@@ -1,0 +1,32 @@
+{
+  "studies": [
+    {
+      "id": 1,
+      "name": "Toei Animation",
+      "description": "<span>Японська анімаційна студія</span> <br />Заснована <span>1956</span> року. За більш ніж 50 <br />років існування, студія <span>«Toei Animation»</span> <br />створила безліч популярних аніме. <br />Зараз Toei є провідною компанією у <br />виробництві аніме в Японії, попри те, що <br />популярність вона набула за <span>хіти</span>, <br /><span>випущені багато років тому</span>.",
+      "image": "../public/studies_toei.jpg",
+      "link": "http://localhost:3000/studies/toei"
+    },
+    {
+      "id": 2,
+      "name": "Kyoto Animation",
+      "description": "Description of Study 2",
+      "image": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "link": "https://example.com/study2"
+    },
+    {
+      "id": 3,
+      "name": "Study 3",
+      "description": "Description of Study 3",
+      "image": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "link": "https://example.com/study3"
+    },
+    {
+      "id": 4,
+      "name": "Study 4",
+      "description": "Description of Study 4",
+      "image": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "link": "https://example.com/study4"
+    }
+  ]
+}
