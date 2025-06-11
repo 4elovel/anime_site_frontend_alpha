@@ -1,5 +1,16 @@
-'use client';
+import { LoginForm } from "@/components/login-form"
 
+export default function SigninPage() {
+  return (
+    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <LoginForm />
+      </div>
+    </div>
+  )
+}
+
+/* 
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -109,3 +120,4 @@ export default function SigninPage() {
         </div>
     );
 }
+*/
