@@ -14,12 +14,12 @@ export function AuthInput({ icon: Icon, label, id, ...props }: IconInputProps) {
     <div className="flex flex-col gap-1">
       {label && <Label htmlFor={inputId}>{label}</Label>}
       <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-          <Icon className="w-5 h-5" />
+        <span className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground">
+          <Icon className="w-3.5 h-3.5 md:w-5 md:h-5 text-white" />
         </span>
         <Input
           id={inputId}
-          className="pl-10 py-5 border-blue rounded-2xl"
+          className="pl-13 py-6 border-blue rounded-[52px] h-13 font-[400] text-[24px]! placeholder:text-white"
           {...props}
         />
       </div>

@@ -2,8 +2,8 @@ import { LoginForm } from "@/components/auth/login-form";
 
 export default function SigninPage() {
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10 flex-col gap-8">
-      <div className="w-full max-w-sm">
+    <div className="flex min-h-screen w-full items-center justify-center p-6 md:p-10 flex-col gap-8">
+      <div className="w-full max-w-lg">
         <LoginForm />
       </div>
     </div>

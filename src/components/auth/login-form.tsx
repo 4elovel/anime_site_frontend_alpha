@@ -13,10 +13,10 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+    <div className={cn("flex flex-col gap-6 max-w-lg", className)} {...props}>
+      <Card className="bg-transparent border-none">
         <CardHeader>
-          <CardTitle className="text-center">Вхід</CardTitle>
+          <CardTitle className="text-center text-white text-4xl">Вхід</CardTitle>
         </CardHeader>
         <CardContent>
           <form>
@@ -40,12 +40,12 @@ export function LoginForm({
                 />
                 <div className="flex items-center">
                   <div className="flex items-center space-x-2">
-                    <Checkbox id="rememberUser" />
-                    <Label>Запам'ятати мене?</Label>
+                    <Checkbox className="data-[state=checked]:bg-blue w-5 h-5 border-blue" id="rememberUser" />
+                    <Label className="font-sans text-white">Запам'ятати мене?</Label>
                   </div>
                   <a
                     href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline font-sans bg-transparent text-white"
                   >
                     Забули пароль?
                   </a>
@@ -55,7 +55,7 @@ export function LoginForm({
                 <Button
                   type="submit"
                   size="sm"
-                  className="text-white hover:text-dark-white rounded-full px-6 py-2 text-md font-normal bg-blue hover:bg-dark-blue cursor-pointer"
+                  className="text-white hover:text-dark-white rounded-full px-6 py-2 text-md font-normal font-sans bg-blue hover:bg-dark-blue cursor-pointer"
                 >
                   Далі
                 </Button>
