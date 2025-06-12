@@ -38,7 +38,7 @@ export default async function AnimePage({
   ];
 
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4 bg-black">
+    <div className="max-w-6xl mx-auto py-10 px-4">
       <AnimeCardCollection items={animeList} />
     </div>
   );

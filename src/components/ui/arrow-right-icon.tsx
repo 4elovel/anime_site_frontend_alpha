@@ -6,7 +6,10 @@ interface ArrowRightIconProps {
   className?: string;
 }
 
-const ArrowRightIcon: React.FC<ArrowRightIconProps> = ({ href, className = "" }) => (
+const ArrowRightIcon: React.FC<ArrowRightIconProps> = ({
+  href,
+  className = "",
+}) => (
   <Link href={href} className={className} tabIndex={-1} aria-label="Go to link">
     <svg
       width="24"

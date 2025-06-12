@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 
 export const dynamicParams = true;
 
@@ -9,9 +9,13 @@ export async function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: 'Anime',
+  title: "Anime",
 };
 
-export default function AnimeLayout({ children }: { children: React.ReactNode }) {
+export default function AnimeLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <>{children}</>;
 }

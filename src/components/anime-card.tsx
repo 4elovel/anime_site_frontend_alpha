@@ -19,12 +19,12 @@ export const AnimeCard: React.FC<AnimeCardProps> = ({
   slug,
 }) => {
   return (
-    <div className="flex flex-col items-center w-48">
-      <a href={slug ? `/anime/${slug}` : "#"}>
+    <div className="flex flex-col items-center w-full sm:w-48">
+      <a href={slug ? `/anime/${slug}` : "#"} className="w-full block">
         <img
           src={image}
           alt={title}
-          className="rounded-2xl w-48 h-64 object-cover shadow-lg mb-3"
+          className="rounded-2xl w-full h-auto sm:w-48 sm:h-64 aspect-[3/4] sm:aspect-auto object-cover shadow-lg mb-3"
           style={{ background: "#18181b" }}
         />
       </a>
