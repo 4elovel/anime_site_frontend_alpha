@@ -10,7 +10,12 @@ const ArrowRightIcon: React.FC<ArrowRightIconProps> = ({
   href,
   className = "",
 }) => (
-  <Link href={href} className={className} tabIndex={-1} aria-label="Go to link">
+  <Link
+    href={href}
+    className={"hover:cursor-pointer " + className}
+    tabIndex={-1}
+    aria-label="Go to link"
+  >
     <svg
       width="24"
       height="24"

@@ -19,7 +19,7 @@ export function AuthInput({ icon: Icon, label, id, ...props }: IconInputProps) {
         </span>
         <Input
           id={inputId}
-          className="pl-12 py-6 border-blue rounded-[52px] h-13 font-[400] text-[16px] md:text-[24px]! placeholder:text-white"
+          className="pl-12 py-6 border-blue rounded-[52px] h-13 font-[400] text-[1rem] md:text-2xl! placeholder:text-white"
           {...props}
         />
       </div>

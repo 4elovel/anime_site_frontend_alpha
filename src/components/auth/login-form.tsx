@@ -15,7 +15,6 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-
   return (
     <div
       className={cn(
@@ -24,10 +23,10 @@ export function LoginForm({
       )}
       {...props}
     >
-      <div className="flex items-center justify-center w-[4.5rem] h-[4.5rem] md:w-[7.75rem] md:h-[7.75rem] bg-dark-blue mb-2">
+      <div className="flex items-center justify-center w-[4.5rem] h-[4.5rem] md:w-[7.75rem] md:h-[7.75rem] bg-dark-blue">
         <Mail className="w-[4rem] h-[4rem] md:w-[7rem] md:h-[7rem] text-blue-950" />
       </div>
-      <Card className="bg-transparent border-none w-full">
+      <Card className="bg-transparent border-none w-full pt-0">
         <AuthHeader />
         <CardContent className="p-3">
           <AuthForm />

@@ -34,7 +34,7 @@ export const AnimeCard: React.FC<AnimeCardProps> = ({
       >
         {title}
       </span>
-      <div className="flex items-center justify-center text-zinc-400 mt-1 w-ful text-sm">
+      <div className="flex items-center justify-center text-zinc-400 mt-1 w-full text-sm">
         {year && <span>{year}</span>}
         {year && media_type && (
           <span className="">
