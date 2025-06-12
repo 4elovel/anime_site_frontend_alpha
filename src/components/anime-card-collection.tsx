@@ -1,5 +1,6 @@
 import React from "react";
 import AnimeCard, { AnimeCardProps } from "@/components/anime-card";
+import ArrowRightIcon from "@/components/ui/arrow-right-icon";
 
 interface AnimeCardCollectionProps {
   title?: string;
@@ -14,17 +15,8 @@ const AnimeCardCollection: React.FC<AnimeCardCollectionProps> = ({
     <section className="w-full pl-2 sm:pl-6">
       <div className="flex items-center mb-8">
         <h2 className="text-4xl font-bold text-white mr-6">{title}</h2>
-        <button className="ml-auto rounded-xl border border-blue-400 p-2 text-white hover:bg-blue-900 transition-colors">
-          <svg
-            width="28"
-            height="28"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-          >
-            <path d="M9 18l6-6-6-6" />
-          </svg>
+        <button className="ml-auto flex items-center justify-center w-10 h-10 rounded-lg border border-[#49638A] bg-transparent p-0 hover:bg-blue-900 transition-colors">
+          <ArrowRightIcon href="#" />
         </button>
       </div>
       <div className="flex flex-row gap-12">
