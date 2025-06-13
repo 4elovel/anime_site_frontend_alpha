@@ -19,9 +19,9 @@ const AnimeCardCollection: React.FC<AnimeCardCollectionProps> = ({
           <ArrowRightIcon href="#" className="w-7 h-7" />
         </button>
       </div>
-      <div className="flex flex-col w-full gap-6 sm:flex-row sm:gap-12">
+      <div className="flex max-md:sm:justify-center flex-col max-md:sm:flex-wrap w-full gap-6 sm:flex-row  sm:gap-6 md:gap-12">
         {items.map((anime, idx) => (
-          <div key={anime.slug || idx} className="w-full  p-7 sm:p-0">
+          <div key={anime.slug || idx} className="w-full sm:w-1/3 md:w-48">
             <AnimeCard {...anime} />
           </div>
         ))}
