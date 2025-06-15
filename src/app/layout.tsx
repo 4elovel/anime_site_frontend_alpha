@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import { Inter } from 'next/font/google';
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+import { Inter } from "next/font/google";
+import { AuthProvider } from "@/contexts/AuthContext";
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,11 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="`${inter.variable} ${geistSans.variable} ${geistMono.variable}`">
-      <body
-        className={`font-sans bg-gradient antialiased`}
-      >
-        {children}
+    <html
+      lang="en"
+      className="`${inter.variable} ${geistSans.variable} ${geistMono.variable}`"
+    >
+      <body className={`font-sans bg-gradient antialiased`}>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

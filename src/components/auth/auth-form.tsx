@@ -1,6 +1,7 @@
 // basic component for auth form
 "use client";
 
+import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ export function AuthForm({}: React.ComponentProps<"div">) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [touched, setTouched] = useState({ email: false, password: false });
+  const { login, loading, error } = useAuth();
 
   const isEmailValid =
     email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -26,7 +28,8 @@ export function AuthForm({}: React.ComponentProps<"div">) {
     e.preventDefault();
     setTouched({ email: true, password: true });
     if (isEmailValid && isPasswordValid) {
-      // submit logic
+      await login(email, password);
+      // Optionally redirect or show success
     }
   }
 
@@ -95,11 +98,12 @@ export function AuthForm({}: React.ComponentProps<"div">) {
                 ? "opacity-60 pointer-events-none"
                 : ""
             )}
-            disabled={!isEmailValid || !isPasswordValid}
+            disabled={loading || !isEmailValid || !isPasswordValid}
           >
-            Далі
+            {loading ? "Вхід..." : "Далі"}
           </Button>
         </div>
+        {error && <span className="text-red-500 text-xs pl-2">{error}</span>}
       </div>
     </form>
   );
