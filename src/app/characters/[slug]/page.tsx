@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { API_BASE_URL } from "@/config";
-import ArrowRightIcon from "@/components/ui/arrow-right-icon";
+import AnimeCardCollection from "@/components/anime-card-collection";
 
 interface CharacterData {
   id: string;
@@ -15,11 +15,6 @@ interface CharacterData {
   birthplace?: string;
   original_name?: string;
   type?: string;
-  animes?: {
-    slug: string;
-    name: string;
-    image: string;
-  }[];
 }
 
 async function getCharacter(slug: string): Promise<CharacterData | null> {
@@ -35,18 +30,42 @@ async function getCharacter(slug: string): Promise<CharacterData | null> {
   }
 }
 
+async function getCharacterAnimes(slug: string) {
+  try {
+    const res = await fetch(`${API_BASE_URL}people/${slug}/animes`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return Array.isArray(json.data) ? json.data : [];
+  } catch {
+    return [];
+  }
+}
+
 export default async function CharacterPage({
   params,
 }: {
   params: { slug: string };
 }) {
   const character = await getCharacter(params.slug);
-  console.log("Character data:", character);
-  if (!character) {
+  if (!character || character.type !== "character") {
     return (
-      <div className="text-white text-center mt-20">Character not found</div>
+      <div className="text-white text-center mt-20">No such character</div>
     );
   }
+
+  // Fetch first 4 anime for this character
+  const animes = (await getCharacterAnimes(params.slug)).slice(0, 4);
+  const animeCards = animes.map((anime: any) => ({
+    image: anime.poster,
+    title: anime.name,
+    year: anime.first_air_date
+      ? new Date(anime.first_air_date).getFullYear()
+      : undefined,
+    media_type: anime.kind,
+    slug: anime.slug,
+  }));
 
   return (
     <div className="max-w-6xl mx-auto py-12 px-4 flex flex-col md:flex-row gap-12">
@@ -66,11 +85,11 @@ export default async function CharacterPage({
         <h1 className="text-3xl md:text-4xl font-bold text-white mb-1">
           {character.name}
         </h1>
-        {
+        {character.original_name && (
           <div className="text-zinc-400 text-base mb-2">
             {character.original_name}
           </div>
-        }
+        )}
         <div className="flex gap-2 items-center mb-2">
           <span className="font-semibold text-lg text-white">Опис</span>
           <span
@@ -93,27 +112,18 @@ export default async function CharacterPage({
               роки
             </div>
           )}
-          {
-            <div>
-              <span className="font-semibold text-white">Стать:</span>{" "}
-              {character.gender}
-            </div>
-          }
-          {
-            <div>
-              <span className="font-semibold text-white">
-                Місце народження:
-              </span>{" "}
-              {character.birthplace || "Невідомо"}
-            </div>
-          }
+          {/* Add more fields as needed */}
         </div>
         {character.biography && (
           <div className="mt-2 text-zinc-200 text-base leading-relaxed whitespace-pre-line">
             {character.biography}
           </div>
         )}
-        {/* <div className="mt-2 text-zinc-400 text-sm">Джерело <a href="#" className="text-blue-400 underline">MyAnimeList</a></div> */}
+        {animeCards.length > 0 && (
+          <div className="mt-8">
+            <AnimeCardCollection title="Аніме" items={animeCards} />
+          </div>
+        )}
       </div>
     </div>
   );
