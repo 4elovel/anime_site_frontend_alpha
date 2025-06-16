@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { API_BASE_URL } from "@/config";
-import AnimeCardCollection from "@/components/anime-card-collection";
+import CardCollection from "@/components/card-collection";
 
 interface CharacterData {
   id: string;
@@ -16,6 +16,23 @@ interface CharacterData {
   original_name?: string;
   type?: string;
 }
+
+const voiceActorCards = [
+  {
+    type: "voice-actor",
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    name: "Сакакібара Йошико",
+    title: "Геллсінґ OVA",
+    animeImage: "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+  },
+  {
+    type: "voice-actor",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    name: "Іван Петров",
+    title: "Геллсінґ",
+    animeImage: "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+  },
+];
 
 async function getCharacter(slug: string): Promise<CharacterData | null> {
   try {
@@ -121,7 +138,17 @@ export default async function CharacterPage({
         )}
         {animeCards.length > 0 && (
           <div className="mt-8">
-            <AnimeCardCollection title="Аніме" items={animeCards} />
+            <CardCollection
+              title="Аніме"
+              showArrowRightIcon
+              items={animeCards}
+              cardType="anime"
+            />
+            <CardCollection
+              title="Озвучення персонажа"
+              items={voiceActorCards}
+              cardType="voice-actor"
+            />
           </div>
         )}
       </div>

@@ -1,6 +1,6 @@
 import AnimeCard from "@/components/anime-card";
 import AnimeTooltip from "@/components/anime-tooltip";
-import AnimeCardCollection from "@/components/anime-card-collection";
+import CardCollection from "@/components/card-collection";
 export default async function AnimePage({
   params,
 }: {
@@ -39,7 +39,7 @@ export default async function AnimePage({
 
   return (
     <div className="max-w-6xl mx-auto py-10 px-4">
-      <AnimeCardCollection items={animeList} />
+      {/* /<CardCollection items={animeList} /> */}
     </div>
   );
 }
