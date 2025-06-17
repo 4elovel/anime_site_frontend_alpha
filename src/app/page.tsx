@@ -13,6 +13,10 @@ export default function Home() {
       <Link href="/anime">
         <Button>anime</Button>
       </Link>
+
+      <Link href="/signup">
+        <Button>Sign Up</Button>
+      </Link>
     </div>
   );
 }

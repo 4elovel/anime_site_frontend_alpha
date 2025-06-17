@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 
-export function AuthFooter() {
+export function AuthFooter( { showRegister = true }: { showRegister?: boolean } ) {
   return (
     <div className="flex flex-col gap-6 items-center justify-center w-full mt-4">
       <Image
@@ -15,7 +15,8 @@ export function AuthFooter() {
       />
 
       <div className="flex flex-col gap-6 mt-6 items-center">
-        <div className="flex flex-row items-center gap-2">
+        { showRegister && (
+          <div className="flex flex-row items-center gap-2">
           <span className="text-blue font-sans text-base md:text-lg">
             Немає аккаунту ?
           </span>
@@ -26,6 +27,8 @@ export function AuthFooter() {
             Реєстрація
           </a>
         </div>
+        )}
+        
 
         <div className="text-white font-sans text-base md:text-lg text-center">
           Вхід за допомогою
