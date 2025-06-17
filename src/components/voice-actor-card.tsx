@@ -33,12 +33,15 @@ const VoiceActorCard: React.FC<VoiceActorCardProps> = ({
         )}
       </div>
       <span
-        className="block w-full text-center text-base text-white truncate"
+        className="block w-full max-w-full items-center text-center text-sm truncate text-zinc-400"
         title={title}
       >
         {title}
       </span>
-      <div className="flex items-center justify-center text-white mt-1 w-full text-xl font-semibold truncate">
+      <div
+        className=" text-center max-w-full justify-center block text-white mt-1 w-full text-base font-semibold truncate"
+        title={name}
+      >
         {name}
       </div>
     </div>

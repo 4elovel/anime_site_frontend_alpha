@@ -16,7 +16,7 @@ interface CharacterData {
   original_name?: string;
   type?: string;
 }
-
+//TODO get voiceactor data from API
 const voiceActorCards = [
   {
     type: "voice-actor",
@@ -28,8 +28,22 @@ const voiceActorCards = [
   {
     type: "voice-actor",
     image: "https://randomuser.me/api/portraits/men/32.jpg",
-    name: "Іван Петров",
+    name: "Іван Петров Іванович",
     title: "Геллсінґ",
+    animeImage: "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+  },
+  {
+    type: "voice-actor",
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    name: "Сакакібара Йошико",
+    title: "Геллсінґ OVA",
+    animeImage: "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+  },
+  {
+    type: "voice-actor",
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    name: "Сакакібара Йошико",
+    title: "Геллсінґ OVA",
     animeImage: "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
   },
 ];
@@ -68,7 +82,7 @@ export default async function CharacterPage({
   const character = await getCharacter(params.slug);
   if (!character || character.type !== "character") {
     return (
-      <div className="text-white text-center mt-20">No such character</div>
+      <div className="text-white text-center mt-20">Такого персонажа немає</div>
     );
   }
 
