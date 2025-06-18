@@ -13,6 +13,9 @@ export default function Home() {
       <Link href="/anime">
         <Button>anime</Button>
       </Link>
+      <Link href="/characters/blanche-considine">
+        <Button>character</Button>
+      </Link>
 
       <Link href="/signup">
         <Button>Sign Up</Button>
