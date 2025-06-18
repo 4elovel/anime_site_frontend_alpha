@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { API_BASE_URL } from "@/config";
 import CardCollection from "@/components/card-collection";
+import SectionHeader from "@/components/section-header";
 
 interface CharacterData {
   id: string;
@@ -121,19 +122,7 @@ export default async function CharacterPage({
             {character.original_name}
           </div>
         )}
-        <div className="flex gap-2 items-center mb-2">
-          <span className="font-semibold text-lg text-white">Опис</span>
-          <span
-            className="flex flex-row justify-center items-center px-2 py-0 gap-2 w-16 h-[35px] rounded-[12px] text-white text-[16px] font-medium leading-[19px] select-none border"
-            style={{
-              fontFamily: "Inter, sans-serif",
-              background: "var(--color-language-button-color)",
-              borderColor: "var(--color-language-button-color)",
-            }}
-          >
-            UA
-          </span>
-        </div>
+        <SectionHeader title="Опис" badge="UA" className="mb-2" />
         <div className="flex flex-col gap-1 text-zinc-300 text-base">
           {character.birth_date && (
             <div>
