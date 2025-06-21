@@ -1,7 +1,7 @@
 import React from "react";
-import AnimeCard, { AnimeCardProps } from "@/components/anime-card";
+import AnimeCard, { AnimeCardProps } from "@/components/shared/anime-card";
 import ArrowRightIcon from "@/components/ui/arrow-right-icon";
-import VoiceActorCard from "./voice-actor-card";
+import VoiceActorCard from "../shared/voice-actor-card";
 import { Anek_Malayalam } from "next/font/google";
 
 interface CardCollectionProps {

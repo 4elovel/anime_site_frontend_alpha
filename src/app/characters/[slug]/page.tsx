@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { API_BASE_URL } from "@/config";
-import CardCollection from "@/components/card-collection";
-import SectionHeader from "@/components/section-header";
+import CardCollection from "@/components/shared/card-collection";
+import SectionHeader from "@/components/shared/section-header";
 
 interface CharacterData {
   id: string;

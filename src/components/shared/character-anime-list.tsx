@@ -1,5 +1,5 @@
 import React from "react";
-import CardCollection from "@/components/card-collection";
+import CardCollection from "@/components/shared/card-collection";
 
 interface AnimeCardData {
   image: string;

@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "@/config";
 import React from "react";
 import ImdbRating from "@/assets/anime/imdb-rating.svg";
-import SectionHeader from "@/components/section-header";
+import SectionHeader from "@/components/shared/section-header";
 import ActionButton from "@/components/ui/action-button";
 import { Play, Share2Icon } from "lucide-react";
 import ArrowDown from "@/assets/arrow-down.svg";
