@@ -52,22 +52,26 @@ const slides: Slide[] = [
 
 // Хук для визначення ширини вікна
 function useWindowWidth() {
-  const [width, setWidth] = useState(1200); // Значення за замовчуванням
+  const [width, setWidth] = useState(0); // Початкове значення 0
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     const handleResize = () => setWidth(window.innerWidth);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  return width;
+
+  return { width, mounted };
 }
 
 const AnimeCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalSlides = slides.length;
-  const width = useWindowWidth();
+  const { width, mounted } = useWindowWidth();
 
-  // Автоматичне перелистывание
+  // Автоматичне перелистування
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % totalSlides);
@@ -79,26 +83,39 @@ const AnimeCarousel = () => {
   const prev = () => {
     setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
+
   const next = () => {
     setCurrentIndex((prev) => (prev + 1) % totalSlides);
   };
 
-  const getVisibleSlides = () => {
-    return Array.from({ length: 5 }, (_, i) => {
-      const offset = i - 2;
-      const index = (currentIndex + offset + totalSlides) % totalSlides;
-      return { ...slides[index], offset };
-    });
-  };
+  // Показуємо заглушку до монтування
+  if (!mounted) {
+    return (
+      <div className="w-full h-[300px] sm:h-[500px] flex items-center justify-center bg-gray-900 rounded-xl">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
+
+  // Визначаємо розміри та зміщення в залежності від ширини екрану
+  const isMobile = width < 640;
+  const isTablet = width >= 640 && width < 1024;
+
+  const slideWidth = isMobile ? 350 : isTablet ? 500 : 660;
+  const slideHeight = isMobile ? 200 : isTablet ? 400 : 400;
+  const offsetX = isMobile ? 60 : isTablet ? 100 : 150;
 
   return (
-    <div
-      className="w-full h-screen flex items-center justify-center overflow-hidden relative"
-      style={{ perspective: 1200 }}
-    >
-      {/* Background grid */}
-      <div className="relative w-full max-w-[1600px] h-[600px] sm:h-[400px] xs:h-[260px] flex items-center justify-center">
-        {/* Справжній скрол-карусель */}
+    <div className="w-full min-h-[250px] sm:min-h-[300px] lg:min-h-[350px] flex items-center justify-center overflow-hidden relativepy-8">
+      {/* Контейнер карусели */}
+      <div
+        className="relative flex items-center justify-center"
+        style={{
+          width: "100%",
+          maxWidth: `${slideWidth * 3}px`,
+          height: `${slideHeight + 50}px`,
+        }}
+      >
         {slides.map((slide, slideIndex) => {
           let relativeIndex = slideIndex - currentIndex;
           if (relativeIndex > Math.floor(totalSlides / 2)) {
@@ -106,59 +123,98 @@ const AnimeCarousel = () => {
           } else if (relativeIndex < -Math.floor(totalSlides / 2)) {
             relativeIndex += totalSlides;
           }
-          // Показуємо лише ті, що поряд із центром
-          if (Math.abs(relativeIndex) > 2) return null;
 
-          // Зміщення та масштаб
-          const offsetX = width < 640 ? 90 : width < 900 ? 140 : 220;
+          // Показуємо максимум 3 слайди на мобільних
+          const maxVisible = isMobile ? 1 : 2;
+          if (Math.abs(relativeIndex) > maxVisible) return null;
+
+          // Розрахунок позиції та масштабу
           let translateX = relativeIndex * offsetX;
           let scale = 1;
-          if (relativeIndex === -2 || relativeIndex === 2)
-            scale = width < 640 ? 0.7 : 0.78;
-          if (relativeIndex === -1 || relativeIndex === 1)
-            scale = width < 640 ? 0.82 : 0.9;
-          if (relativeIndex === 0) scale = 1;
+          let opacity = 1;
 
-          let zIndex = 10 - Math.abs(relativeIndex);
+          if (Math.abs(relativeIndex) === 2) {
+            scale = 0.8;
+            opacity = 0.9;
+          } else if (Math.abs(relativeIndex) === 1) {
+            scale = 0.9;
+            opacity = 1;
+          }
+
+          const zIndex = 10 - Math.abs(relativeIndex);
 
           return (
             <motion.div
               key={slide.id}
-              className="absolute"
+              className="absolute cursor-pointer"
               style={{ zIndex }}
               initial={false}
-              animate={{ x: translateX, scale, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 90, damping: 18 }}
+              animate={{
+                x: translateX,
+                scale,
+                opacity,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 90,
+                damping: 18,
+                opacity: { duration: 0.3 },
+              }}
+              onClick={() => {
+                if (relativeIndex !== 0) {
+                  setCurrentIndex(slideIndex);
+                }
+              }}
             >
-              <div className="relative w-[700px] h-[500px] rounded-3xl overflow-hidden">
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${slide.image})` }}
+              <div
+                className="relative overflow-hidden rounded-xl shadow-2xl"
+                style={{
+                  width: slideWidth,
+                  height: slideHeight,
+                }}
+              >
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
                 />
-                {/* Градієнт для затемнення низу */}
-                <div
-                  className="pointer-events-none absolute left-0 right-0 bottom-0 h-1/2"
-                  style={{
-                    background:
-                      "linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0) 100%)",
-                  }}
-                />
+
+                {/* Градієнт для затемнення */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                {/* Контент тільки для активного слайду */}
                 {relativeIndex === 0 && (
                   <motion.div
-                    className="absolute bottom-0 left-0 right-0 p-8 sm:p-4 xs:p-2 text-white"
-                    initial={{ y: 60, opacity: 0 }}
+                    className="absolute bottom-0 left-0 right-0 p-4 text-white"
+                    initial={{ y: 30, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.3, duration: 0.6 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
                   >
-                    <h2 className="text-4xl sm:text-2xl xs:text-base font-extrabold leading-tight mb-4 xs:mb-2">
+                    <h2
+                      className={`font-bold leading-tight mb-2 ${
+                        isMobile
+                          ? "text-sm"
+                          : isTablet
+                          ? "text-base"
+                          : "text-lg"
+                      }`}
+                    >
                       {slide.title}
                     </h2>
-                    <p className="text-lg sm:text-base xs:text-xs leading-relaxed text-gray-300">
+                    <p
+                      className={`text-gray-300 leading-relaxed ${
+                        isMobile
+                          ? "text-xs line-clamp-2"
+                          : isTablet
+                          ? "text-sm line-clamp-3"
+                          : "text-sm line-clamp-3"
+                      }`}
+                    >
                       {slide.description}
                     </p>
                   </motion.div>
                 )}
-                {relativeIndex !== 0 && <div className="absolute inset-0" />}
               </div>
             </motion.div>
           );
