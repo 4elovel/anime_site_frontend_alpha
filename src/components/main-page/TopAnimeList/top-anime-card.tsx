@@ -32,9 +32,9 @@ const TopAnimeCard: FC<TopAnimeCardProps> = ({
       whileHover={{
         scale: 1.04,
       }}
-      className="w-[260px] min-w-[260px] flex flex-col text-white font-sans cursor-pointer transition-transform duration-200"
+      className="min-w-[200px] sm:w-[260px] xs:min-w-0 flex flex-col text-white font-sans cursor-pointer transition-transform duration-200"
     >
-      <div className="relative h-[390px] w-full rounded-2xl overflow-hidden">
+      <div className="relative h-[300px] sm:h-[390px] w-full rounded-2xl overflow-hidden">
         <Image
           src={image}
           alt={title}

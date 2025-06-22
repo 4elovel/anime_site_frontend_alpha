@@ -52,8 +52,8 @@ const TopAnimeList: React.FC<TopAnimeListProps> = ({
         </button>
       </div>
 
-      <div className="w-full overflow-x-auto px-2">
-        <div className="flex lg:grid lg:grid-cols-5 md:grid-cols-3 xs:flex gap-x-6 gap-y-10 xs:gap-x-4 xs:gap-y-6 min-w-fit">
+      <div className="w-full px-2">
+        <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-x-6 gap-y-10 xs:gap-x-4 xs:gap-y-6">
           {items.map((anime, idx) => (
             <TopAnimeCard
               key={anime.title + idx}

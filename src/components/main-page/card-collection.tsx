@@ -235,11 +235,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
               .map((item, idx) => (
                 <div
                   key={item.title ? item.title + idx : idx}
-                  className={`w-full ${
-                    cardType === "top-user"
-                      ? "items-center justify-center flex"
-                      : ""
-                  }`}
+                  className="w-full"
                 >
                   {renderCard ? (
                     renderCard(item, idx + activePage * 2)

@@ -234,7 +234,7 @@ const AnimeCarousel = () => {
                       transition={{ delay: 0.2, duration: 0.5 }}
                     >
                       <h2
-                        className={`font-bold leading-tight mb-2 ${
+                        className={`font-bold leading-tight mb-1 ${
                           isMobile
                             ? "text-sm"
                             : isTablet
