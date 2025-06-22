@@ -20,13 +20,11 @@ const TopAnimeList: React.FC<TopAnimeListProps> = ({
 }) => {
   return (
     <section className="w-full max-w-[1400px] mx-auto py-10 xs:py-4">
-      {/* Заголовок */}
       <div className="flex flex-col items-center mb-8 xs:mb-4 px-2">
         <h2 className="text-white text-4xl sm:text-2xl xs:text-lg font-bold tracking-tight text-center">
           Топ <span className="text-blue-400">10</span> аніме
         </h2>
 
-        {/* Градієнтна лінія */}
         <div className="w-full flex justify-center mt-4">
           <div
             className="w-full h-0 border-t-[2px]"
@@ -39,7 +37,6 @@ const TopAnimeList: React.FC<TopAnimeListProps> = ({
         </div>
       </div>
 
-      {/* Кнопка фільтра справа */}
       <div className="flex justify-end mb-8 xs:mb-4 px-2">
         <button className="flex items-center gap-2 text-white px-4 py-2 rounded-xl border border-[#918C8C80] text-lg xs:text-sm">
           {filterLabel}
@@ -55,7 +52,6 @@ const TopAnimeList: React.FC<TopAnimeListProps> = ({
         </button>
       </div>
 
-      {/* Список карток */}
       <div className="w-full overflow-x-auto px-2">
         <div className="flex lg:grid lg:grid-cols-5 md:grid-cols-3 xs:flex gap-x-6 gap-y-10 xs:gap-x-4 xs:gap-y-6 min-w-fit">
           {items.map((anime, idx) => (

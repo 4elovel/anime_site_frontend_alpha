@@ -70,7 +70,6 @@ export default async function AnimePage({
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 flex flex-col md:flex-row gap-10">
-      {/* Left: Poster and actions */}
       <div className="flex flex-col items-center gap-4 min-w-[260px]">
         <img
           src={anime.poster || anime.image_name}
@@ -93,7 +92,6 @@ export default async function AnimePage({
         </div>
       </div>
 
-      {/* Center: Main info */}
       <div className="flex-1 flex flex-col gap-4">
         <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
           <div>
@@ -112,8 +110,6 @@ export default async function AnimePage({
               maxRating={10}
             />
           </div>
-
-          {/* Genres/tags can be fetched from /animes/{anime}/tags */}
         </div>
 
         <div className="flex gap-2 mt-2 flex-wrap">

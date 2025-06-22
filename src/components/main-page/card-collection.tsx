@@ -57,7 +57,6 @@ const CardCollection: React.FC<CardCollectionProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, [items.length, cardType]);
 
-  // Скролимо до сторінки
   const scrollToPage = (pageIdx: number) => {
     if (scrollRef.current) {
       let perPage;
@@ -75,7 +74,6 @@ const CardCollection: React.FC<CardCollectionProps> = ({
     }
   };
 
-  // Відслідковуємо активну сторінку при ручному скролі
   useEffect(() => {
     const handleScroll = () => {
       if (scrollRef.current) {
@@ -93,7 +91,6 @@ const CardCollection: React.FC<CardCollectionProps> = ({
     };
   }, [isMobile]);
 
-  // Додаю scroll-to-top для grid при зміні сторінки (мобільна версія)
   useEffect(() => {
     if (isMobile && gridRef.current) {
       gridRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -113,7 +110,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
           <h2 className="text-white text-4xl sm:text-2xl xs:text-lg font-bold tracking-tight">
             {title}
           </h2>
-          {/* Пагінація справа на рівні з заголовком або кнопка */}
+
           {!isMobile && showButton && buttonText && buttonUrl ? (
             <a
               href={buttonUrl}
@@ -176,7 +173,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
               </div>
             )
           )}
-          {/* Мобільна стрілка справа */}
+
           {isMobile && (
             <div className="flex gap-2 ml-auto">
               <button
@@ -216,7 +213,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
             </div>
           )}
         </div>
-        {/* Грід для мобільних */}
+
         {isMobile ? (
           <div
             className={
@@ -238,7 +235,11 @@ const CardCollection: React.FC<CardCollectionProps> = ({
               .map((item, idx) => (
                 <div
                   key={item.title ? item.title + idx : idx}
-                  className="w-full"
+                  className={`w-full ${
+                    cardType === "top-user"
+                      ? "items-center justify-center flex"
+                      : ""
+                  }`}
                 >
                   {renderCard ? (
                     renderCard(item, idx + activePage * 2)
@@ -259,7 +260,9 @@ const CardCollection: React.FC<CardCollectionProps> = ({
         ) : (
           <motion.div
             ref={scrollRef}
-            className="flex gap-2 xs:gap-4 overflow-x-auto scrollbar-hide px-2 pb-2 pt-1"
+            className={`flex gap-2 xs:gap-4 overflow-x-auto scrollbar-hide px-2 pb-2 pt-1 ${
+              cardType === "top-user" ? "justify-center" : ""
+            }`}
             style={{
               scrollBehavior: "smooth",
               maxWidth: "1400px",

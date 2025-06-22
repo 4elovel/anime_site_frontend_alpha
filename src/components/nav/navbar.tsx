@@ -12,7 +12,6 @@ export default function Navbar() {
       className="w-full flex items-center justify-between px-8 py-4 bg-transparent"
       style={{ minHeight: 0 }}
     >
-      {/* Логотип */}
       <div className="flex-shrink-0">
         <Image
           src="/logo.png"
@@ -23,9 +22,7 @@ export default function Navbar() {
         />
       </div>
 
-      {/* Іконки справа */}
       <div className="flex items-center gap-6 sm:gap-4 xs:gap-2">
-        {/* Пошук: інпут на десктопі, іконка на мобільних */}
         <div className="hidden md:flex items-center border border-[#5B7CB2] rounded-xl px-4 py-2 w-72 max-w-xs">
           <svg
             className="w-5 h-5 text-white mr-2"
@@ -43,6 +40,7 @@ export default function Navbar() {
             className="bg-transparent outline-none text-white placeholder-gray-400 w-full"
           />
         </div>
+        
         <button className="md:hidden border border-[#5B7CB2] rounded-xl w-14 h-14 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent hover:bg-[#2C3650] transition p-0">
           <svg
             className="w-7 h-7 sm:w-5 sm:h-5 xs:w-4 xs:h-4 text-white"
@@ -55,7 +53,7 @@ export default function Navbar() {
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
         </button>
-        {/* Дзвіночок */}
+
         <button className="border border-[#5B7CB2] rounded-xl w-14 h-14 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent hover:bg-[#2C3650] transition p-0">
           <svg
             className="w-7 h-7 sm:w-5 sm:h-5 xs:w-4 xs:h-4 text-white"
@@ -68,7 +66,6 @@ export default function Navbar() {
           </svg>
         </button>
 
-        {/* Аватар */}
         <img
           src="assets/mock-user-logo.png"
           alt="User"

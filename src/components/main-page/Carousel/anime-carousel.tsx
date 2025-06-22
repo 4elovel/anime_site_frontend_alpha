@@ -51,7 +51,6 @@ const slides: Slide[] = [
   },
 ];
 
-// Хук для визначення ширини вікна
 function useWindowWidth() {
   const [width, setWidth] = useState(0); // Початкове значення 0
   const [mounted, setMounted] = useState(false);
@@ -72,7 +71,6 @@ const AnimeCarousel = () => {
   const totalSlides = slides.length;
   const { width, mounted } = useWindowWidth();
 
-  // Автоматичне перелистування
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % totalSlides);
@@ -89,7 +87,6 @@ const AnimeCarousel = () => {
     setCurrentIndex((prev) => (prev + 1) % totalSlides);
   };
 
-  // Показуємо заглушку до монтування
   if (!mounted) {
     return (
       <div className="w-full h-[300px] sm:h-[500px] flex items-center justify-center bg-gray-900 rounded-xl">
@@ -98,7 +95,6 @@ const AnimeCarousel = () => {
     );
   }
 
-  // Визначаємо розміри та зміщення в залежності від ширини екрану
   const isMobile = width < 640;
   const isTablet = width >= 640 && width < 1024;
 
@@ -108,7 +104,6 @@ const AnimeCarousel = () => {
 
   return (
     <div className="w-full select-none min-h-[250px] sm:min-h-[300px] lg:min-h-[350px] flex items-center justify-center overflow-hidden relativepy-8">
-      {/* Контейнер карусели */}
       <div
         className="relative flex items-center justify-center"
         style={{
@@ -128,7 +123,6 @@ const AnimeCarousel = () => {
           const maxVisible = isMobile ? 2 : 2;
           if (Math.abs(relativeIndex) > maxVisible) return null;
 
-          // Розрахунок позиції та масштабу
           let translateX = relativeIndex * offsetX;
           let scale = 1;
           let opacity = 1;
@@ -184,13 +178,10 @@ const AnimeCarousel = () => {
                   priority={relativeIndex === 0}
                   quality={70}
                 />
-                {/* Градієнт для затемнення */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                {/* Контент тільки для активного слайду */}
                 {relativeIndex === 0 && (
                   <>
-                    {/* Left Arrow */}
                     <button
                       onClick={prev}
                       className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/40 backdrop-blur-lg rounded-2xl flex items-center justify-center z-30 hover:bg-black/50 transition"
@@ -212,7 +203,7 @@ const AnimeCarousel = () => {
                         />
                       </svg>
                     </button>
-                    {/* Right Arrow */}
+
                     <button
                       onClick={next}
                       className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/40 backdrop-blur-lg rounded-2xl flex items-center justify-center z-30 hover:bg-black/50 transition "
@@ -235,7 +226,7 @@ const AnimeCarousel = () => {
                         />
                       </svg>
                     </button>
-                    {/* Текст */}
+
                     <motion.div
                       className="absolute bottom-0 left-0 right-0 p-4 text-white z-20"
                       initial={{ y: 30, opacity: 0 }}

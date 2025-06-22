@@ -8,6 +8,7 @@ import TopAnimeList from "@/components/main-page/TopAnimeList/top-anime-list";
 import CommentCollection from "@/components/main-page/comment-collection";
 import TopUserList from "@/components/main-page/top-user-list";
 import ContinueWatchingCard from "../components/main-page/continue-watching-card";
+
 // TODO: API HOOKS
 const popularAnime = [
   {

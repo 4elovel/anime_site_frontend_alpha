@@ -28,8 +28,7 @@ const TopUserCard: React.FC<TopUserCardProps> = ({
   };
 
   return (
-    <div className="flex items-center w-full py-3 sm:px-4 xs:px-2 justify-center gap-x-2">
-      {/* Rank + Crown */}
+    <div className="flex items-center w-[320px] xs:w-full py-3 px-2 justify-center gap-x-4">
       <div className="flex items-center">
         <span
           className="text-lg font-bold mr-1 xs:text-base"
@@ -47,7 +46,6 @@ const TopUserCard: React.FC<TopUserCardProps> = ({
         </svg>
       </div>
 
-      {/* Avatar */}
       <div className="w-24 h-24 xs:w-16 xs:h-16 rounded-full overflow-hidden flex-shrink-0">
         <Image
           src={avatarUrl}
@@ -59,8 +57,7 @@ const TopUserCard: React.FC<TopUserCardProps> = ({
         />
       </div>
 
-      {/* User Info and Stats */}
-      <div className="flex-1 flex flex-col items-start justify-center min-w-0">
+      <div className="flex-1 flex flex-col items-start justify-center">
         <div className="text-white font-bold text-base mb-0.5 xs:text-sm">
           {username}
         </div>
@@ -68,12 +65,10 @@ const TopUserCard: React.FC<TopUserCardProps> = ({
           Реєстрація: {registration}
         </div>
 
-        {/* Stats under registration */}
         <div className="flex items-center gap-6 xs:gap-3">
-          {/* Stars */}
           <div className="flex flex-col items-center">
             <svg
-              className="w-4 h-4 xs:w-3 xs:h-3 text-gray-400 mb-0.5"
+              className="w-6 h-6 xs:w-3 xs:h-3 text-gray-400 mb-0.5"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -87,10 +82,9 @@ const TopUserCard: React.FC<TopUserCardProps> = ({
             </span>
           </div>
 
-          {/* Comments */}
           <div className="flex flex-col items-center">
             <svg
-              className="w-4 h-4 xs:w-3 xs:h-3 text-gray-400 mb-0.5"
+              className="w-6 h-6 xs:w-3 xs:h-3 text-gray-400 mb-0.5"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -104,10 +98,9 @@ const TopUserCard: React.FC<TopUserCardProps> = ({
             </span>
           </div>
 
-          {/* Folders */}
           <div className="flex flex-col items-center">
             <svg
-              className="w-4 h-4 xs:w-3 xs:h-3 text-gray-400 mb-0.5"
+              className="w-6 h-6 xs:w-3 xs:h-3 text-gray-400 mb-0.5"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
