@@ -343,6 +343,11 @@ export default function Home() {
 
       <TopUserList users={topUsers} />
 
+      <CardCollection title="Топ онґоінґи" items={popularAnime} cardType="anime" />
+
+      <CardCollection title="Рекомендації для вас" items={popularAnime} cardType="anime" />
+
+
       <Button>Test</Button>
       <Link href="/signin">
         <Button>Sign In</Button>
