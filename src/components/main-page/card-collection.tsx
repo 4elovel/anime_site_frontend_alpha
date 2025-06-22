@@ -5,11 +5,14 @@ import { motion } from "framer-motion";
 import ArrowRightIcon from "@/components/ui/arrow-right-icon";
 import VoiceActorCard from "../shared/voice-actor-card";
 import { Anek_Malayalam } from "next/font/google";
+import CommentCard from "./CommentSection/comment-card";
+import TopUserCard from "./top-user-card";
 
 interface CardCollectionProps {
   title?: string;
   items: any[];
   cardType: string;
+  renderCard?: (item: any, idx: number) => React.ReactNode;
 }
 
 const CARD_WIDTH = 320 + 40; // ширина карточки + gap
@@ -21,6 +24,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
   title = "Популярне зараз",
   items,
   cardType = "anime",
+  renderCard,
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activePage, setActivePage] = useState(0);
@@ -31,19 +35,32 @@ const CardCollection: React.FC<CardCollectionProps> = ({
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 640);
-      const perPage =
-        window.innerWidth < 640 ? ITEMS_PER_PAGE_SM : ITEMS_PER_PAGE;
+      let perPage;
+      if (window.innerWidth < 640 && cardType === "top-user") {
+        perPage = 5;
+      } else if (window.innerWidth < 640) {
+        perPage = ITEMS_PER_PAGE_SM;
+      } else {
+        perPage = ITEMS_PER_PAGE;
+      }
       setPagesCount(Math.ceil(items.length / perPage));
     };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [items.length]);
+  }, [items.length, cardType]);
 
   // Скролимо до сторінки
   const scrollToPage = (pageIdx: number) => {
     if (scrollRef.current) {
-      const perPage = isMobile ? ITEMS_PER_PAGE_SM : ITEMS_PER_PAGE;
+      let perPage;
+      if (isMobile && cardType === "top-user") {
+        perPage = 5;
+      } else if (isMobile) {
+        perPage = ITEMS_PER_PAGE_SM;
+      } else {
+        perPage = ITEMS_PER_PAGE;
+      }
       const cardWidth = isMobile ? CARD_WIDTH_SM : CARD_WIDTH;
       const scrollAmount = pageIdx * cardWidth * perPage;
       scrollRef.current.scrollTo({ left: scrollAmount, behavior: "smooth" });
@@ -92,42 +109,33 @@ const CardCollection: React.FC<CardCollectionProps> = ({
           {/* Пагінація справа на рівні з заголовком */}
           {!isMobile && (
             <div
-              className="flex items-center border border-[#918C8C80] rounded-2xl px-4 py-2 xs:px-2 xs:py-1 bg-black/80 ml-4"
-              style={{ minWidth: isMobile ? 100 : 180 }}
+              className="flex items-center border border-[#918C8C80] rounded-xl px-2 py-1 bg-black/80 ml-2"
+              style={{ minWidth: 100 }}
             >
               <button
                 aria-label="Scroll left"
                 onClick={() => scroll("left")}
                 disabled={activePage === 0}
-                className="w-12 h-12 xs:w-8 xs:h-8 flex items-center justify-center rounded-xl bg-[#19191c] transition-all text-white text-2xl xs:text-base disabled:opacity-40"
+                className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#19191c] transition-all text-white text-lg disabled:opacity-40"
               >
-                <svg
-                  width={isMobile ? 16 : 24}
-                  height={isMobile ? 16 : 24}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
+                <svg width={18} height={18} fill="none" viewBox="0 0 24 24">
                   <path
                     d="M15 19l-7-7 7-7"
                     stroke="#fff"
-                    strokeWidth="2.2"
+                    strokeWidth="1.7"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </svg>
               </button>
-              <div className="flex items-center gap-2 mx-4 xs:mx-2">
+              <div className="flex items-center gap-2 mx-2">
                 {Array.from({ length: pagesCount }).map((_, idx) => (
                   <span
                     key={idx}
-                    className={`h-1.5 xs:h-1 rounded-full transition-all duration-200 cursor-pointer ${
+                    className={`h-1 rounded-full transition-all duration-200 cursor-pointer ${
                       activePage === idx
-                        ? isMobile
-                          ? "w-4 bg-blue-500"
-                          : "w-7 bg-blue-500"
-                        : isMobile
-                        ? "w-2 bg-[#23232a]"
-                        : "w-5 bg-[#23232a]"
+                        ? "w-6 bg-blue-500"
+                        : "w-4 bg-[#23232a]"
                     }`}
                     style={{ display: "inline-block" }}
                     onClick={() => scrollToPage(idx)}
@@ -138,18 +146,13 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                 aria-label="Scroll right"
                 onClick={() => scroll("right")}
                 disabled={activePage === pagesCount - 1}
-                className="w-12 h-12 xs:w-8 xs:h-8 flex items-center justify-center rounded-xl bg-[#19191c] transition-all text-white text-2xl xs:text-base disabled:opacity-40"
+                className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#19191c] transition-all text-white text-lg disabled:opacity-40"
               >
-                <svg
-                  width={isMobile ? 16 : 24}
-                  height={isMobile ? 16 : 24}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
+                <svg width={18} height={18} fill="none" viewBox="0 0 24 24">
                   <path
                     d="M9 5l7 7-7 7"
                     stroke="#fff"
-                    strokeWidth="2.2"
+                    strokeWidth="1.7"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
@@ -199,34 +202,69 @@ const CardCollection: React.FC<CardCollectionProps> = ({
         </div>
         {/* Грід для мобільних */}
         {isMobile ? (
-          <div className="grid grid-cols-2 gap-4 px-2" ref={gridRef}>
+          <div
+            className={
+              cardType === "top-user"
+                ? "grid grid-cols-1 gap-2 px-2 justify-center"
+                : "grid grid-cols-2 gap-2 px-2"
+            }
+            ref={gridRef}
+          >
             {items
-              .slice(activePage * 2, activePage * 2 + 2)
-              .map((anime, idx) => (
-                <div key={anime.title + idx} className="w-full">
-                  {cardType === "anime" && <AnimeCard {...anime} />}
-                  {cardType === "voice-actor" && <VoiceActorCard {...anime} />}
+              .slice(
+                isMobile && cardType === "top-user"
+                  ? activePage * 5
+                  : activePage * 2,
+                isMobile && cardType === "top-user"
+                  ? activePage * 5 + 5
+                  : activePage * 2 + 2
+              )
+              .map((item, idx) => (
+                <div
+                  key={item.title ? item.title + idx : idx}
+                  className="w-full"
+                >
+                  {renderCard ? (
+                    renderCard(item, idx + activePage * 2)
+                  ) : cardType === "anime" ? (
+                    <AnimeCard {...item} />
+                  ) : cardType === "voice-actor" ? (
+                    <VoiceActorCard {...item} />
+                  ) : cardType === "comment" ? (
+                    <CommentCard {...item} />
+                  ) : cardType === "top-user" ? (
+                    <TopUserCard {...item} />
+                  ) : null}
                 </div>
               ))}
           </div>
         ) : (
           <motion.div
             ref={scrollRef}
-            className="flex gap-10 xs:gap-4 overflow-x-auto scrollbar-hide px-2 pb-2 pt-1"
+            className="flex gap-2 xs:gap-4 overflow-x-auto scrollbar-hide px-2 pb-2 pt-1"
             style={{
               scrollBehavior: "smooth",
               maxWidth: "1400px",
               margin: "0 auto",
             }}
           >
-            {items.map((anime, idx) => (
+            {items.map((item, idx) => (
               <div
-                key={anime.title + idx}
+                key={item.title ? item.title + idx : idx}
                 className="flex-shrink-0"
                 style={{ width: isMobile ? 220 : 320 }}
               >
-                {cardType === "anime" && <AnimeCard {...anime} />}
-                {cardType === "voice-actor" && <VoiceActorCard {...anime} />}
+                {renderCard ? (
+                  renderCard(item, idx)
+                ) : cardType === "anime" ? (
+                  <AnimeCard {...item} />
+                ) : cardType === "voice-actor" ? (
+                  <VoiceActorCard {...item} />
+                ) : cardType === "comment" ? (
+                  <CommentCard {...item} />
+                ) : cardType === "top-user" ? (
+                  <TopUserCard {...item} />
+                ) : null}
               </div>
             ))}
           </motion.div>

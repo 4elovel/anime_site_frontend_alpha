@@ -49,7 +49,7 @@ export default function PasswordResetForm({
         >
           <span className="block w-full whitespace-pre-line">
             На ваш <span className="text-blue-500">E-mail</span> буде
-            відправлена силка для відновлення паролю
+            відправлена посилання для відновлення паролю
           </span>
         </div>
         <CardContent className="p-3">

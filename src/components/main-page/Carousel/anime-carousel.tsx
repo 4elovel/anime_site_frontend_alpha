@@ -50,9 +50,22 @@ const slides: Slide[] = [
   },
 ];
 
+// Хук для визначення ширини вікна
+function useWindowWidth() {
+  const [width, setWidth] = useState(1200); // Значення за замовчуванням
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  return width;
+}
+
 const AnimeCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalSlides = slides.length;
+  const width = useWindowWidth();
 
   // Автоматичне перелистывание
   useEffect(() => {
@@ -97,14 +110,13 @@ const AnimeCarousel = () => {
           if (Math.abs(relativeIndex) > 2) return null;
 
           // Зміщення та масштаб
-          const offsetX =
-            window.innerWidth < 640 ? 90 : window.innerWidth < 900 ? 140 : 220;
+          const offsetX = width < 640 ? 90 : width < 900 ? 140 : 220;
           let translateX = relativeIndex * offsetX;
           let scale = 1;
           if (relativeIndex === -2 || relativeIndex === 2)
-            scale = window.innerWidth < 640 ? 0.7 : 0.78;
+            scale = width < 640 ? 0.7 : 0.78;
           if (relativeIndex === -1 || relativeIndex === 1)
-            scale = window.innerWidth < 640 ? 0.82 : 0.9;
+            scale = width < 640 ? 0.82 : 0.9;
           if (relativeIndex === 0) scale = 1;
 
           let zIndex = 10 - Math.abs(relativeIndex);
@@ -122,6 +134,14 @@ const AnimeCarousel = () => {
                 <div
                   className="absolute inset-0 bg-cover bg-center"
                   style={{ backgroundImage: `url(${slide.image})` }}
+                />
+                {/* Градієнт для затемнення низу */}
+                <div
+                  className="pointer-events-none absolute left-0 right-0 bottom-0 h-1/2"
+                  style={{
+                    background:
+                      "linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0) 100%)",
+                  }}
                 />
                 {relativeIndex === 0 && (
                   <motion.div

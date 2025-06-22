@@ -11,6 +11,13 @@ export interface AnimeCardProps {
   duration: string;
 }
 
+function getSeasonWord(n: number) {
+  if (n % 10 === 1 && n % 100 !== 11) return "Сезон";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "Сезони";
+  return "Сезонів";
+}
+
 export const AnimeCard: React.FC<AnimeCardProps> = ({
   image,
   title,
@@ -23,7 +30,7 @@ export const AnimeCard: React.FC<AnimeCardProps> = ({
     <motion.div
       whileHover={{ scale: 1.04, boxShadow: "0 8px 32px 0 rgba(0,0,0,0.25)" }}
       transition={{ type: "spring", stiffness: 200, damping: 22 }}
-      className="bg-black rounded-3xl p-4 sm:p-3 xs:p-2 w-full max-w-xs mx-auto flex flex-col items-center shadow-xl min-w-[220px] xs:min-w-[180px]"
+      className="bg-black rounded-3xl p-4 sm:p-3 xs:p-1 w-full max-w-full min-w-0 mx-auto flex flex-col items-center shadow-xl overflow-hidden"
       style={{ minWidth: 0 }}
     >
       <div className="w-full aspect-[3/4] rounded-2xl overflow-hidden mb-4 xs:mb-2">
@@ -36,73 +43,52 @@ export const AnimeCard: React.FC<AnimeCardProps> = ({
           priority
         />
       </div>
-      <h2 className="text-white text-2xl sm:text-xl xs:text-lg font-bold w-full text-left mb-3 xs:mb-2 leading-tight truncate">
+      <h2 className="text-white text-sm sm:text-xl font-bold w-full text-left mb-3 xs:mb-1 leading-tight truncate xs:truncate">
         {title}
       </h2>
-      <div className="flex items-center w-full mb-4 xs:mb-2">
-        <span className="bg-[#4B7FCC] text-white text-sm font-semibold rounded-lg px-3 py-1 flex items-center mr-3 min-w-[48px] h-8 xs:h-7 xs:px-2 xs:text-xs">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="mr-1 xs:w-4 xs:h-4"
-          >
-            <path
-              d="M5 1V17M13 1V17M1 5H5M1 13H5M1 9H17M13 5H17M13 13H17M1 3C1 2.46957 1.21071 1.96086 1.58579 1.58579C1.96086 1.21071 2.46957 1 3 1H15C15.5304 1 16.0391 1.21071 16.4142 1.58579C16.7893 1.96086 17 2.46957 17 3V15C17 15.5304 16.7893 16.0391 16.4142 16.4142C16.0391 16.7893 15.5304 17 15 17H3C2.46957 17 1.96086 16.7893 1.58579 16.4142C1.21071 16.0391 1 15.5304 1 15V3Z"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+      <div className="flex items-center w-full mb-4 xs:mb-1">
+        <span className="bg-[#4B7FCC] text-white text-sm font-semibold rounded-lg px-3 py-1 flex items-center mr-3 min-w-[48px] h-8 xs:h-5 xs:px-0.5 xs:text-[11px]">
           IMDb
         </span>
-        <span className="text-[#918C8C] text-sm font-semibold mr-1 xs:text-xs">
+        <span className="text-[#918C8C] text-xs font-semibold mr-1 sm:text-sm">
           {imdbRating}
         </span>
-        <span className="text-[#918C8C] text-sm xs:text-xs">({imdbVotes})</span>
+        <span className="text-[#918C8C] text-xs sm:text-sm">({imdbVotes})</span>
       </div>
-      <div className="flex w-full justify-between mt-auto gap-2 xs:gap-1">
-        <div className="flex items-center border border-[#918C8C80] rounded-xl px-3 py-2 xs:px-2 xs:py-1">
+      <div className="flex w-full justify-between mt-auto gap-1 sm:gap-2">
+        <div className="flex items-center border border-[#918C8C80] rounded-xl px-2 py-1 sm:px-3 sm:py-2">
           <svg
-            width="20"
-            height="20"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="mr-2 xs:w-4 xs:h-4"
-          >
-            <path
-              d="M14.5 13.5V5.41a1 1 0 0 0-.3-.7L9.8.29A1 1 0 0 0 9.08 0H1.5v13.5A2.5 2.5 0 0 0 4 16h8a2.5 2.5 0 0 0 2.5-2.5m-1.5 0v-7H8v-5H3v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1M9.5 5V2.12L12.38 5zM5.13 5h-.62v1.25h2.12V5zm-.62 3h7.12v1.25H4.5zm.62 3h-.62v1.25h7.12V11z"
-              clipRule="evenodd"
-              fill="#fff"
-              fillRule="evenodd"
-            />
-          </svg>
-          <span className="text-[#918C8C] text-sm font-medium xs:text-xs">
-            {seasons} Сезон
-          </span>
-        </div>
-        <div className="flex items-center border border-[#918C8C80] rounded-xl px-3 py-2 ml-2 xs:px-2 xs:py-1 xs:ml-1">
-          <svg
-            width="20"
-            height="20"
+            width="21"
+            height="21"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="mr-2 xs:w-4 xs:h-4"
+            className="mr-2"
           >
             <path
-              d="M12 7V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
-              stroke="#fff"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              d="M18.6252 1.73536H11.3179C11.0959 1.73604 10.8788 1.67078 10.694 1.54786L9.39083 0.67645C8.95931 0.387894 8.45165 0.234341 7.93255 0.235357H4.3752C3.67924 0.236101 3.01199 0.512902 2.51987 1.00502C2.02775 1.49715 1.75095 2.16439 1.7502 2.86036V3.98536H21.2502C21.2502 2.53786 20.0727 1.73536 18.6252 1.73536ZM19.3635 18.2354H3.63692C2.94814 18.2346 2.28727 17.9631 1.79682 17.4795C1.30638 16.9959 1.02566 16.3389 1.0152 15.6502L0.258639 7.92801V7.91489C0.233864 7.60538 0.273417 7.29409 0.37481 7.00062C0.476203 6.70714 0.637241 6.43783 0.84779 6.20962C1.05834 5.98142 1.31384 5.79926 1.59822 5.67461C1.8826 5.54997 2.1897 5.48553 2.5002 5.48536H20.5049C20.8153 5.48566 21.1223 5.55019 21.4066 5.6749C21.6908 5.7996 21.9462 5.98178 22.1567 6.20997C22.3671 6.43816 22.5281 6.70743 22.6294 7.00084C22.7308 7.29425 22.7703 7.60546 22.7455 7.91489V7.92801L21.9852 15.6502C21.9747 16.3389 21.694 16.9959 21.2036 17.4795C20.7131 17.9631 20.0523 18.2346 19.3635 18.2354Z"
+              fill="#918C8C"
             />
           </svg>
-          <span className="text-[#918C8C] text-sm font-medium xs:text-xs">
+          <span className="text-[#918C8C] text-xs sm:text-sm font-medium">
+            {seasons} {getSeasonWord(seasons)}
+          </span>
+        </div>
+        <div className="flex items-center border border-[#918C8C80] rounded-xl px-3 py-2 ml-2 xs:px-1 xs:py-0.5 xs:ml-1">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="mr-2 xs:w-2 xs:h-2"
+          >
+            <path
+              d="M10.3335 0.246094C15.8565 0.246094 20.3335 4.72309 20.3335 10.2461C20.3335 15.7691 15.8565 20.2461 10.3335 20.2461C4.8105 20.2461 0.333496 15.7691 0.333496 10.2461C0.333496 4.72309 4.8105 0.246094 10.3335 0.246094ZM10.3335 4.24609C10.0683 4.24609 9.81393 4.35145 9.62639 4.53899C9.43885 4.72652 9.3335 4.98088 9.3335 5.24609V10.2461C9.33355 10.5113 9.43895 10.7656 9.6265 10.9531L12.6265 13.9531C12.8151 14.1353 13.0677 14.236 13.3299 14.2338C13.5921 14.2315 13.8429 14.1263 14.0283 13.9409C14.2137 13.7555 14.3189 13.5047 14.3212 13.2425C14.3234 12.9803 14.2227 12.7277 14.0405 12.5391L11.3335 9.83209V5.24609C11.3335 4.98088 11.2281 4.72652 11.0406 4.53899C10.8531 4.35145 10.5987 4.24609 10.3335 4.24609Z"
+              fill="#918C8C"
+            />
+          </svg>
+          <span className="text-[#918C8C] text-xs sm:text-sm font-medium">
             {duration}
           </span>
         </div>

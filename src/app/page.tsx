@@ -2,10 +2,12 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 import Navbar from "@/components/nav/navbar";
-import AnimeCarousel from "@/components/main-page/anime-carousel";
+import AnimeCarousel from "@/components/main-page/Carousel/anime-carousel";
 import CardCollection from "@/components/main-page/card-collection";
-import TopAnimeList from "@/components/main-page/top-anime-list";
-
+import TopAnimeList from "@/components/main-page/TopAnimeList/top-anime-list";
+import CommentCollection from "@/components/main-page/comment-collection";
+import TopUserList from "@/components/main-page/top-user-list";
+// TODO: API HOOKS
 const popularAnime = [
   {
     image: "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
@@ -64,7 +66,7 @@ const popularAnime = [
     duration: "1 год. 46 хв",
   },
 ];
-
+// TODO: API HOOKS
 const topAnime = [
   {
     image: "https://cdn.myanimelist.net/images/anime/101/135567.jpg",
@@ -137,6 +139,111 @@ const topAnime = [
     rating: 8.93,
   },
 ];
+// TODO: API HOOKS
+const comments = [
+  {
+    avatarUrl: "/assets/mock-user-logo.png",
+    username: "demchik",
+    timeAgo: "1 год назад",
+    text: "Краще б я не знала про цю адаптацію... вона дуже слабка....щось...",
+    tag: "Аніме",
+    animeTitle: "Початок після кінця",
+    animeUrl: "#",
+  },
+  {
+    avatarUrl: "/assets/mock-user-logo.png",
+    username: "Ispa_Ian",
+    timeAgo: "5 год назад",
+    text: "Це просто прекрасне аніме. Тепер я розумію звідки в нього така фан база...",
+    tag: "Аніме",
+    animeTitle: "Химерні пригоди ДжоДжо",
+    animeUrl: "#",
+  },
+  {
+    avatarUrl: "/assets/mock-user-logo.png",
+    username: "DarTash",
+    timeAgo: "13 год назад",
+    text: "Подивились одну серію — подивились увесь серіал.",
+    tag: "Аніме",
+    animeTitle: "Я — Сакамотто, е, втямили?",
+    animeUrl: "#",
+  },
+  {
+    avatarUrl: "/assets/mock-user-logo.png",
+    username: "copok",
+    timeAgo: "3 год назад",
+    text: "Нудненьке, але принаймні краще за 'подарунок' від творців Кастлванії: Н...",
+    tag: "Аніме",
+    animeTitle: "Диявол теж плаче",
+    animeUrl: "#",
+  },
+  {
+    avatarUrl: "/assets/mock-user-logo.png",
+    username: "Anonimka",
+    timeAgo: "4 год назад",
+    text: "Тепер я хочу поїхати в Тайвань і працювати в похоронному бюро🥲",
+    tag: "Аніме",
+    animeTitle: "Траурний концерт",
+    animeUrl: "#",
+  },
+];
+// TODO: API HOOKS
+const topUsers = [
+  {
+    rank: 1,
+    avatarUrl: "/assets/mock-user-logo.png",
+    username: "demchik",
+    registration: "13.03.2022",
+    stars: "9.1к",
+    comments: "5к",
+    folders: "13к",
+  },
+  {
+    rank: 2,
+    avatarUrl: "/assets/mock-user-logo.png",
+    username: "Ispa_Ian",
+    registration: "23.05.2022",
+    stars: "6к",
+    comments: "1.2к",
+    folders: "9.9к",
+  },
+  {
+    rank: 3,
+    avatarUrl: "/assets/mock-user-logo.png",
+    username: "copok",
+    registration: "15.01.2023",
+    stars: "3к",
+    comments: "2.2к",
+    folders: "8.7к",
+  },
+  {
+    rank: 4,
+    avatarUrl: "/assets/mock-user-logo.png",
+    username: "copok",
+    registration: "15.01.2023",
+    stars: "3к",
+    comments: "2.2к",
+    folders: "8.7к",
+  },
+  {
+    rank: 5,
+    avatarUrl: "/assets/mock-user-logo.png",
+    username: "copok",
+    registration: "15.01.2023",
+    stars: "3к",
+    comments: "2.2к",
+    folders: "8.7к",
+  },
+  {
+    rank: 6,
+    avatarUrl: "/assets/mock-user-logo.png",
+    username: "copok",
+    registration: "15.01.2023",
+    stars: "3к",
+    comments: "2.2к",
+    folders: "8.7к",
+  },
+];
 
 export default function Home() {
   return (
@@ -144,6 +251,10 @@ export default function Home() {
       <Navbar />
       <AnimeCarousel />
       <TopAnimeList items={topAnime} />
+
+      <TopUserList users={topUsers} />
+
+      <CommentCollection comments={comments} />
 
       <CardCollection
         title="Популярне зараз"
