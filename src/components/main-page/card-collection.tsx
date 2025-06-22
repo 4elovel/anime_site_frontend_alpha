@@ -180,7 +180,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                 aria-label="Scroll left"
                 onClick={() => setActivePage((p) => Math.max(0, p - 1))}
                 disabled={activePage === 0}
-                className="w-10 h-10 flex items-center justify-center rounded-xl border border-[#444] bg-black/80 text-white text-xl disabled:opacity-40"
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#1A1A1D] text-white text-xl disabled:opacity-40"
               >
                 <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
                   <path
@@ -198,7 +198,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                   setActivePage((p) => Math.min(p + 1, pagesCount - 1))
                 }
                 disabled={activePage === pagesCount - 1}
-                className="w-10 h-10 flex items-center justify-center rounded-xl border border-[#444] bg-black/80 text-white text-xl disabled:opacity-40"
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#1A1A1D] text-white text-xl disabled:opacity-40"
               >
                 <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
                   <path
@@ -263,6 +263,8 @@ const CardCollection: React.FC<CardCollectionProps> = ({
               scrollBehavior: "smooth",
               maxWidth: "1400px",
               margin: "0 auto",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
             }}
           >
             {items.map((item, idx) => (
