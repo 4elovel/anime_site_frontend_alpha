@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+
+@tailwind base; /* injects base styles (normalize) */
+@tailwind components; /* injects component classes */
 @tailwind utilities; /* injects utility classes */
 
 @custom-variant dark (&:is(.dark *));
@@ -15,32 +18,6 @@
       rgba(0, 0, 0, 0) 100%
     ),
     #000;
-}
-
-.bg-diagonal-stripes {
-  background:
-    linear-gradient(
-      45deg,
-      transparent 35%,
-      rgba(73, 99, 138, 0.1) 35%,
-      rgba(73, 99, 138, 0.1) 65%,
-      transparent 65%
-    ),
-    linear-gradient(
-      -45deg,
-      transparent 35%,
-      rgba(73, 99, 138, 0.05) 35%,
-      rgba(73, 99, 138, 0.05) 65%,
-      transparent 65%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(73, 99, 138, 0.2) 0%,
-      rgba(30, 41, 59, 0.8) 50%,
-      #000 100%
-    );
-  background-size: 60px 60px, 60px 60px, 100% 100%;
-  background-position: 0 0, 30px 30px, 0 0;
 }
 
 /*  background: linear-gradient(180deg, rgba(73, 99, 138, 0.35) -15%, rgba(0, 0, 0, 0) 100%), #000; */

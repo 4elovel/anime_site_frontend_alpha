@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 import Navbar from "@/components/nav/navbar";
-import AnimeCarousel from "@/components/anime-carousel";
-import CardCollection from "@/components/card-collection";
-import TopAnimeList from "@/components/top-anime-list";
+import AnimeCarousel from "@/components/main-page/anime-carousel";
+import CardCollection from "@/components/main-page/card-collection";
+import TopAnimeList from "@/components/main-page/top-anime-list";
 
 const popularAnime = [
   {
@@ -169,3 +169,22 @@ export default function Home() {
     </div>
   );
 }
+
+//  <Navbar />
+//       <Button>Test</Button>
+//       <Link href="/signin">
+//         <Button>Sign In</Button>
+//       </Link>
+//       <Link href="/signin"></Link>
+
+//       <Link href="/anime">
+//         <Button>anime</Button>
+//       </Link>
+//       <Link href="/characters/blanche-considine">
+//         <Button>character</Button>
+//       </Link>
+
+//       <Link href="/signup">
+//         <Button>Sign Up</Button>
+//       </Link>
+//     </div>

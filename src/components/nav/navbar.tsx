@@ -1,6 +1,5 @@
 "use client";
 
-import UserProfilePopover from "@/components/nav/user-profile-popover";
 import { motion } from "framer-motion";
 import Image from "next/image";
 

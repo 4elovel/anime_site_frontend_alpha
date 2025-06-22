@@ -1,14 +1,16 @@
 import { API_BASE_URL } from "@/config";
 import React from "react";
 import ImdbRating from "@/assets/anime/imdb-rating.svg";
-import SectionHeader from "@/components/section-header";
+import SectionHeader from "@/components/shared/section-header";
 import ActionButton from "@/components/ui/action-button";
-import { Play } from "lucide-react";
+import { Play, Share2Icon } from "lucide-react";
 import ArrowDown from "@/assets/arrow-down.svg";
 import WatchTogether from "@/assets/watch-together.svg";
 import Rating from "@/components/ui/rating";
 import { EllipsisVertical } from "lucide-react";
 import MoreIcon from "@/assets/three-vertical-dots.svg";
+import ShareIcon from "@/assets/share.svg";
+import StandartButtonIcon from "@/components/ui/standart-button-icon";
 
 interface Studio {
   id: string;
@@ -162,8 +164,16 @@ export default async function AnimePage({
               colorClass="bg-[#D06005] text-white hover:bg-[#c25903]"
               className="w-full"
             />
-            <MoreIcon height={22} width={22} />
+            <StandartButtonIcon
+              className="w-23"
+              icon={<Share2Icon color="white" size={22} />}
+            />
+            <StandartButtonIcon icon={<MoreIcon size={22} />} />
           </div>
+          {/* <button className="flex items-center justify-center w-12 h-12 rounded-xl border border-transparent bg-transparent hover:bg-[#223c5e] transition-colors">
+            <MoreIcon></MoreIcon>
+          </button> */}
+
           <SectionHeader title="Опис" badge="UA" className="mb-2" />
           <div className="text-zinc-200 text-base leading-relaxed whitespace-pre-line">
             {anime.description || anime.seo?.description || "Опис недоступний."}
