@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 interface Slide {
   id: number;
@@ -106,7 +107,7 @@ const AnimeCarousel = () => {
   const offsetX = isMobile ? 60 : isTablet ? 100 : 150;
 
   return (
-    <div className="w-full min-h-[250px] sm:min-h-[300px] lg:min-h-[350px] flex items-center justify-center overflow-hidden relativepy-8">
+    <div className="w-full select-none min-h-[250px] sm:min-h-[300px] lg:min-h-[350px] flex items-center justify-center overflow-hidden relativepy-8">
       {/* Контейнер карусели */}
       <div
         className="relative flex items-center justify-center"
@@ -167,19 +168,23 @@ const AnimeCarousel = () => {
               }}
             >
               <div
-                className="relative overflow-hidden rounded-xl shadow-2xl"
-                style={{
-                  width: slideWidth,
-                  height: slideHeight,
-                }}
+                className={`
+                  relative overflow-hidden rounded-xl shadow-md
+                  w-[220px] h-[130px]
+                  sm:w-[350px] sm:h-[200px]
+                  md:w-[500px] md:h-[300px]
+                  lg:w-[660px] lg:h-[400px]
+                `}
               >
-                <img
+                <Image
                   src={slide.image}
                   alt={slide.title}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 220px, (max-width: 1024px) 350px, (max-width: 1280px) 500px, 660px"
+                  priority={relativeIndex === 0}
+                  quality={70}
                 />
-
                 {/* Градієнт для затемнення */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 

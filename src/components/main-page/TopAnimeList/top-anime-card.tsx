@@ -42,6 +42,7 @@ const TopAnimeCard: FC<TopAnimeCardProps> = ({
           fill
           className="object-cover rounded-2xl"
           sizes="260px"
+          priority
         />
       </div>
 

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface TopUserCardProps {
   rank: number;
@@ -48,10 +49,13 @@ const TopUserCard: React.FC<TopUserCardProps> = ({
 
       {/* Avatar */}
       <div className="w-24 h-24 xs:w-16 xs:h-16 rounded-full overflow-hidden flex-shrink-0">
-        <img
+        <Image
           src={avatarUrl}
           alt={username}
+          width={96}
+          height={96}
           className="w-full h-full object-cover"
+          priority
         />
       </div>
 
