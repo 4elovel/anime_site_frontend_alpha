@@ -206,9 +206,9 @@ const AnimeCarousel = () => {
                         <path
                           d="M19 12L5 12M5 12L9 8M5 12L9 16"
                           stroke="white"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     </button>
@@ -229,12 +229,42 @@ const AnimeCarousel = () => {
                         <path
                           d="M19 12L5 12M5 12L9 8M5 12L9 16"
                           stroke="white"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     </button>
+                    {/* Текст */}
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 p-4 text-white z-20"
+                      initial={{ y: 30, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.2, duration: 0.5 }}
+                    >
+                      <h2
+                        className={`font-bold leading-tight mb-2 ${
+                          isMobile
+                            ? "text-sm"
+                            : isTablet
+                            ? "text-base"
+                            : "text-lg"
+                        }`}
+                      >
+                        {slide.title}
+                      </h2>
+                      <p
+                        className={`text-gray-300 leading-relaxed ${
+                          isMobile
+                            ? "text-xs line-clamp-2"
+                            : isTablet
+                            ? "text-sm line-clamp-3"
+                            : "text-sm line-clamp-3"
+                        }`}
+                      >
+                        {slide.description}
+                      </p>
+                    </motion.div>
                   </>
                 )}
               </div>

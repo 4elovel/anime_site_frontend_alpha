@@ -246,19 +246,33 @@ const topUsers = [
   },
 ];
 
-// TODO: API HOOKS 
+// TODO: API HOOKS
 const continueWatchingItems = [
   {
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
     title: "Пожирач душ",
     episode: "E46",
     year: 2008,
     currentTime: "5:34",
     totalTime: "24:20",
     progress: 334 / 1460, // 5*60+34 / 24*60+20
+    link: "/anime/pozhyrach-dush/episode/46",
   },
   {
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    title: "Дні Сакамоото",
+    episode: "E5",
+    year: 2025,
+    currentTime: "15:10",
+    totalTime: "24:00",
+    progress: 910 / 1440, // 15*60+10 / 24*60
+    link: "/anime/dni-sakamoto/episode/5",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
     title: "Дні Сакамоото",
     episode: "E5",
     year: 2025,
@@ -267,7 +281,8 @@ const continueWatchingItems = [
     progress: 910 / 1440, // 15*60+10 / 24*60
   },
   {
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
     title: "Дні Сакамоото",
     episode: "E5",
     year: 2025,
@@ -276,7 +291,8 @@ const continueWatchingItems = [
     progress: 910 / 1440, // 15*60+10 / 24*60
   },
   {
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
     title: "Дні Сакамоото",
     episode: "E5",
     year: 2025,
@@ -285,7 +301,8 @@ const continueWatchingItems = [
     progress: 910 / 1440, // 15*60+10 / 24*60
   },
   {
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
     title: "Дні Сакамоото",
     episode: "E5",
     year: 2025,
@@ -293,16 +310,6 @@ const continueWatchingItems = [
     totalTime: "24:00",
     progress: 910 / 1440, // 15*60+10 / 24*60
   },
-  {
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
-    title: "Дні Сакамоото",
-    episode: "E5",
-    year: 2025,
-    currentTime: "15:10",
-    totalTime: "24:00",
-    progress: 910 / 1440, // 15*60+10 / 24*60
-  },
-  
 ];
 
 export default function Home() {
@@ -311,6 +318,15 @@ export default function Home() {
       <Navbar />
 
       <AnimeCarousel />
+
+      <CardCollection
+        title="Продовжуйте дивитись"
+        items={continueWatchingItems}
+        cardType="continue-watching"
+        showButton={true}
+        buttonText="Переглянути весь список"
+        buttonUrl="/continue-watching"
+      />
 
       <CardCollection
         title="Популярне зараз"
@@ -325,15 +341,6 @@ export default function Home() {
       <CardCollection title="Новинки" items={popularAnime} cardType="anime" />
 
       <TopUserList users={topUsers} />
-
-      <CardCollection
-        title="Продовжуйте дивитись"
-        items={continueWatchingItems}
-        cardType="continue-watching"
-        showButton={true}
-        buttonText="Переглянути весь список"
-        buttonUrl="/continue-watching"
-      />
 
       <Button>Test</Button>
       <Link href="/signin">
