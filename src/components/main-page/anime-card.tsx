@@ -28,9 +28,9 @@ export const AnimeCard: React.FC<AnimeCardProps> = ({
 }) => {
   return (
     <motion.div
-      whileHover={{ scale: 1.04, boxShadow: "0 8px 32px 0 rgba(0,0,0,0.25)" }}
+      whileHover={{ scale: 1.04 }}
       transition={{ type: "spring", stiffness: 200, damping: 22 }}
-      className="bg-black rounded-3xl p-4 sm:p-3 xs:p-1 w-full max-w-full min-w-0 mx-auto flex flex-col items-center shadow-xl overflow-hidden"
+      className="p-4 sm:p-3 xs:p-1 w-full max-w-full min-w-0 mx-auto flex flex-col items-center overflow-hidden"
       style={{ minWidth: 0 }}
     >
       <div className="w-full aspect-[3/4] rounded-2xl overflow-hidden mb-4 xs:mb-2">

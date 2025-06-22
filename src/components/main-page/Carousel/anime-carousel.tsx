@@ -125,8 +125,7 @@ const AnimeCarousel = () => {
             relativeIndex += totalSlides;
           }
 
-          // Показуємо максимум 3 слайди на мобільних
-          const maxVisible = isMobile ? 1 : 2;
+          const maxVisible = isMobile ? 2 : 2;
           if (Math.abs(relativeIndex) > maxVisible) return null;
 
           // Розрахунок позиції та масштабу
@@ -147,7 +146,9 @@ const AnimeCarousel = () => {
           return (
             <motion.div
               key={slide.id}
-              className="absolute cursor-pointer"
+              className={`absolute cursor-pointer ${
+                relativeIndex === 0 ? "z-20" : "z-10"
+              }`}
               style={{ zIndex }}
               initial={false}
               animate={{
@@ -168,13 +169,11 @@ const AnimeCarousel = () => {
               }}
             >
               <div
-                className={`
-                  relative overflow-hidden rounded-xl shadow-md
-                  w-[220px] h-[130px]
+                className={`relative overflow-hidden rounded-xl shadow-md
+                  w-[300px] h-[200px]
                   sm:w-[350px] sm:h-[200px]
                   md:w-[500px] md:h-[300px]
-                  lg:w-[660px] lg:h-[400px]
-                `}
+                  lg:w-[850px] lg:h-[400px]`}
               >
                 <Image
                   src={slide.image}
@@ -190,35 +189,53 @@ const AnimeCarousel = () => {
 
                 {/* Контент тільки для активного слайду */}
                 {relativeIndex === 0 && (
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 p-4 text-white"
-                    initial={{ y: 30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                  >
-                    <h2
-                      className={`font-bold leading-tight mb-2 ${
-                        isMobile
-                          ? "text-sm"
-                          : isTablet
-                          ? "text-base"
-                          : "text-lg"
-                      }`}
+                  <>
+                    {/* Left Arrow */}
+                    <button
+                      onClick={prev}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/40 backdrop-blur-lg rounded-2xl flex items-center justify-center z-30 hover:bg-black/50 transition"
+                      aria-label="Попередній слайд"
+                      type="button"
                     >
-                      {slide.title}
-                    </h2>
-                    <p
-                      className={`text-gray-300 leading-relaxed ${
-                        isMobile
-                          ? "text-xs line-clamp-2"
-                          : isTablet
-                          ? "text-sm line-clamp-3"
-                          : "text-sm line-clamp-3"
-                      }`}
+                      <svg
+                        width={18}
+                        height={18}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M19 12L5 12M5 12L9 8M5 12L9 16"
+                          stroke="white"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                    {/* Right Arrow */}
+                    <button
+                      onClick={next}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/40 backdrop-blur-lg rounded-2xl flex items-center justify-center z-30 hover:bg-black/50 transition "
+                      aria-label="Наступний слайд"
+                      type="button"
                     >
-                      {slide.description}
-                    </p>
-                  </motion.div>
+                      <svg
+                        width={18}
+                        height={18}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        className="rotate-180"
+                      >
+                        <path
+                          d="M19 12L5 12M5 12L9 8M5 12L9 16"
+                          stroke="white"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  </>
                 )}
               </div>
             </motion.div>

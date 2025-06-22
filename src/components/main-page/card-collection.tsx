@@ -7,12 +7,16 @@ import VoiceActorCard from "../shared/voice-actor-card";
 import { Anek_Malayalam } from "next/font/google";
 import CommentCard from "./CommentSection/comment-card";
 import TopUserCard from "./top-user-card";
+import ContinueWatchingCard from "./continue-watching-card";
 
 interface CardCollectionProps {
   title?: string;
   items: any[];
   cardType: string;
   renderCard?: (item: any, idx: number) => React.ReactNode;
+  showButton?: boolean;
+  buttonText?: string;
+  buttonUrl?: string;
 }
 
 const CARD_WIDTH = 320 + 40; // ширина карточки + gap
@@ -25,6 +29,9 @@ const CardCollection: React.FC<CardCollectionProps> = ({
   items,
   cardType = "anime",
   renderCard,
+  showButton = false,
+  buttonText = "",
+  buttonUrl = "",
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activePage, setActivePage] = useState(0);
@@ -106,59 +113,68 @@ const CardCollection: React.FC<CardCollectionProps> = ({
           <h2 className="text-white text-4xl sm:text-2xl xs:text-lg font-bold tracking-tight">
             {title}
           </h2>
-          {/* Пагінація справа на рівні з заголовком */}
-          {!isMobile && (
-            <div
-              className="flex items-center border border-[#918C8C80] rounded-xl px-2 py-1 bg-black/80 ml-2"
-              style={{ minWidth: 100 }}
+          {/* Пагінація справа на рівні з заголовком або кнопка */}
+          {!isMobile && showButton && buttonText && buttonUrl ? (
+            <a
+              href={buttonUrl}
+              className="border-2 border-[#4B7FCC] rounded-2xl px-4 py-2 text-white font-semibold transition-colors duration-200 hover:bg-[#4B7FCC] hover:text-black text-base ml-2 h-10 flex items-center"
             >
-              <button
-                aria-label="Scroll left"
-                onClick={() => scroll("left")}
-                disabled={activePage === 0}
-                className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#19191c] transition-all text-white text-lg disabled:opacity-40"
+              {buttonText}
+            </a>
+          ) : (
+            !isMobile && (
+              <div
+                className="flex items-center border border-[#918C8C80] rounded-xl px-2 py-1 bg-black/80 ml-2"
+                style={{ minWidth: 100 }}
               >
-                <svg width={18} height={18} fill="none" viewBox="0 0 24 24">
-                  <path
-                    d="M15 19l-7-7 7-7"
-                    stroke="#fff"
-                    strokeWidth="1.7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-              <div className="flex items-center gap-2 mx-2">
-                {Array.from({ length: pagesCount }).map((_, idx) => (
-                  <span
-                    key={idx}
-                    className={`h-1 rounded-full transition-all duration-200 cursor-pointer ${
-                      activePage === idx
-                        ? "w-6 bg-blue-500"
-                        : "w-4 bg-[#23232a]"
-                    }`}
-                    style={{ display: "inline-block" }}
-                    onClick={() => scrollToPage(idx)}
-                  />
-                ))}
+                <button
+                  aria-label="Scroll left"
+                  onClick={() => scroll("left")}
+                  disabled={activePage === 0}
+                  className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#19191c] transition-all text-white text-lg disabled:opacity-40"
+                >
+                  <svg width={18} height={18} fill="none" viewBox="0 0 24 24">
+                    <path
+                      d="M15 19l-7-7 7-7"
+                      stroke="#fff"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+                <div className="flex items-center gap-2 mx-2">
+                  {Array.from({ length: pagesCount }).map((_, idx) => (
+                    <span
+                      key={idx}
+                      className={`h-1 rounded-full transition-all duration-200 cursor-pointer ${
+                        activePage === idx
+                          ? "w-6 bg-blue-500"
+                          : "w-4 bg-[#23232a]"
+                      }`}
+                      style={{ display: "inline-block" }}
+                      onClick={() => scrollToPage(idx)}
+                    />
+                  ))}
+                </div>
+                <button
+                  aria-label="Scroll right"
+                  onClick={() => scroll("right")}
+                  disabled={activePage === pagesCount - 1}
+                  className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#19191c] transition-all text-white text-lg disabled:opacity-40"
+                >
+                  <svg width={18} height={18} fill="none" viewBox="0 0 24 24">
+                    <path
+                      d="M9 5l7 7-7 7"
+                      stroke="#fff"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
               </div>
-              <button
-                aria-label="Scroll right"
-                onClick={() => scroll("right")}
-                disabled={activePage === pagesCount - 1}
-                className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#19191c] transition-all text-white text-lg disabled:opacity-40"
-              >
-                <svg width={18} height={18} fill="none" viewBox="0 0 24 24">
-                  <path
-                    d="M9 5l7 7-7 7"
-                    stroke="#fff"
-                    strokeWidth="1.7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
+            )
           )}
           {/* Мобільна стрілка справа */}
           {isMobile && (
@@ -234,6 +250,8 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                     <CommentCard {...item} />
                   ) : cardType === "top-user" ? (
                     <TopUserCard {...item} />
+                  ) : cardType === "continue-watching" ? (
+                    <ContinueWatchingCard {...item} />
                   ) : null}
                 </div>
               ))}
@@ -264,6 +282,8 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                   <CommentCard {...item} />
                 ) : cardType === "top-user" ? (
                   <TopUserCard {...item} />
+                ) : cardType === "continue-watching" ? (
+                  <ContinueWatchingCard {...item} />
                 ) : null}
               </div>
             ))}

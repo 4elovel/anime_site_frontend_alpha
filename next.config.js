@@ -7,7 +7,7 @@ const nextConfig = {
                 hostname: "cdn.myanimelist.net",
             },
         ],
-        domains: ['images.unsplash.com'],
+        domains: ['images.unsplash.com', ],
     },
     webpack(config) {
         // Grab the existing rule that handles SVG imports

@@ -7,6 +7,7 @@ import CardCollection from "@/components/main-page/card-collection";
 import TopAnimeList from "@/components/main-page/TopAnimeList/top-anime-list";
 import CommentCollection from "@/components/main-page/comment-collection";
 import TopUserList from "@/components/main-page/top-user-list";
+import ContinueWatchingCard from "../components/main-page/continue-watching-card";
 // TODO: API HOOKS
 const popularAnime = [
   {
@@ -245,22 +246,95 @@ const topUsers = [
   },
 ];
 
+// TODO: API HOOKS 
+const continueWatchingItems = [
+  {
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    title: "Пожирач душ",
+    episode: "E46",
+    year: 2008,
+    currentTime: "5:34",
+    totalTime: "24:20",
+    progress: 334 / 1460, // 5*60+34 / 24*60+20
+  },
+  {
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    title: "Дні Сакамоото",
+    episode: "E5",
+    year: 2025,
+    currentTime: "15:10",
+    totalTime: "24:00",
+    progress: 910 / 1440, // 15*60+10 / 24*60
+  },
+  {
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    title: "Дні Сакамоото",
+    episode: "E5",
+    year: 2025,
+    currentTime: "15:10",
+    totalTime: "24:00",
+    progress: 910 / 1440, // 15*60+10 / 24*60
+  },
+  {
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    title: "Дні Сакамоото",
+    episode: "E5",
+    year: 2025,
+    currentTime: "15:10",
+    totalTime: "24:00",
+    progress: 910 / 1440, // 15*60+10 / 24*60
+  },
+  {
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    title: "Дні Сакамоото",
+    episode: "E5",
+    year: 2025,
+    currentTime: "15:10",
+    totalTime: "24:00",
+    progress: 910 / 1440, // 15*60+10 / 24*60
+  },
+  {
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop",
+    title: "Дні Сакамоото",
+    episode: "E5",
+    year: 2025,
+    currentTime: "15:10",
+    totalTime: "24:00",
+    progress: 910 / 1440, // 15*60+10 / 24*60
+  },
+  
+];
+
 export default function Home() {
   return (
     <div className="p-0 m-0 font-[family-name:var(--font-geist-sans)]">
       <Navbar />
+
       <AnimeCarousel />
-      <TopAnimeList items={topAnime} />
-
-      <TopUserList users={topUsers} />
-
-      <CommentCollection comments={comments} />
 
       <CardCollection
         title="Популярне зараз"
         items={popularAnime}
         cardType="anime"
       />
+
+      <TopAnimeList items={topAnime} />
+
+      <CommentCollection comments={comments} />
+
+      <CardCollection title="Новинки" items={popularAnime} cardType="anime" />
+
+      <TopUserList users={topUsers} />
+
+      <CardCollection
+        title="Продовжуйте дивитись"
+        items={continueWatchingItems}
+        cardType="continue-watching"
+        showButton={true}
+        buttonText="Переглянути весь список"
+        buttonUrl="/continue-watching"
+      />
+
       <Button>Test</Button>
       <Link href="/signin">
         <Button>Sign In</Button>
