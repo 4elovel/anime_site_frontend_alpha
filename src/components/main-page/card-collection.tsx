@@ -59,6 +59,13 @@ const CardCollection: React.FC<CardCollectionProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, [items.length, cardType]);
 
+  useEffect(() => {
+    if (cardType === "top-user" && scrollRef.current) {
+      scrollRef.current.scrollLeft = 0;
+      setActivePage(0);
+    }
+  }, [items, cardType]);
+
   const scrollToPage = (pageIdx: number) => {
     if (scrollRef.current) {
       let perPage;
@@ -381,9 +388,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
         ) : (
           <motion.div
             ref={scrollRef}
-            className={`flex gap-2 xs:gap-4 overflow-x-auto scrollbar-hide px-2 pb-2 pt-1${
-              cardType === "top-user" ? " justify-center" : ""
-            }`}
+            className={`flex gap-2 xs:gap-4 overflow-x-auto scrollbar-hide px-2 pb-2 pt-1`}
             style={{
               scrollBehavior: "smooth",
               maxWidth: "1400px",
