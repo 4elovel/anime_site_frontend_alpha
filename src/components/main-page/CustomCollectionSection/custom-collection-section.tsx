@@ -135,7 +135,7 @@ const CustomCollectionSection: React.FC<CustomCollectionCardProps> = ({
           </div>
         )}
       </div>
-      <div className="flex flex-col items-start mb-2 sm:flex-row sm:items-center">
+      <div className="flex flex-col items-start mb-4 sm:flex-row sm:items-center">
         <img
           src={userAvatar}
           alt={userName}

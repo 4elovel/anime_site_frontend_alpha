@@ -522,6 +522,10 @@ export default function Home() {
         ))}
       </section>
 
+      <section className="py-10">
+        <CustomCollectionSection items={collectionItems} />
+      </section>
+
       <CardCollection
         title="Топ онґоінґи"
         items={popularAnime}
@@ -696,10 +700,6 @@ export default function Home() {
       <Link href="/signup">
         <Button>Sign Up</Button>
       </Link>
-
-      <section className="bg-black min-h-screen py-10">
-        <CustomCollectionSection items={collectionItems} />
-      </section>
     </div>
   );
 }
