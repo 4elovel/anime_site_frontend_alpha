@@ -184,7 +184,7 @@ const AnimeCarousel = () => {
                   <>
                     <button
                       onClick={prev}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/40 backdrop-blur-lg rounded-2xl flex items-center justify-center z-30 hover:bg-black/50 transition"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 bg-black/40 backdrop-blur-lg rounded-sm sm:rounded-2xl flex items-center justify-center z-30 hover:bg-black/50 transition"
                       aria-label="Попередній слайд"
                       type="button"
                     >
@@ -206,7 +206,7 @@ const AnimeCarousel = () => {
 
                     <button
                       onClick={next}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/40 backdrop-blur-lg rounded-2xl flex items-center justify-center z-30 hover:bg-black/50 transition "
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 bg-black/40 backdrop-blur-lg rounded-sm sm:rounded-2xl flex items-center justify-center z-30 hover:bg-black/50 transition "
                       aria-label="Наступний слайд"
                       type="button"
                     >
