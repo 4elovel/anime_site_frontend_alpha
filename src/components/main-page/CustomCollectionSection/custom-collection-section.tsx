@@ -159,7 +159,7 @@ const CustomCollectionSection: React.FC<CustomCollectionCardProps> = ({
                   fill="#787880"
                 />
               </svg>
-              <span>{likes}</span>
+              <span>{items.length}</span>
             </div>
             <div className="flex items-center">
               <svg width="16" height="16" viewBox="0 0 20 18" className="mr-2">

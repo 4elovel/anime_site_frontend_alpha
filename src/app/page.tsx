@@ -522,8 +522,30 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="py-10">
-        <CustomCollectionSection items={collectionItems} />
+      <section className="py-10 relative">
+        <h1 className="text-white text-2xl font-bold pl-6.5">
+          Підбірки сайту та користувачів
+        </h1>
+        <CustomCollectionSection
+          title="Підбірки користувачів"
+          comments={60}
+          likes={70}
+          time="близько 5 годин тому"
+          tags={["Україна", "Українці"]}
+          items={collectionItems}
+          userAvatar="assets/mock-user-logo.png"
+          userName="Україна в аніме"
+        />
+        <CustomCollectionSection
+          title="Підбірка сайту"
+          comments={30}
+          likes={707}
+          time="близько 5 годин тому"
+          tags={["Серіал", "ONA"]}
+          items={collectionItems}
+          userAvatar="assets/mock-user-logo.png"
+          userName="Аніме, що закінчилися за один сезон"
+        />
       </section>
 
       <CardCollection
