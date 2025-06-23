@@ -343,10 +343,17 @@ export default function Home() {
 
       <TopUserList users={topUsers} />
 
-      <CardCollection title="Топ онґоінґи" items={popularAnime} cardType="anime" />
+      <CardCollection
+        title="Топ онґоінґи"
+        items={popularAnime}
+        cardType="anime"
+      />
 
-      <CardCollection title="Рекомендації для вас" items={popularAnime} cardType="anime" />
-
+      <CardCollection
+        title="Рекомендації для вас"
+        items={popularAnime}
+        cardType="anime"
+      />
 
       <Button>Test</Button>
       <Link href="/signin">
@@ -354,7 +361,7 @@ export default function Home() {
       </Link>
       <Link href="/signin"></Link>
 
-      <Link href="/anime">
+      <Link href="/anime/similique-blanditiis-magnam-esse">
         <Button>anime</Button>
       </Link>
       <Link href="/characters/blanche-considine">

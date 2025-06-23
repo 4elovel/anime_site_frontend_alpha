@@ -11,6 +11,7 @@ import { EllipsisVertical } from "lucide-react";
 import MoreIcon from "@/assets/three-vertical-dots.svg";
 import ShareIcon from "@/assets/share.svg";
 import StandartButtonIcon from "@/components/ui/standart-button-icon";
+import AnimeDetailsPanel from "@/components/shared/anime-details-panel";
 
 interface Studio {
   id: string;
@@ -56,12 +57,27 @@ async function getAnime(slug: string): Promise<AnimeDetails | null> {
   }
 }
 
+async function getAnimeTags(slug: string): Promise<string[]> {
+  try {
+    const res = await fetch(`${API_BASE_URL}animes/${slug}/tags`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return [];
+    const json = await res.json();
+    // Assuming the response is { data: ["tag1", "tag2", ...] }
+    return json.data || [];
+  } catch {
+    return [];
+  }
+}
+
 export default async function AnimePage({
   params,
 }: {
   params: { slug: string };
 }) {
   const anime = await getAnime(params.slug);
+  const tags = await getAnimeTags(params.slug);
   if (!anime) {
     return (
       <div className="text-white text-center mt-20">Аніме не знайдено</div>
@@ -70,6 +86,7 @@ export default async function AnimePage({
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 flex flex-col md:flex-row gap-10">
+      {/* Left: Poster */}
       <div className="flex flex-col items-center gap-4 min-w-[260px]">
         <img
           src={anime.poster || anime.image_name}
@@ -92,6 +109,7 @@ export default async function AnimePage({
         </div>
       </div>
 
+      {/* Center: Main info */}
       <div className="flex-1 flex flex-col gap-4">
         <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
           <div>
@@ -111,42 +129,24 @@ export default async function AnimePage({
             />
           </div>
         </div>
-
-        <div className="flex gap-2 mt-2 flex-wrap">
-          {anime.kind && (
-            <span className="bg-zinc-700 px-2 py-1 rounded text-xs">
-              {anime.kind.toUpperCase()}
-            </span>
-          )}
-          {anime.episodes_count && (
-            <span className="bg-zinc-700 px-2 py-1 rounded text-xs">
-              Епізодів: {anime.episodes_count}
-            </span>
-          )}
-          {anime.duration && (
-            <span className="bg-zinc-700 px-2 py-1 rounded text-xs">
-              Тривалість: {anime.duration} хв
-            </span>
-          )}
-          {anime.studio?.name && (
-            <span className="bg-zinc-700 px-2 py-1 rounded text-xs">
-              Студія: {anime.studio.name}
-            </span>
-          )}
-          {anime.first_air_date && (
-            <span className="bg-zinc-700 px-2 py-1 rounded text-xs">
-              Початок:{" "}
-              {new Date(anime.first_air_date).toLocaleDateString("uk-UA")}
-            </span>
-          )}
-          {anime.last_air_date && (
-            <span className="bg-zinc-700 px-2 py-1 rounded text-xs">
-              Кінець:{" "}
-              {new Date(anime.last_air_date).toLocaleDateString("uk-UA")}
-            </span>
-          )}
+        {/* TODO DELETE TEST TAG */}
+        <div className="flex flex-row flex-wrap items-center gap-3 min-h-[27px]">
+          {/* Hardcoded test tag */}
+          <span className="font-sans text-white decoration-dotted text-base font-normal leading-6 underline underline-dotted underline-offset-4 decoration-[#49638A] cursor-pointer bg-none rounded-none p-0">
+            Тест-тег
+          </span>
+          {/* Tags from DB */}
+          {tags &&
+            tags.map((tag, idx) => (
+              <span
+                key={tag + idx}
+                className="font-sans text-white text-base font-normal leading-6 underline underline-dotted underline-offset-4 decoration-[#49638A] cursor-pointer bg-none rounded-none p-0"
+              >
+                {tag}
+              </span>
+            ))}
         </div>
-        <div className="mt-6 items-center text-center content-center justify-center">
+        <div className="items-center text-center content-center justify-center">
           <div className="flex flex-row gap-3 mb-4 justify-center content-center items-center">
             <ActionButton
               text="Дивитися E1"
@@ -166,10 +166,6 @@ export default async function AnimePage({
             />
             <StandartButtonIcon icon={<MoreIcon size={22} />} />
           </div>
-          {/* <button className="flex items-center justify-center w-12 h-12 rounded-xl border border-transparent bg-transparent hover:bg-[#223c5e] transition-colors">
-            <MoreIcon></MoreIcon>
-          </button> */}
-
           <SectionHeader title="Опис" badge="UA" className="mb-2" />
           <div className="text-zinc-200 text-base leading-relaxed whitespace-pre-line">
             {anime.description || anime.seo?.description || "Опис недоступний."}
@@ -177,6 +173,9 @@ export default async function AnimePage({
         </div>
         {/* TODO: Fetch and display episodes, persons, tags, ratings, comments, similars, related using additional endpoints */}
       </div>
+
+      {/* Right: Details panel (only visible on large screens) */}
+      <AnimeDetailsPanel anime={anime} />
     </div>
   );
 }

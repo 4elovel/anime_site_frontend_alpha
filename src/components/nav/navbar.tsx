@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+import UserProfilePopover from "@/components/nav/user-profile-popover";
+
 export default function Navbar() {
   return (
     <motion.header
@@ -16,8 +18,8 @@ export default function Navbar() {
         <Image
           src="/logo.png"
           alt="Логотип"
-          width={40}
-          height={40}
+          width={256}
+          height={256}
           className="w-18 h-18 object-contain"
         />
       </div>
@@ -40,7 +42,7 @@ export default function Navbar() {
             className="bg-transparent outline-none text-white placeholder-gray-400 w-full"
           />
         </div>
-        
+
         <button className="md:hidden border border-[#5B7CB2] rounded-xl w-14 h-14 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent hover:bg-[#2C3650] transition p-0">
           <svg
             className="w-7 h-7 sm:w-5 sm:h-5 xs:w-4 xs:h-4 text-white"
@@ -66,11 +68,13 @@ export default function Navbar() {
           </svg>
         </button>
 
-        <img
+        {/* <img
           src="assets/mock-user-logo.png"
           alt="User"
           className="w-12 h-12 sm:w-9 sm:h-9 xs:w-7 xs:h-7 rounded-full object-cover border border-[#5B7CB2]"
-        />
+        /> */}
+
+        <UserProfilePopover isSignedIn={false} username={"SakuraShadow"} />
       </div>
     </motion.header>
   );

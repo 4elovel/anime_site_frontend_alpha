@@ -2,7 +2,11 @@
 import React from "react";
 import Image from "next/image";
 
-export function AuthFooter( { showRegister = true }: { showRegister?: boolean } ) {
+export function AuthFooter({
+  showRegister = true,
+}: {
+  showRegister?: boolean;
+}) {
   return (
     <div className="flex flex-col gap-6 items-center justify-center w-full mt-4">
       <Image
@@ -15,20 +19,19 @@ export function AuthFooter( { showRegister = true }: { showRegister?: boolean } 
       />
 
       <div className="flex flex-col gap-6 mt-6 items-center">
-        { showRegister && (
+        {showRegister && (
           <div className="flex flex-row items-center gap-2">
-          <span className="text-blue font-sans text-base md:text-lg">
-            Немає аккаунту ?
-          </span>
-          <a
-            href="#"
-            className="text-white font-sans text-base md:text-lg underline underline-offset-4"
-          >
-            Реєстрація
-          </a>
-        </div>
+            <span className="text-blue font-sans text-base md:text-lg">
+              Немає аккаунту ?
+            </span>
+            <a
+              href="#"
+              className="text-white font-sans text-base md:text-lg underline underline-offset-4"
+            >
+              Реєстрація
+            </a>
+          </div>
         )}
-        
 
         <div className="text-white font-sans text-base md:text-lg text-center">
           Вхід за допомогою
@@ -39,7 +42,7 @@ export function AuthFooter( { showRegister = true }: { showRegister?: boolean } 
             <span className="flex items-center justify-center w-[3rem] h-[3rem] md:w-18 md:h-18 rounded-full bg-blue hover:bg-dark-blue hover:cursor-pointer">
               <Image
                 className="w-6 h-6 md:w-13 md:h-13 text-white bg-transparent rounded-full"
-                src="/assets/auth/discord1.svg"
+                src="/assets/auth/discord.svg"
                 alt="Logo"
                 width={24}
                 height={24}

@@ -11,6 +11,8 @@ import { AuthForm } from "@/components/auth/auth-form";
 import { AuthFooter } from "@/components/auth/auth-footer";
 import { Mail } from "lucide-react";
 
+import Image from "next/image";
+
 export function SignupForm({
   className,
   ...props
@@ -23,8 +25,14 @@ export function SignupForm({
       )}
       {...props}
     >
-      <div className="flex items-center justify-center w-[4.5rem] h-[4.5rem] md:w-[7.75rem] md:h-[7.75rem] bg-dark-blue">
-        <Mail className="w-[4rem] h-[4rem] md:w-[7rem] md:h-[7rem] text-blue-950" />
+      <div className="flex items-center justify-center w-[4.5rem] h-[4.5rem] md:w-[7.75rem] md:h-[7.75rem] bg-black rounded-full border-2 border-dark-blue">
+        <Image
+          src={"/logo.png"}
+          alt="Logo"
+          width={256}
+          height={256}
+          className="w-[4rem] h-[4rem] md:w-[7rem] md:h-[7rem] text-blue-950"
+        />
       </div>
       <Card className="bg-transparent border-none w-full pt-0">
         <AuthHeader title="Реєстрація" />

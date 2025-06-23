@@ -18,49 +18,64 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default function UserProfilePopover(isSignedIn: boolean = false) {
-  const signMessage = isSignedIn === true ? "Log out" : "Sign In"; // wtf
+import { User, Heart, ImagePlay, Settings, LogOut } from "lucide-react";
+
+interface UserProfilePopoverProps {
+  isSignedIn: boolean;
+  username: string;
+}
+
+export default function UserProfilePopover({
+  isSignedIn,
+  username,
+}: UserProfilePopoverProps) {
+  const signMessage = isSignedIn ? "Log out" : "Sign In";
+  const avatarUrl = "assets/mock-user-logo.png";
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="cursor-pointer">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
+        <Avatar className="cursor-pointer w-12 h-12 sm:w-9 sm:h-9 xs:w-7 xs:h-7 rounded-full object-cover border border-[#5B7CB2]">
+          <AvatarImage src={avatarUrl} />
+          <AvatarFallback>VM</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-50 md:w-60 text-white border-dark-blue border-none bg-[rgba(128,128,128,0.2)] backdrop-blur-md"
+        className="w-50 md:w-fit text-white border-[#787880] border-[1px] p-0 bg-transparent backdrop-blur-md font-semibold md:mr-2"
         align="start"
       >
-        <DropdownMenuLabel>Menu</DropdownMenuLabel>
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Anime</DropdownMenuItem>
-          <DropdownMenuItem>Lists</DropdownMenuItem>
+        <DropdownMenuLabel className="flex items-center gap-2 text-center border-b-[1px] border-[#787880]">
+          <Avatar className="cursor-pointer w-12 h-12 sm:w-9 sm:h-9 xs:w-7 xs:h-7 rounded-full object-cover border border-[#5B7CB2]">
+            <AvatarImage src={avatarUrl} />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <h1 className="text-[1rem]">{username}</h1>
+        </DropdownMenuLabel>
+        <DropdownMenuGroup className="p-1">
+          <DropdownMenuItem className="hover:bg-none">
+            <User className="text-white w-6! h-6! hover:text-black" />
+            Профіль
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Heart className="text-white w-6! h-6!" />
+            Улюблене
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <ImagePlay className="text-white w-6! h-6!" />
+            Список аніме
+          </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          {/* <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Email</DropdownMenuItem>
-                <DropdownMenuItem>Message</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>More...</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub> */}
-          <DropdownMenuItem>New Team</DropdownMenuItem>
+        <DropdownMenuSeparator className="bg-[#787880]" />
+        <DropdownMenuGroup className="p-1">
+          <DropdownMenuItem>
+            <Settings className="text-white w-6! h-6!" />
+            Налаштування
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <LogOut className="text-red-500 w-6! h-6!" />
+            Вийти
+          </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>GitHub</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuItem disabled>API</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>{signMessage}</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
