@@ -10,6 +10,7 @@ import TopUserList from "@/components/main-page/top-user-list";
 import ContinueWatchingCard from "../components/main-page/continue-watching-card";
 import GenreCard from "@/components/main-page/genre-card";
 import ReleaseCard from "@/components/main-page/release-card";
+import CustomCollectionSection from "@/components/main-page/CustomCollectionSection/custom-collection-section";
 
 // TODO: API HOOKS
 const popularAnime = [
@@ -370,6 +371,54 @@ const releaseData = [
   },
 ];
 
+const collectionItems = [
+  {
+    img: "https://cdn.myanimelist.net/images/anime/4/19644.jpg",
+    title: "Війни Сакури. Ц...",
+    href: "#",
+  },
+  {
+    img: "https://cdn.myanimelist.net/images/anime/10/47347.jpg",
+    title: "Війни Сакури",
+    href: "#",
+  },
+  {
+    img: "https://cdn.myanimelist.net/images/anime/13/17405.jpg",
+    title: "Історія букволіжк...",
+    href: "#",
+  },
+  {
+    img: "https://cdn.myanimelist.net/images/anime/5/73199.jpg",
+    title: "Держслужбовці...",
+    href: "#",
+  },
+  {
+    img: "https://cdn.myanimelist.net/images/anime/3/40451.jpg",
+    title: "Спів войовничих...",
+    href: "#",
+  },
+  {
+    img: "https://cdn.myanimelist.net/images/anime/12/76049.jpg",
+    title: "Тераформування",
+    href: "#",
+  },
+  {
+    img: "https://cdn.myanimelist.net/images/anime/8/77986.jpg",
+    title: "Темніше за Чорн...",
+    href: "#",
+  },
+  {
+    img: "https://cdn.myanimelist.net/images/anime/11/39717.jpg",
+    title: "На старт!",
+    href: "#",
+  },
+  {
+    img: "https://cdn.myanimelist.net/images/anime/12/65157.jpg",
+    title: "Мобільний воїн Г...",
+    href: "#",
+  },
+];
+
 export default function Home() {
   return (
     <div className="p-0 m-0 font-[family-name:var(--font-geist-sans)]">
@@ -647,6 +696,10 @@ export default function Home() {
       <Link href="/signup">
         <Button>Sign Up</Button>
       </Link>
+
+      <section className="bg-black min-h-screen py-10">
+        <CustomCollectionSection items={collectionItems} />
+      </section>
     </div>
   );
 }
