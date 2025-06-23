@@ -8,6 +8,7 @@ import TopAnimeList from "@/components/main-page/TopAnimeList/top-anime-list";
 import CommentCollection from "@/components/main-page/comment-collection";
 import TopUserList from "@/components/main-page/top-user-list";
 import ContinueWatchingCard from "../components/main-page/continue-watching-card";
+import GenreCard from "@/components/main-page/genre-card";
 
 // TODO: API HOOKS
 const popularAnime = [
@@ -333,6 +334,134 @@ export default function Home() {
         title="Популярне зараз"
         items={popularAnime}
         cardType="anime"
+      />
+
+      <CardCollection
+        title="Скоро на сайті"
+        items={[
+          {
+            image: "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+            title: "Суперкуб",
+            isAnonce: true,
+            date: "10.05.2025",
+          },
+          {
+            image: "https://cdn.myanimelist.net/images/anime/101/135567.jpg",
+            title: "Магічний Куб 2",
+            isAnonce: true,
+            date: "15.06.2025",
+          },
+          {
+            image: "https://cdn.myanimelist.net/images/anime/1764/138022.jpg",
+            title: "Космічний Рейнджер",
+            isAnonce: true,
+            date: "01.07.2025",
+          },
+          {
+            image: "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
+            title: "Літній Вітер",
+            isAnonce: true,
+            date: "20.08.2025",
+          },
+          {
+            image: "https://cdn.myanimelist.net/images/anime/10/100646.jpg",
+            title: "Драконів Слід",
+            isAnonce: true,
+            date: "05.09.2025",
+          },
+          {
+            image: "https://cdn.myanimelist.net/images/anime/1517/110266.jpg",
+            title: "Сонячний Кристал",
+            isAnonce: true,
+            date: "12.10.2025",
+          },
+          {
+            image: "https://cdn.myanimelist.net/images/anime/3/72078.jpg",
+            title: "Тіньова Місія",
+            isAnonce: true,
+            date: "25.11.2025",
+          },
+          {
+            image: "https://cdn.myanimelist.net/images/anime/3/40451.jpg",
+            title: "Зоряний Портал",
+            isAnonce: true,
+            date: "30.12.2025",
+          },
+        ]}
+        cardType="anime"
+        showButton={true}
+        buttonText="Переглянути всі анонси"
+        buttonUrl="/anonce"
+      />
+
+      <CardCollection
+        title="Жанри"
+        items={[
+          {
+            title: "Драма",
+            description: (
+              <>
+                Цей жанр зосереджується на{" "}
+                <span className="text-blue-400">емоційних</span> та{" "}
+                <span className="text-blue-400">психологічних</span>{" "}
+                переживаннях персонажів. Такі історії часто торкаються серйозних
+                тем — втрат, особистісного зростання, стосунків, внутрішніх
+                конфліктів.
+              </>
+            ),
+            animeImages: [
+              "https://cdn.myanimelist.net/images/anime/3/40451.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
+            ],
+          },
+          {
+            title: "Драма",
+            description: (
+              <>
+                Цей жанр зосереджується на{" "}
+                <span className="text-blue-400">емоційних</span> та{" "}
+                <span className="text-blue-400">психологічних</span>{" "}
+                переживаннях персонажів. Такі історії часто торкаються серйозних
+                тем — втрат, особистісного зростання, стосунків, внутрішніх
+                конфліктів.
+              </>
+            ),
+            animeImages: [
+              "https://cdn.myanimelist.net/images/anime/3/40451.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
+            ],
+          },
+          {
+            title: "Драма",
+            description: (
+              <>
+                Цей жанр зосереджується на{" "}
+                <span className="text-blue-400">емоційних</span> та{" "}
+                <span className="text-blue-400">психологічних</span>{" "}
+                переживаннях персонажів. Такі історії часто торкаються серйозних
+                тем — втрат, особистісного зростання, стосунків, внутрішніх
+                конфліктів.
+              </>
+            ),
+            animeImages: [
+              "https://cdn.myanimelist.net/images/anime/3/40451.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
+            ],
+          },
+        ]}
+        cardType="genre"
+        showButton={true}
+        buttonText="Всі жанри"
+        buttonUrl="/genres"
       />
 
       <TopAnimeList items={topAnime} />

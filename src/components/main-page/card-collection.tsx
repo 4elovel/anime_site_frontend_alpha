@@ -8,6 +8,7 @@ import { Anek_Malayalam } from "next/font/google";
 import CommentCard from "./CommentSection/comment-card";
 import TopUserCard from "./top-user-card";
 import ContinueWatchingCard from "./continue-watching-card";
+import GenreCard from "@/components/main-page/genre-card";
 
 interface CardCollectionProps {
   title?: string;
@@ -36,7 +37,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activePage, setActivePage] = useState(0);
   const [pagesCount, setPagesCount] = useState(1);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<null | boolean>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -103,6 +104,8 @@ const CardCollection: React.FC<CardCollectionProps> = ({
     scrollToPage(newPage);
   };
 
+  if (isMobile === null) return null;
+
   return (
     <section className="w-full flex flex-col items-center py-10 xs:py-4">
       <div className="relative w-full max-w-[1400px] mx-auto">
@@ -114,7 +117,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
           {!isMobile && showButton && buttonText && buttonUrl ? (
             <a
               href={buttonUrl}
-              className="border-2 border-[#4B7FCC] rounded-2xl px-4 py-2 text-white font-semibold transition-colors duration-200 hover:bg-[#4B7FCC] hover:text-black text-base ml-2 h-10 flex items-center"
+              className="border-2 border-[#4B7FCC] rounded-xl px-4 py-2 text-white font-semibold transition-colors duration-200 hover:bg-[#4B7FCC] hover:text-black text-base ml-2 h-10 flex items-center"
             >
               {buttonText}
             </a>
@@ -219,6 +222,8 @@ const CardCollection: React.FC<CardCollectionProps> = ({
             className={
               cardType === "top-user"
                 ? "grid grid-cols-1 gap-2 px-2 justify-center"
+                : cardType === "genre"
+                ? "flex flex-col gap-6 px-2"
                 : "grid grid-cols-2 gap-2 px-2"
             }
             ref={gridRef}
@@ -249,9 +254,19 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                     <TopUserCard {...item} />
                   ) : cardType === "continue-watching" ? (
                     <ContinueWatchingCard {...item} />
+                  ) : cardType === "genre" ? (
+                    <GenreCard {...item} />
                   ) : null}
                 </div>
               ))}
+          </div>
+        ) : cardType === "genre" ? (
+          <div className="flex flex-col gap-6 px-2 w-full">
+            {items.map((item, idx) => (
+              <div key={item.title ? item.title + idx : idx} className="w-full">
+                {renderCard ? renderCard(item, idx) : <GenreCard {...item} />}
+              </div>
+            ))}
           </div>
         ) : (
           <motion.div
@@ -270,8 +285,12 @@ const CardCollection: React.FC<CardCollectionProps> = ({
             {items.map((item, idx) => (
               <div
                 key={item.title ? item.title + idx : idx}
-                className="flex-shrink-0"
-                style={{ width: isMobile ? 220 : 320 }}
+                className={cardType === "genre" ? "w-full" : "flex-shrink-0"}
+                style={
+                  cardType === "genre"
+                    ? { minWidth: "100%" }
+                    : { width: isMobile ? 220 : 320 }
+                }
               >
                 {renderCard ? (
                   renderCard(item, idx)
