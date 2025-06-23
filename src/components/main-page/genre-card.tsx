@@ -17,7 +17,7 @@ const GenreCard: React.FC<GenreCardProps> = ({
     "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=140&h=200&fit=crop&crop=top",
     "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=140&h=200&fit=crop&crop=bottom",
   ],
-  href = '',
+  href = "",
 }) => {
   const [isMobile, setIsMobile] = useState<null | boolean>(null);
 
@@ -46,7 +46,7 @@ const GenreCard: React.FC<GenreCardProps> = ({
     <Link href={href} className="block w-full group" tabIndex={0}>
       <div className="w-full flex flex-row relative cursor-pointer group-hover:opacity-90 transition-opacity">
         <div className="flex flex-col justify-start z-10 flex-shrink-0 w-[200px] md:w-[520px]">
-          <h2 className="text-white text-5xl font-bold mb-6 leading-tight">
+          <h2 className="text-white text-3xl font-bold mb-6 leading-tight">
             {title}
           </h2>
           <div className="text-gray-300 text-base leading-relaxed font-normal break-words px-2 max-w-full">
@@ -84,16 +84,22 @@ const GenreCard: React.FC<GenreCardProps> = ({
           <div className="ml-3 md:ml-8 flex items-center justify-end">
             <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-opacity-10 flex items-center justify-center cursor-pointer hover:bg-opacity-20 transition-all">
               <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
+                width="48"
+                height="48"
+                viewBox="0 0 48 49"
                 fill="none"
                 stroke="white"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                <path d="M9 18l6-6-6-6" />
+                <path
+                  d="M18.0001 12.0469C18.0001 12.0469 30 20.8847 30 24.0469C30 27.2093 18 36.0469 18 36.0469"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </div>
           </div>

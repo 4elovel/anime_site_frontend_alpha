@@ -9,6 +9,7 @@ import CommentCollection from "@/components/main-page/comment-collection";
 import TopUserList from "@/components/main-page/top-user-list";
 import ContinueWatchingCard from "../components/main-page/continue-watching-card";
 import GenreCard from "@/components/main-page/genre-card";
+import ReleaseCard from "@/components/main-page/release-card";
 
 // TODO: API HOOKS
 const popularAnime = [
@@ -314,6 +315,61 @@ const continueWatchingItems = [
   },
 ];
 
+const releaseData = [
+  {
+    month: "Травень",
+    items: [
+      {
+        image: "https://cdn.myanimelist.net/images/anime/5/73199.jpg",
+        title: "Від селянина з глухої місце...",
+        engTitle: "Katainaka no Ossan, Kensei ni Naru",
+        episodes: 8,
+        date: "20.05",
+      },
+      {
+        image: "https://cdn.myanimelist.net/images/anime/5/73199.jpg",
+        title: "Я зловісний володар міжзо...",
+        engTitle: "Ore wa Seikan Kokka no Akutoku Ryoushu!",
+        episodes: 6,
+        date: "24.05",
+      },
+      {
+        image: "https://cdn.myanimelist.net/images/anime/5/73199.jpg",
+        title: "Як стати звичайним",
+        engTitle: "Shoushimin Series",
+        episodes: 6,
+        date: "29.05",
+      },
+    ],
+  },
+  {
+    month: "Червень",
+    items: [
+      {
+        image: "https://cdn.myanimelist.net/images/anime/5/73199.jpg",
+        title: "Лікорис Рекоіл: Друзі - викр...",
+        engTitle: "Lycoris Recoil Short Movie",
+        episodes: 5,
+        date: "02.06",
+      },
+      {
+        image: "https://cdn.myanimelist.net/images/anime/5/73199.jpg",
+        title: "Твоя форма",
+        engTitle: "Your Forma",
+        episodes: 2,
+        date: "05.06",
+      },
+      {
+        image: "https://cdn.myanimelist.net/images/anime/5/73199.jpg",
+        title: "Прибулець Муму",
+        engTitle: "Uchuujiin Muumuu",
+        episodes: 3,
+        date: "12.06",
+      },
+    ],
+  },
+];
+
 export default function Home() {
   return (
     <div className="p-0 m-0 font-[family-name:var(--font-geist-sans)]">
@@ -394,8 +450,43 @@ export default function Home() {
         buttonUrl="/anonce"
       />
 
+      <TopAnimeList items={topAnime} />
+
+      <CommentCollection comments={comments} />
+
+      <CardCollection title="Новинки" items={popularAnime} cardType="anime" />
+
+      <TopUserList users={topUsers} />
+
+      <section className="relative">
+        <h1 className="text-white text-2xl font-bold pl-6.5">
+          Календар релізів
+        </h1>
+        {releaseData.map((month) => (
+          <CardCollection
+            key={month.month}
+            items={month.items}
+            cardType="release"
+            title={month.month}
+            showButton={false}
+          />
+        ))}
+      </section>
+
       <CardCollection
-        title="Жанри"
+        title="Топ онґоінґи"
+        items={popularAnime}
+        cardType="anime"
+      />
+
+      <CardCollection
+        title="Рекомендації для вас"
+        items={popularAnime}
+        cardType="anime"
+      />
+
+      <CardCollection
+        title="Жанри сайту"
         items={[
           {
             title: "Драма",
@@ -416,6 +507,7 @@ export default function Home() {
               "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
               "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
             ],
+            href: "",
           },
           {
             title: "Драма",
@@ -436,6 +528,7 @@ export default function Home() {
               "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
               "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
             ],
+            href: "",
           },
           {
             title: "Драма",
@@ -456,32 +549,86 @@ export default function Home() {
               "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
               "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
             ],
+            href: "",
           },
         ]}
         cardType="genre"
         showButton={true}
-        buttonText="Всі жанри"
+        buttonText="Переглянути всі жанри"
         buttonUrl="/genres"
       />
 
-      <TopAnimeList items={topAnime} />
-
-      <CommentCollection comments={comments} />
-
-      <CardCollection title="Новинки" items={popularAnime} cardType="anime" />
-
-      <TopUserList users={topUsers} />
-
       <CardCollection
-        title="Топ онґоінґи"
-        items={popularAnime}
-        cardType="anime"
-      />
-
-      <CardCollection
-        title="Рекомендації для вас"
-        items={popularAnime}
-        cardType="anime"
+        title="Теги сайту"
+        items={[
+          {
+            title: "Історичне",
+            description: (
+              <>
+                Цей жанр зосереджується на{" "}
+                <span className="text-blue-400">емоційних</span> та{" "}
+                <span className="text-blue-400">психологічних</span>{" "}
+                переживаннях персонажів. Такі історії часто торкаються серйозних
+                тем — втрат, особистісного зростання, стосунків, внутрішніх
+                конфліктів.
+              </>
+            ),
+            animeImages: [
+              "https://cdn.myanimelist.net/images/anime/3/40451.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
+            ],
+            href: "",
+          },
+          {
+            title: "Самураї",
+            description: (
+              <>
+                Цей жанр зосереджується на{" "}
+                <span className="text-blue-400">емоційних</span> та{" "}
+                <span className="text-blue-400">психологічних</span>{" "}
+                переживаннях персонажів. Такі історії часто торкаються серйозних
+                тем — втрат, особистісного зростання, стосунків, внутрішніх
+                конфліктів.
+              </>
+            ),
+            animeImages: [
+              "https://cdn.myanimelist.net/images/anime/3/40451.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
+            ],
+            href: "",
+          },
+          {
+            title: "Романтика",
+            description: (
+              <>
+                Цей жанр зосереджується на{" "}
+                <span className="text-blue-400">емоційних</span> та{" "}
+                <span className="text-blue-400">психологічних</span>{" "}
+                переживаннях персонажів. Такі історії часто торкаються серйозних
+                тем — втрат, особистісного зростання, стосунків, внутрішніх
+                конфліктів.
+              </>
+            ),
+            animeImages: [
+              "https://cdn.myanimelist.net/images/anime/3/40451.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+              "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
+            ],
+            href: "",
+          },
+        ]}
+        cardType="genre"
+        showButton={true}
+        buttonText="Переглянути всі жанри"
+        buttonUrl="/genres"
       />
 
       <Button>Test</Button>
