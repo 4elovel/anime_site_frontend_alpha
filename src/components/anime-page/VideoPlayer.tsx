@@ -16,7 +16,18 @@ function VideoPlayer({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
-  const [volume, setVolume] = useState(0.8);
+  const [volume, setVolume] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedVolume = localStorage.getItem("videoPlayerVolume");
+      if (savedVolume !== null) {
+        const volumeValue = parseFloat(savedVolume);
+        if (!isNaN(volumeValue) && volumeValue >= 0 && volumeValue <= 1) {
+          return volumeValue;
+        }
+      }
+    }
+    return 0.8;
+  });
   const [played, setPlayed] = useState(0);
   const [duration, setDuration] = useState(0);
   const [seeking, setSeeking] = useState(false);
@@ -32,16 +43,6 @@ function VideoPlayer({
     g: 0,
     b: 0,
   });
-
-  useEffect(() => {
-    const savedVolume = localStorage.getItem("videoPlayerVolume");
-    if (savedVolume !== null) {
-      const volumeValue = parseFloat(savedVolume);
-      if (!isNaN(volumeValue) && volumeValue >= 0 && volumeValue <= 1) {
-        setVolume(volumeValue);
-      }
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("videoPlayerVolume", volume.toString());
