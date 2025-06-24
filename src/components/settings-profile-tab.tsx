@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import SettingsSelect from "@/components/ui/settings-select";
+import CalendarIcon from "@/assets/calendar.svg";
 
 interface SettingsProfileTabProps {
   username: string;
@@ -40,8 +41,10 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
   setBirthdate,
   handleAvatarUpload,
 }) => {
-  const [gender, setGender] = React.useState("female");
-  const [cover, setCover] = React.useState<string | null>(null);
+  const [gender, setGender] = useState("female");
+  const [cover, setCover] = useState<string | null>(null);
+  const [birthdateError, setBirthdateError] = useState("");
+  const birthdateInputRef = useRef<HTMLInputElement>(null);
 
   const handleCoverUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -49,6 +52,29 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
       const url = URL.createObjectURL(file);
       setCover(url);
     }
+  };
+
+  // Validate birthdate: not in future, at least 10 years old
+  const validateBirthdate = (dateStr: string) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    const now = new Date();
+    if (date > now) return "Дата не може бути в майбутньому";
+    const minDate = new Date();
+    minDate.setFullYear(minDate.getFullYear() - 10);
+    if (date > minDate) return "Вам має бути не менше 10 років";
+    return "";
+  };
+
+  const handleBirthdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBirthdate(e.target.value);
+    setBirthdateError(validateBirthdate(e.target.value));
+  };
+
+  const handleCalendarClick = () => {
+    birthdateInputRef.current?.focus();
+    birthdateInputRef.current?.showPicker &&
+      birthdateInputRef.current.showPicker();
   };
 
   return (
@@ -151,7 +177,7 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
           />
           <button
             type="button"
-            className="mt-2 w-32 self-end bg-[#2563eb] text-white rounded-lg px-6 py-2 font-semibold hover:bg-[#1d4ed8] transition-colors"
+            className="mt-2 w-32 bg-[#2563eb] text-white rounded-lg px-6 py-2 font-semibold hover:bg-[#1d4ed8] transition-colors"
           >
             Зберегти
           </button>
@@ -170,7 +196,7 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
           />
           <button
             type="button"
-            className="mt-2 w-32 self-end bg-[#2563eb] text-white rounded-lg px-6 py-2 font-semibold hover:bg-[#1d4ed8] transition-colors"
+            className="mt-2 w-32 bg-[#2563eb] text-white rounded-lg px-6 py-2 font-semibold hover:bg-[#1d4ed8] transition-colors"
           >
             Зберегти
           </button>
@@ -205,11 +231,22 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
                 id="birthdate"
                 type="date"
                 value={birthdate}
-                onChange={(e) => setBirthdate(e.target.value)}
-                className="bg-transparent border border-[#49638A] rounded-lg px-4 py-2 text-white text-base focus:border-blue-400 focus:ring-0 placeholder:text-[#bfc6d5] pr-12"
+                onChange={handleBirthdateChange}
+                ref={birthdateInputRef}
+                className={`bg-transparent border border-[#49638A] rounded-lg px-4 py-2 text-white text-base focus:border-blue-400 focus:ring-0 placeholder:text-[#bfc6d5] pr-12 ${
+                  birthdateError ? "border-red-500" : ""
+                }`}
                 placeholder="ДД. ММ. РРРР"
+                aria-invalid={!!birthdateError}
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[#bfc6d5] pointer-events-none">
+              <button
+                type="button"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#bfc6d5] p-0 m-0 bg-transparent border-0 cursor-pointer"
+                tabIndex={-1}
+                onClick={handleCalendarClick}
+                aria-label="Вибрати дату"
+                style={{ lineHeight: 0 }}
+              >
                 <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
                   <path
                     d="M8 7V3M16 7V3M3 11H21M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z"
@@ -219,7 +256,12 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
                     strokeLinejoin="round"
                   />
                 </svg>
-              </span>
+              </button>
+              {birthdateError && (
+                <span className="absolute left-0 -bottom-6 text-red-500 text-xs">
+                  {birthdateError}
+                </span>
+              )}
             </div>
           </div>
         </div>
