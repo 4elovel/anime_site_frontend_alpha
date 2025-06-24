@@ -2,7 +2,7 @@
 import Navbar from "@/components/nav/navbar";
 import React, { useRef, useState, MutableRefObject, useEffect } from "react";
 import ReactPlayer from "react-player";
-import VideoPlayer from "./VideoPlayer";
+import VideoPlayer from "../../../../components/anime-page/VideoPlayer";
 
 const TEST_VIDEO_URL = "/My Hero Academia FINAL SEASON _ OFFICIAL TRAILER.mp4";
 
