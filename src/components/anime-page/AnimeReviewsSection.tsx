@@ -129,7 +129,7 @@ const AnimeReviewsSection: React.FC<AnimeReviewsSectionProps> = ({
       <div className="text-[#B6B6B6] text-lg mb-4">
         Нам важлива твоя думка! Сподобалося це аніме?
       </div>
-      <button className="mb-8 px-6 py-3 rounded-xl bg-[#23242A] text-white text-lg font-semibold border border-[#44454A] hover:bg-[#33344A] transition w-fit">
+      <button className="mb-8 px-6 py-3 rounded-xl text-white text-sm font-semibold border border-[#49638A] hover:bg-[#33344A] transition w-fit">
         Залишити відгук
       </button>
       <div className="flex flex-col gap-6">

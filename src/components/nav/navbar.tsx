@@ -10,8 +10,25 @@ import { motion } from "framer-motion";
 
 import UserProfilePopover from "@/components/nav/user-profile-popover";
 
+// Хук для визначення мобільного режиму (max-width: 640px)
+function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState(false);
+  React.useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 640);
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  return isMobile;
+}
+
 const Navbar: React.FC = () => {
   const pathname = usePathname();
+  const isMobile = useIsMobile();
+
+  if (!pathname) return null;
 
   // Динамічний ланцюжок для прикладу (можна замінити на реальні дані)
   let breadcrumbs: BreadcrumbItem[] = [];
@@ -50,7 +67,7 @@ const Navbar: React.FC = () => {
           />
         </Link>
       ) : (
-        <Breadcrumbs items={breadcrumbs} />
+        <Breadcrumbs items={isMobile ? breadcrumbs.slice(0, 1) : breadcrumbs} />
       )}
 
       <div className="flex items-center gap-6 sm:gap-4 xs:gap-2">
@@ -72,9 +89,9 @@ const Navbar: React.FC = () => {
           />
         </div>
 
-        <button className="md:hidden border border-[#5B7CB2] rounded-xl w-14 h-14 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent hover:bg-[#2C3650] transition p-0">
+        <button className="md:hidden border border-[#5B7CB2] rounded-xl w-12 h-12 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent hover:bg-[#2C3650] transition p-0">
           <svg
-            className="w-7 h-7 sm:w-5 sm:h-5 xs:w-4 xs:h-4 text-white"
+            className="w-5 h-5 sm:w-5 sm:h-5 xs:w-4 xs:h-4 text-white"
             fill="none"
             stroke="currentColor"
             strokeWidth={2}
@@ -85,9 +102,9 @@ const Navbar: React.FC = () => {
           </svg>
         </button>
 
-        <button className="border border-[#5B7CB2] rounded-xl w-14 h-14 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent hover:bg-[#2C3650] transition p-0">
+        <button className="border border-[#5B7CB2] rounded-xl w-12 h-12 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent hover:bg-[#2C3650] transition p-0">
           <svg
-            className="w-7 h-7 sm:w-5 sm:h-5 xs:w-4 xs:h-4 text-white"
+            className="w-5 h-5 sm:w-5 sm:h-5 xs:w-4 xs:h-4 text-white"
             fill="none"
             stroke="currentColor"
             strokeWidth={2}
