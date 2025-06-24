@@ -1,7 +1,13 @@
+import { ViewStatsCard } from "@/components/profile/view-stats-card";
+import Navbar from "@/components/nav/navbar";
+
 export default function ProfilePage() {
   return (
-    <div className="flex relative justify-center items-center h-screen overflow-hidden">
-      <h1>Профіль</h1>
+    <div>
+      <Navbar />
+      <div className="flex relative justify-center items-center h-screen overflow-hidden">
+        <ViewStatsCard />
+      </div>
     </div>
   );
 }
