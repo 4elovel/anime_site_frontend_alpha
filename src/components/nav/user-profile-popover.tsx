@@ -52,27 +52,27 @@ export default function UserProfilePopover({
           <h1 className="text-[1rem]">{username}</h1>
         </DropdownMenuLabel>
         <DropdownMenuGroup className="p-1">
-          <DropdownMenuItem className="hover:bg-none">
-            <User className="text-white w-6! h-6! hover:text-black" />
+          <DropdownMenuItem className="hover:bg-none group">
+            <User className="user-popover-icon" />
             Профіль
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Heart className="text-white w-6! h-6!" />
+          <DropdownMenuItem className="group">
+            <Heart className="user-popover-icon" />
             Улюблене
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <ImagePlay className="text-white w-6! h-6!" />
+          <DropdownMenuItem className="group">
+            <ImagePlay className="user-popover-icon" />
             Список аніме
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator className="bg-[#787880]" />
         <DropdownMenuGroup className="p-1">
-          <DropdownMenuItem>
-            <Settings className="text-white w-6! h-6!" />
+          <DropdownMenuItem className="group">
+            <Settings className="user-popover-icon" />
             Налаштування
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <LogOut className="text-red-500 w-6! h-6!" />
+          <DropdownMenuItem className="group">
+            <LogOut className="user-popover-icon text-red-500" />
             Вийти
           </DropdownMenuItem>
         </DropdownMenuGroup>

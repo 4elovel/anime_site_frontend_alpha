@@ -170,3 +170,8 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+/* UserProfilePopover icon hover effect */
+.group:hover .user-popover-icon:not(.text-red-500) {
+  color: #000 !important;
+}
