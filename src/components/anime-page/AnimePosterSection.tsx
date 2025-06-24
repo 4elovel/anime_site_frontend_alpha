@@ -23,7 +23,7 @@ const AnimePosterSection: React.FC<AnimePosterSectionProps> = ({
       <img
         src={poster}
         alt={name}
-        className="rounded-2xl w-[260px] h-[360px] object-cover shadow-xl border border-zinc-700"
+        className="rounded-2xl w-full h-[500px] md:w-[260px] md:h-[400px] object-cover shadow-xl border border-zinc-700"
       />
     )}
     <div className="flex flex-col gap-3 w-full mt-2">

@@ -221,12 +221,15 @@ function VideoPlayer({
   return (
     <div
       id="video-container"
-      className="relative flex items-center justify-center w-full aspect-video sm:aspect-video xs:aspect-video min-h-[220px] sm:min-h-[320px] md:min-h-[400px] lg:min-h-[60vh]"
-      onMouseEnter={() => setShowControls(true)}
-      onMouseLeave={() => setShowControls(true)}
+      className="relative flex items-center justify-center w-full aspect-video sm:aspect-video xs:aspect-video min-h-[220px] sm:min-h-[320px] md:min-h-[400px] lg:min-h-[60vh]
+      z-20 cursor-pointer"
+      onMouseEnter={() => playing && setShowControls(true)}
+      onMouseLeave={() => playing && setShowControls(true)}
+      onClick={handlePlayPause}
     >
       {isLightOn && (
         <>
+          {/* Left ambient light */}
           <div
             style={{
               position: "absolute",
@@ -240,6 +243,7 @@ function VideoPlayer({
               filter: "blur(40px)",
             }}
           />
+          {/* Right ambient light */}
           <div
             style={{
               position: "absolute",
@@ -253,6 +257,34 @@ function VideoPlayer({
               filter: "blur(40px)",
             }}
           />
+          {/* Top ambient light */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: "15%",
+              zIndex: 0,
+              pointerEvents: "none",
+              background: `radial-gradient(ellipse at top, rgba(${leftColor.r},${leftColor.g},${leftColor.b},0.7) 60%, rgba(0,0,0,0.95) 100%)`,
+              filter: "blur(40px)",
+            }}
+          />
+          {/* Bottom ambient light */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: "15%",
+              zIndex: 0,
+              pointerEvents: "none",
+              background: `radial-gradient(ellipse at bottom, rgba(${rightColor.r},${rightColor.g},${rightColor.b},0.7) 60%, rgba(0,0,0,0.95) 100%)`,
+              filter: "blur(40px)",
+            }}
+          />
         </>
       )}
       <canvas
@@ -261,6 +293,28 @@ function VideoPlayer({
         height={18}
         style={{ display: "none" }}
       />
+
+      {/* Large play/pause button overlay */}
+      {!playing && (
+        <div className="absolute inset-0 flex items-center justify-center z-5 pointer-events-none">
+          <div className="bg-black/50 rounded-full p-4 sm:p-6 md:p-8 pointer-events-auto">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-white"
+            >
+              <path
+                d="M6 3.99979V19.9998C5.99995 20.1777 6.04737 20.3524 6.13738 20.5059C6.22739 20.6594 6.35672 20.7861 6.51202 20.8729C6.66733 20.9598 6.84299 21.0036 7.02088 20.9999C7.19878 20.9961 7.37245 20.945 7.524 20.8518L20.524 12.8518C20.6696 12.7623 20.7898 12.637 20.8733 12.4879C20.9567 12.3387 21.0005 12.1707 21.0005 11.9998C21.0005 11.8289 20.9567 11.6609 20.8733 11.5117C20.7898 11.3626 20.6696 11.2373 20.524 11.1478L7.524 3.14779C7.37245 3.05456 7.19878 3.00345 7.02088 2.99973C6.84299 2.99601 6.66733 3.03983 6.51202 3.12665C6.35672 3.21348 6.22739 3.34017 6.13738 3.49366C6.04737 3.64714 5.99995 3.82186 6 3.99979Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+        </div>
+      )}
+
       <ReactPlayer
         ref={playerRef}
         url={url}
@@ -283,7 +337,7 @@ function VideoPlayer({
       />
       <div
         className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent px-2 sm:px-4 md:px-10 pt-8 sm:pt-12 md:pt-16 pb-4 sm:pb-6 md:pb-8 transition-opacity duration-300 ${
-          showControls ? "opacity-100" : "opacity-0"
+          showControls && playing ? "opacity-100" : "opacity-0"
         } z-10`}
       >
         <div className="relative w-full h-1 bg-white/30 rounded-sm mb-5 cursor-pointer">
@@ -300,8 +354,15 @@ function VideoPlayer({
             step="any"
             value={played}
             onChange={handleSeekChange}
-            onMouseDown={handleSeekMouseDown}
-            onMouseUp={handleSeekMouseUp}
+            onMouseDown={(e) => {
+              e.stopPropagation();
+              handleSeekMouseDown();
+            }}
+            onMouseUp={(e) => {
+              e.stopPropagation();
+              handleSeekMouseUp();
+            }}
+            onClick={(e) => e.stopPropagation()}
             className="absolute -top-1.5 left-0 w-full h-4 opacity-0 cursor-pointer"
           />
         </div>
@@ -309,7 +370,10 @@ function VideoPlayer({
         <div className="flex items-center justify-between flex-wrap gap-y-2">
           <div className="flex items-center gap-3 sm:gap-5">
             <button
-              onClick={handlePlayPause}
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePlayPause();
+              }}
               className="bg-transparent border-none text-white cursor-pointer p-1 sm:p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
             >
               {playing ? (
@@ -347,24 +411,52 @@ function VideoPlayer({
             </button>
 
             <button
-              onClick={handleMute}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleMute();
+              }}
               className="bg-transparent border-none text-white cursor-pointer p-1 sm:p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M15 8C15.621 8.46574 16.125 9.06966 16.4721 9.76393C16.8193 10.4582 17 11.2238 17 12C17 12.7762 16.8193 13.5418 16.4721 14.2361C16.125 14.9303 15.621 15.5343 15 16M17.7 5C18.7439 5.84365 19.586 6.91013 20.1644 8.12132C20.7429 9.33252 21.0431 10.6578 21.0431 12C21.0431 13.3422 20.7429 14.6675 20.1644 15.8787C19.586 17.0899 18.7439 18.1563 17.7 19M6 15.0002H4C3.73478 15.0002 3.48043 14.8949 3.29289 14.7073C3.10536 14.5198 3 14.2654 3 14.0002V10.0002C3 9.735 3.10536 9.48065 3.29289 9.29311C3.48043 9.10557 3.73478 9.00022 4 9.00022H6L9.5 4.50022C9.5874 4.33045 9.73265 4.19754 9.90949 4.12551C10.0863 4.05348 10.2831 4.04708 10.4643 4.10746C10.6454 4.16784 10.799 4.29103 10.8972 4.45476C10.9955 4.61849 11.0319 4.81196 11 5.00022V19.0002C11.0319 19.1885 10.9955 19.3819 10.8972 19.5457C10.799 19.7094 10.6454 19.8326 10.4643 19.893C10.2831 19.9534 10.0863 19.947 9.90949 19.8749C9.73265 19.8029 9.5874 19.67 9.5 19.5002L6 15.0002Z"
-                  stroke="white"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+              {muted ? (
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 15.0002H4C3.73478 15.0002 3.48043 14.8949 3.29289 14.7073C3.10536 14.5198 3 14.2654 3 14.0002V10.0002C3 9.735 3.10536 9.48065 3.29289 9.29311C3.48043 9.10557 3.73478 9.00022 4 9.00022H6L9.5 4.50022C9.5874 4.33045 9.73265 4.19754 9.90949 4.12551C10.0863 4.05348 10.2831 4.04708 10.4643 4.10746C10.6454 4.16784 10.799 4.29103 10.8972 4.45476C10.9955 4.61849 11.0319 4.81196 11 5.00022V19.0002C11.0319 19.1885 10.9955 19.3819 10.8972 19.5457C10.799 19.7094 10.6454 19.8326 10.4643 19.893C10.2831 19.9534 10.0863 19.947 9.90949 19.8749C9.73265 19.8029 9.5874 19.67 9.5 19.5002L6 15.0002Z"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M17 9L21 13M21 9L17 13"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 8C15.621 8.46574 16.125 9.06966 16.4721 9.76393C16.8193 10.4582 17 11.2238 17 12C17 12.7762 16.8193 13.5418 16.4721 14.2361C16.125 14.9303 15.621 15.5343 15 16M17.7 5C18.7439 5.84365 19.586 6.91013 20.1644 8.12132C20.7429 9.33252 21.0431 10.6578 21.0431 12C21.0431 13.3422 20.7429 14.6675 20.1644 15.8787C19.586 17.0899 18.7439 18.1563 17.7 19M6 15.0002H4C3.73478 15.0002 3.48043 14.8949 3.29289 14.7073C3.10536 14.5198 3 14.2654 3 14.0002V10.0002C3 9.735 3.10536 9.48065 3.29289 9.29311C3.48043 9.10557 3.73478 9.00022 4 9.00022H6L9.5 4.50022C9.5874 4.33045 9.73265 4.19754 9.90949 4.12551C10.0863 4.05348 10.2831 4.04708 10.4643 4.10746C10.6454 4.16784 10.799 4.29103 10.8972 4.45476C10.9955 4.61849 11.0319 4.81196 11 5.00022V19.0002C11.0319 19.1885 10.9955 19.3819 10.8972 19.5457C10.799 19.7094 10.6454 19.8326 10.4643 19.893C10.2831 19.9534 10.0863 19.947 9.90949 19.8749C9.73265 19.8029 9.5874 19.67 9.5 19.5002L6 15.0002Z"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
             </button>
 
             <input
@@ -374,6 +466,9 @@ function VideoPlayer({
               step="any"
               value={volume}
               onChange={handleVolumeChange}
+              onClick={(e) => e.stopPropagation()}
+              onMouseDown={(e) => e.stopPropagation()}
+              onMouseUp={(e) => e.stopPropagation()}
               className="w-12 sm:w-16 accent-white"
               style={{ accentColor: "#fff" }}
             />
@@ -385,7 +480,10 @@ function VideoPlayer({
 
           <div className="flex items-center gap-2 sm:gap-4">
             <button
-              onClick={handleRewind}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleRewind();
+              }}
               className="bg-transparent border-none text-white cursor-pointer p-1 sm:p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
             >
               <svg
@@ -406,7 +504,10 @@ function VideoPlayer({
               </svg>
             </button>
             <button
-              onClick={handleForward}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleForward();
+              }}
               className="bg-transparent border-none text-white cursor-pointer p-1 sm:p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
             >
               <svg
@@ -426,7 +527,10 @@ function VideoPlayer({
                 />
               </svg>
             </button>
-            <button className="bg-transparent border-none text-white cursor-pointer p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10">
+            <button
+              className="bg-transparent border-none text-white cursor-pointer p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
               <svg
                 width="24"
                 height="24"
@@ -443,7 +547,10 @@ function VideoPlayer({
                 />
               </svg>
             </button>
-            <button className="bg-transparent border-none text-white cursor-pointer p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10">
+            <button
+              className="bg-transparent border-none text-white cursor-pointer p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
               <svg
                 width="24"
                 height="24"
@@ -460,7 +567,10 @@ function VideoPlayer({
                 />
               </svg>
             </button>
-            <button className="bg-transparent border-none text-white cursor-pointer p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10">
+            <button
+              className="bg-transparent border-none text-white cursor-pointer p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
               <svg
                 width="24"
                 height="24"
@@ -485,7 +595,10 @@ function VideoPlayer({
               </svg>
             </button>
             <button
-              onClick={handleFullscreen}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleFullscreen();
+              }}
               className="bg-transparent border-none text-white cursor-pointer p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
             >
               {isFullscreen ? (
