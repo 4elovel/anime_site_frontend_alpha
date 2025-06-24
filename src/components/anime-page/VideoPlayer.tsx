@@ -33,6 +33,20 @@ function VideoPlayer({
     b: 0,
   });
 
+  useEffect(() => {
+    const savedVolume = localStorage.getItem("videoPlayerVolume");
+    if (savedVolume !== null) {
+      const volumeValue = parseFloat(savedVolume);
+      if (!isNaN(volumeValue) && volumeValue >= 0 && volumeValue <= 1) {
+        setVolume(volumeValue);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("videoPlayerVolume", volume.toString());
+  }, [volume]);
+
   const formatTime = (seconds: number): string => {
     if (isNaN(seconds)) return "00:00";
     const mins = Math.floor(seconds / 60);
