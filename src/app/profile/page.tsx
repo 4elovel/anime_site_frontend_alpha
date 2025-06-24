@@ -1,6 +1,7 @@
 import { ViewStatsCard } from "@/components/profile/view-stats-card";
 import Navbar from "@/components/nav/navbar";
 import ProfileCard from "@/components/profile/profile-card";
+import AnimeHistory from "@/components/profile/anime-history";
 import Image from "next/image";
 
 export default function ProfilePage() {
@@ -27,6 +28,7 @@ export default function ProfilePage() {
         <div className="flex justify-center items-center w-full">
           <ViewStatsCard />
         </div>
+        <AnimeHistory />
       </div>
     </div>
   );
