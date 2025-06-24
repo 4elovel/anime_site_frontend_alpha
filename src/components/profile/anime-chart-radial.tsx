@@ -29,14 +29,14 @@ export function AnimeChartRadial() {
   const outerRadius = 63;
 
   return (
-    <Card className="flex flex-col bg-transparent border-0 gap-1">
+    <Card className="flex flex-col bg-transparent border-0 gap-1 px-0!">
       {/* <CardHeader className="items-center pb-0">
         <CardTitle>Radial Chart - Text</CardTitle>
       </CardHeader> */}
-      <CardContent className="flex-1 pb-0 mb-0">
+      <CardContent className="flex-1 pb-0 mb-0 p-0! px-0!">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square h-[120px] b-0!"
+          className="m-0! aspect-square h-[120px] b-0! px-0!"
         >
           <RadialBarChart
             data={chartData}
@@ -44,12 +44,13 @@ export function AnimeChartRadial() {
             endAngle={-230}
             innerRadius={innerRadius}
             outerRadius={outerRadius}
+            className="p-0!"
           >
             <PolarGrid
               gridType="circle"
               radialLines={false}
               stroke="none"
-              className="first:fill-[#333333] last:fill-background b-0!"
+              className="first:fill-[#333333] last:fill-background b-0! p-0!"
               polarRadius={[57, 48]}
             />
             <RadialBar dataKey="animeCount" background cornerRadius={10} />
@@ -80,7 +81,7 @@ export function AnimeChartRadial() {
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm mt-0">
+      <CardFooter className="flex-col gap-2 text-sm mt-0 m-0 p-0">
         <h1 className="text-[#918C8C] text-lg font-[500]">Завершено</h1>
       </CardFooter>
     </Card>

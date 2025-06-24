@@ -12,7 +12,7 @@ export function AnimeStatsBullet({
   className = "",
 }: BulletPointProps) {
   return (
-    <div className={`flex items-center w-full max-w-xs gap-3 ${className}`}>
+    <div className={`flex items-center w-full max-w-full gap-3 ${className}`}>
       <div className="flex items-center gap-2 flex-shrink-0">
         <span
           className={`w-2.5 h-2.5 rounded-full ${circleColor}`}
