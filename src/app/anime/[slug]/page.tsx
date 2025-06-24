@@ -1,6 +1,6 @@
 "use client";
 import { API_BASE_URL } from "@/config";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "@/components/nav/navbar";
 import TopAnimeCard from "@/components/main-page/TopAnimeList/top-anime-card";
 import SectionHeader from "@/components/shared/section-header";
@@ -21,6 +21,7 @@ import AnimePosterSection from "@/components/anime-page/AnimePosterSection";
 import AnimeMainInfoSection from "@/components/anime-page/AnimeMainInfoSection";
 import AnimeEpisodesSection from "@/components/anime-page/AnimeEpisodesSection";
 import AnimeReviewsSection from "@/components/anime-page/AnimeReviewsSection";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 interface Studio {
   id: string;
@@ -81,6 +82,11 @@ async function getAnimeTags(slug: string): Promise<string[]> {
 }
 export default function AnimePage() {
   const params = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
   /*
   const anime = await getAnime(params.slug);
   const tags = await getAnimeTags(params.slug);
@@ -165,6 +171,30 @@ export default function AnimePage() {
       audio: "Озвучка на English",
       subs: "Субтитри",
     },
+    {
+      id: 4,
+      animeTitle: "Звичайний день у Коулуні",
+      title: "E3 - Магазин у провулку",
+      preview: "/assets/mock-user-logo.png",
+      audio: "Озвучка на English",
+      subs: "Субтитри",
+    },
+    {
+      id: 5,
+      animeTitle: "Звичайний день у Коулуні",
+      title: "E3 - Магазин у провулку",
+      preview: "/assets/mock-user-logo.png",
+      audio: "Озвучка на English",
+      subs: "Субтитри",
+    },
+    {
+      id: 6,
+      animeTitle: "Звичайний день у Коулуні",
+      title: "E3 - Магазин у провулку",
+      preview: "/assets/mock-user-logo.png",
+      audio: "Озвучка на English",
+      subs: "Субтитри",
+    },
   ];
 
   const [episodeOrder, setEpisodeOrder] = React.useState<"newest" | "oldest">(
@@ -223,13 +253,19 @@ export default function AnimePage() {
   ];
 
   return (
-    <>
+    <SkeletonTheme
+      baseColor="#23242A"
+      highlightColor="#44454A"
+      borderRadius={8}
+      duration={1.2}
+    >
       <Navbar />
       <div className="max-w-7xl mx-auto py-10 px-4 flex flex-col md:flex-row gap-10">
         {/* Left: Poster */}
         <AnimePosterSection
           poster={anime.poster || anime.image_name}
           name={anime.name}
+          isLoading={isLoading}
         />
 
         {/* Center: Main info */}
@@ -238,27 +274,39 @@ export default function AnimePage() {
             anime={anime}
             tags={tags}
             descriptionBlocks={descriptionBlocks}
+            isLoading={isLoading}
           />
           <AnimeEpisodesSection
             episodes={episodes}
             episodeOrder={episodeOrder}
             setEpisodeOrder={setEpisodeOrder}
+            isLoading={isLoading}
           />
-          <AnimeReviewsSection reviews={reviews} animeName={anime.name} />
-          <AnimeCommentSection comments={comments} />
+          <AnimeReviewsSection
+            reviews={reviews}
+            animeName={anime.name}
+            isLoading={isLoading}
+          />
+          <AnimeCommentSection comments={comments} isLoading={isLoading} />
         </div>
 
         {/* Right: Details panel (only visible on large screens) */}
         <div className="hidden lg:flex flex-col items-end gap-6 min-w-[260px]">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-white text-3xl font-bold">
-              {anime.localRating}
-            </span>
-            <Star className="w-6 h-6 text-white" fill="white" />
-          </div>
-          <AnimeDetailsPanel anime={anime} />
+          {isLoading ? (
+            <AnimeDetailsPanel anime={anime} isLoading />
+          ) : (
+            <>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-white text-3xl font-bold">
+                  {anime.localRating}
+                </span>
+                <Star className="w-6 h-6 text-white" fill="white" />
+              </div>
+              <AnimeDetailsPanel anime={anime} />
+            </>
+          )}
         </div>
       </div>
-    </>
+    </SkeletonTheme>
   );
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import ReviewCard from "@/components/main-page/ReviewSection/review-card";
 import { Heart } from "lucide-react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface Review {
   id: number;
@@ -14,6 +16,7 @@ interface Review {
 interface AnimeReviewsSectionProps {
   reviews: Review[];
   animeName: string;
+  isLoading?: boolean;
 }
 
 const Star = () => (
@@ -77,6 +80,7 @@ function pluralizeReview(count: number) {
 const AnimeReviewsSection: React.FC<AnimeReviewsSectionProps> = ({
   reviews,
   animeName,
+  isLoading = false,
 }) => {
   const reviewsCount = reviews.length;
   const maxStars = 5;
@@ -97,54 +101,77 @@ const AnimeReviewsSection: React.FC<AnimeReviewsSectionProps> = ({
     reviewsCount > 0 ? Math.round((recommendedCount / reviewsCount) * 100) : 0;
 
   return (
-    <div className="mt-16">
+    <div className="mt-4">
       <div className="flex flex-col gap-2 mb-6">
-        <div className="flex items-center gap-2">
-          {starsArray.map((type, i) =>
-            type === "full" ? (
-              <Star key={i} />
-            ) : type === "half" ? (
-              <HalfStar key={i} />
-            ) : (
-              <EmptyStar key={i} />
-            )
-          )}
-        </div>
-        <div className="text-white text-lg font-semibold">
-          Загальний рейтинг на основі {reviewsCount}{" "}
-          {pluralizeReview(reviewsCount)}
-        </div>
-        <div className="flex items-center gap-2 text-lg">
-          <Heart className="w-6 h-6 text-[#FF4B55] fill-[#FF4B55]" />
-          <span className="text-white">
-            {recommendPercent}% глядачів рекомендують це аніме друзям
-          </span>
-        </div>
+        {isLoading ? (
+          <>
+            <Skeleton height={24} width={120} className="mb-2" />
+            <Skeleton height={24} width={220} className="mb-2" />
+            <Skeleton height={24} width={180} />
+          </>
+        ) : (
+          <>
+            <div className="flex items-center gap-2">
+              {starsArray.map((type, i) =>
+                type === "full" ? (
+                  <Star key={i} />
+                ) : type === "half" ? (
+                  <HalfStar key={i} />
+                ) : (
+                  <EmptyStar key={i} />
+                )
+              )}
+            </div>
+            <div className="text-white text-lg font-semibold">
+              Загальний рейтинг на основі {reviewsCount}{" "}
+              {pluralizeReview(reviewsCount)}
+            </div>
+            <div className="flex items-center gap-2 text-lg">
+              <Heart className="w-6 h-6 text-[#FF4B55] fill-[#FF4B55]" />
+              <span className="text-white">
+                {recommendPercent}% глядачів рекомендують це аніме друзям
+              </span>
+            </div>
+          </>
+        )}
       </div>
-      <h3 className="text-white text-3xl font-bold mb-2">
-        {pluralizeReview(reviewsCount).charAt(0).toUpperCase() +
-          pluralizeReview(reviewsCount).slice(1)}{" "}
-        про аніме "{animeName}"
-      </h3>
-      <div className="text-[#B6B6B6] text-lg mb-4">
-        Нам важлива твоя думка! Сподобалося це аніме?
-      </div>
-      <button className="mb-8 px-6 py-3 rounded-xl text-white text-sm font-semibold border border-[#49638A] hover:bg-[#33344A] transition w-fit">
-        Залишити відгук
-      </button>
-      <div className="flex flex-col gap-6">
-        {reviews.map((review) => (
-          <ReviewCard
-            key={review.id}
-            userName={review.username}
-            date={review.date}
-            title={""}
-            rating={review.rating}
-            review={review.text}
-            adminReply={review.adminReply}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <>
+          <Skeleton height={32} width={320} className="mb-2" />
+          <Skeleton height={24} width={220} className="mb-4" />
+          <Skeleton height={44} width={180} className="mb-8" />
+          {Array.from({ length: 2 }).map((_, i) => (
+            <Skeleton key={i} height={120} className="mb-6" />
+          ))}
+        </>
+      ) : (
+        <>
+          <h3 className="text-white text-3xl font-bold mb-2">
+            {pluralizeReview(reviewsCount).charAt(0).toUpperCase() +
+              pluralizeReview(reviewsCount).slice(1)}{" "}
+            про аніме "{animeName}"
+          </h3>
+          <div className="text-[#B6B6B6] text-lg mb-4">
+            Нам важлива твоя думка! Сподобалося це аніме?
+          </div>
+          <button className="mb-8 px-6 py-3 rounded-xl text-white text-sm font-semibold border border-[#49638A] hover:bg-[#33344A] transition w-fit">
+            Залишити відгук
+          </button>
+          <div className="flex flex-col gap-6">
+            {reviews.map((review) => (
+              <ReviewCard
+                key={review.id}
+                userName={review.username}
+                date={review.date}
+                title={""}
+                rating={review.rating}
+                review={review.text}
+                adminReply={review.adminReply}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -1,4 +1,6 @@
 import React from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface AnimeCommentCardProps {
   avatarUrl: string;
@@ -11,6 +13,7 @@ interface AnimeCommentCardProps {
   onDislike?: () => void;
   onReply?: () => void;
   isReply?: boolean;
+  isLoading?: boolean;
 }
 
 const UpArrow = ({ hovered }: { hovered: boolean }) => (
@@ -78,11 +81,40 @@ const AnimeCommentCard: React.FC<AnimeCommentCardProps> = ({
   onDislike,
   onReply,
   isReply = false,
+  isLoading = false,
 }) => {
   const [upHover, setUpHover] = React.useState(false);
   const [downHover, setDownHover] = React.useState(false);
   const [replyHover, setReplyHover] = React.useState(false);
 
+  if (isLoading) {
+    return (
+      <div
+        className={`relative bg-transparent border-none select-none p-0 flex flex-col${
+          isReply ? " pl-4" : ""
+        }`}
+      >
+        <div className="flex items-start gap-4">
+          <Skeleton circle height={48} width={48} className="mt-1" />
+          <div className="flex-1">
+            <div className="flex items-start justify-between mb-1">
+              <div className="flex flex-col">
+                <Skeleton height={18} width={100} />
+                <Skeleton height={12} width={60} className="mt-1" />
+              </div>
+              <div className="flex items-center gap-2">
+                <Skeleton height={24} width={24} />
+                <Skeleton height={18} width={24} />
+                <Skeleton height={24} width={24} />
+              </div>
+            </div>
+            <Skeleton height={18} width={180} className="mb-2" />
+            <Skeleton height={18} width={80} />
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div
       className={`relative bg-transparent border-none select-none p-0 flex flex-col${

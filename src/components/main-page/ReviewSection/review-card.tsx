@@ -1,4 +1,6 @@
 import React from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface ReviewCardProps {
   userName: string;
@@ -7,6 +9,7 @@ interface ReviewCardProps {
   rating: number;
   review: string;
   adminReply?: string;
+  isLoading?: boolean;
 }
 
 const Star = () => (
@@ -71,7 +74,29 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
   rating,
   review,
   adminReply,
+  isLoading = false,
 }) => {
+  if (isLoading) {
+    return (
+      <div className="bg-[#181818] rounded-2xl p-6 text-white w-full shadow-lg border border-[#232323]">
+        <div className="flex items-start justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <Skeleton circle height={12} width={12} className="mr-2" />
+            <Skeleton height={16} width={120} />
+          </div>
+          <Skeleton height={16} width={80} />
+        </div>
+        <div className="flex gap-1 my-2">
+          <Skeleton height={18} width={90} />
+        </div>
+        <Skeleton height={20} width={220} className="mb-2" />
+        <Skeleton height={20} width={180} />
+        <div className="mt-4">
+          <Skeleton height={16} width={120} />
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="bg-[#181818] rounded-2xl p-6 text-white w-full shadow-lg border border-[#232323]">
       <div className="flex items-start justify-between mb-2">
