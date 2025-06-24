@@ -13,9 +13,9 @@ export default function AnimeHistoryHeader() {
       <Button
         variant="secondary"
         size="icon"
-        className="flex items-center justify-center w-10 h-10 border-2 border-white rounded-sm bg-transparent cursor-pointer hover:border-blue hover:bg-transparent"
+        className="group flex items-center justify-center w-10 h-10 border-2 border-white rounded-sm bg-transparent cursor-pointer  hover:bg-white"
       >
-        <MoveRight className="text-white w-6 h-6" />
+        <MoveRight className="text-white w-6 h-6 group-hover:text-black transition-colors" />
       </Button>
     </div>
   );
