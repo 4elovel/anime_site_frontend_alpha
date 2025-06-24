@@ -1,17 +1,26 @@
+"use client";
 import { API_BASE_URL } from "@/config";
 import React from "react";
-import ImdbRating from "@/assets/anime/imdb-rating.svg";
+import Navbar from "@/components/nav/navbar";
+import TopAnimeCard from "@/components/main-page/TopAnimeList/top-anime-card";
 import SectionHeader from "@/components/shared/section-header";
 import ActionButton from "@/components/ui/action-button";
-import { Play, Share2Icon } from "lucide-react";
-import ArrowDown from "@/assets/arrow-down.svg";
-import WatchTogether from "@/assets/watch-together.svg";
-import Rating from "@/components/ui/rating";
-import { EllipsisVertical } from "lucide-react";
-import MoreIcon from "@/assets/three-vertical-dots.svg";
-import ShareIcon from "@/assets/share.svg";
 import StandartButtonIcon from "@/components/ui/standart-button-icon";
 import AnimeDetailsPanel from "@/components/shared/anime-details-panel";
+import Rating from "@/components/ui/rating";
+import { Star } from "lucide-react";
+import ArrowDown from "@/assets/arrow-down.svg";
+import WatchTogether from "@/assets/watch-together.svg";
+import ImdbRating from "@/assets/anime/imdb-rating.svg";
+import { useParams } from "next/navigation";
+import CommentCard from "@/components/main-page/CommentSection/comment-card";
+import ReviewCard from "@/components/main-page/ReviewSection/review-card";
+import AnimeCommentCard from "@/components/main-page/CommentSection/anime-comment-card";
+import AnimeCommentSection from "@/components/main-page/CommentSection/anime-comment-section";
+import AnimePosterSection from "@/components/anime-page/AnimePosterSection";
+import AnimeMainInfoSection from "@/components/anime-page/AnimeMainInfoSection";
+import AnimeEpisodesSection from "@/components/anime-page/AnimeEpisodesSection";
+import AnimeReviewsSection from "@/components/anime-page/AnimeReviewsSection";
 
 interface Studio {
   id: string;
@@ -70,12 +79,9 @@ async function getAnimeTags(slug: string): Promise<string[]> {
     return [];
   }
 }
-
-export default async function AnimePage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default function AnimePage() {
+  const params = useParams();
+  /*
   const anime = await getAnime(params.slug);
   const tags = await getAnimeTags(params.slug);
   if (!anime) {
@@ -83,99 +89,176 @@ export default async function AnimePage({
       <div className="text-white text-center mt-20">Аніме не знайдено</div>
     );
   }
+*/
+  // Мокові дані для тесту
+  const anime = {
+    id: "1",
+    slug: String(params?.slug || ""),
+    name: "Звичайний день у Коулуні",
+    poster: "/assets/mock-user-logo.png",
+    image_name: "/assets/mock-user-logo.png",
+    seo: {
+      title: "Весняна драма",
+      description: "Дуже емоційне аніме.",
+      image: "/assets/mock-user-logo.png",
+    },
+    localRating: 7.76,
+    imdb_score: 9.12,
+    description: "Це тестовий опис аніме для мокових даних.",
+    kind: "TV Серіал",
+    is_published: true,
+    episodes_count: 12,
+    duration: 24,
+    first_air_date: "2023-04-01",
+    last_air_date: "2023-06-17",
+    studio: {
+      id: "studio1",
+      name: "Kyoto Animation",
+      slug: "kyoto-animation",
+      description: "Відома студія аніме.",
+    },
+  };
+  const tags = ["Драма", "Психологія", "Емоції"];
+
+  // Масив описів з джерелом
+  const descriptionBlocks = [
+    {
+      description: `У далекому майбутньому, в місті-гетто Коулун Вол-Сіті, живуть люди, які обожнюють старий спосіб життя. Це притулок для тих, хто сумує за Гонконгом минулого. Однак рієлторка <span class='text-[#4B7FCC] font-semibold'>Куджірай Рейко</span> прагне нового та захоплюючого в цьому районі. Натомість її єдиний колега, <span class='text-[#4B7FCC] font-semibold'>Кудо Хаджіме</span>, насолоджується ностальгією, яку викликає місто, і відштовхує все сучасне, що просочується за його стіни. Але, попри різні погляди та постійні сварки через найбуденніші речі, вони часто знаходять задоволення в компанії одне одного.`,
+      source: {},
+    },
+    {
+      description: `Одного дня невдалий жарт призводить до того, що Хаджіме робить несподіваний крок у бік Рейко, після чого він швидко вибачається. Спантеличена його вчинками, Рейко починає шукати можливі пояснення, тільки щоб виявити минуле, про яке вона не має жодних спогадів.`,
+      source: {},
+    },
+    {
+      description: "",
+      source: {
+        name: "MyAnimeList",
+        url: "https://myanimelist.net/anime/52991/Kowloon_Generic_Romance",
+      },
+    },
+  ];
+
+  // Мокові дані для епізодів
+  const episodes = [
+    {
+      id: 1,
+      animeTitle: "Звичайний день у Коулуні",
+      title: "E1 - Прокинутись у Коулуні",
+      preview: "/assets/mock-user-logo.png",
+      audio: "Озвучка на English",
+      subs: "Субтитри",
+    },
+    {
+      id: 2,
+      animeTitle: "Звичайний день у Коулуні",
+      title: "E2 - Мрії на даху",
+      preview: "/assets/mock-user-logo.png",
+      audio: "Озвучка на English",
+      subs: "Субтитри",
+    },
+    {
+      id: 3,
+      animeTitle: "Звичайний день у Коулуні",
+      title: "E3 - Магазин у провулку",
+      preview: "/assets/mock-user-logo.png",
+      audio: "Озвучка на English",
+      subs: "Субтитри",
+    },
+  ];
+
+  const [episodeOrder, setEpisodeOrder] = React.useState<"newest" | "oldest">(
+    "oldest"
+  );
+  const filteredEpisodes = [...episodes];
+  if (episodeOrder === "newest") filteredEpisodes.reverse();
+
+  // Мокові дані для відгуків
+  const reviews = [
+    {
+      id: 1,
+      username: "АННА",
+      date: "24.04.2025",
+      rating: 4.5,
+      text: "Це аніме мене зачарувало з першої серії! Атмосфера Коулуну передана просто магічно – ніби сама там побувала. Персонажі дуже живі, а повсякденність — така затишна. Обов'язково раджу!",
+      adminReply:
+        "Дякуємо за теплі слова! Ми дуже старалися передати настрій Коулуна 🥰",
+      avatarUrl: "/assets/mock-user-logo.png",
+    },
+    {
+      id: 2,
+      username: "ІГОР",
+      date: "20.04.2025",
+      rating: 4.5,
+      text: "Спочатку здавалося нудним, але чим далі — тим більше затягує. Цікаві побутові моменти, гарна анімація, приємна музика. Гарний вибір для вечірнього перегляду",
+      adminReply:
+        "Дякуємо, що дали аніме шанс! Раді, що воно вам припало до душі 😊",
+      avatarUrl: "/assets/mock-user-logo.png",
+    },
+  ];
+
+  // Мокові дані для коментарів
+  const comments = [
+    {
+      id: 1,
+      avatarUrl: "/assets/mock-user-logo.png",
+      username: "SenpaiOfSarcasm",
+      timeAgo: "7 днів тому",
+      text: "Дивився це аніме, як нормальна людина. Тепер — сплю з постером головного героя і планую назвати кота на його честь",
+    },
+    {
+      id: 2,
+      avatarUrl: "/assets/mock-user-logo.png",
+      username: "OtakuOnCrack",
+      timeAgo: "8 днів тому",
+      text: "Я прийшла сюди просто подивитись аніме, а тепер хочу або стати ніндзя, або піти плакати в подушку. Без середини",
+    },
+    {
+      id: 3,
+      avatarUrl: "/assets/mock-user-logo.png",
+      username: "RamenRage",
+      timeAgo: "7 днів тому",
+      text: "Подивився першу серію, і тепер морально готуюсь до того моменту, коли все піде не так. Бо піде. Завжди йде",
+    },
+  ];
 
   return (
-    <div className="max-w-7xl mx-auto py-10 px-4 flex flex-col md:flex-row gap-10">
-      {/* Left: Poster */}
-      <div className="flex flex-col items-center gap-4 min-w-[260px]">
-        <img
-          src={anime.poster || anime.image_name}
-          alt={anime.name}
-          className="rounded-2xl w-[220px] h-[320px] object-cover shadow-xl border border-zinc-700"
+    <>
+      <Navbar />
+      <div className="max-w-7xl mx-auto py-10 px-4 flex flex-col md:flex-row gap-10">
+        {/* Left: Poster */}
+        <AnimePosterSection
+          poster={anime.poster || anime.image_name}
+          name={anime.name}
         />
-        <div className="flex flex-col gap-3 w-full mt-2">
-          <ActionButton
-            text="Додати до списку"
-            icon={<ArrowDown size={22} />}
-            colorClass="bg-zinc-700 text-white hover:bg-zinc-800"
-            className="w-full"
+
+        {/* Center: Main info */}
+        <div className="flex-1 flex flex-col gap-4">
+          <AnimeMainInfoSection
+            anime={anime}
+            tags={tags}
+            descriptionBlocks={descriptionBlocks}
           />
-          <ActionButton
-            text="Дивитись трейлер"
-            icon={<Play size={22} />}
-            colorClass="bg-zinc-700 text-white hover:bg-zinc-800"
-            className="w-full"
+          <AnimeEpisodesSection
+            episodes={episodes}
+            episodeOrder={episodeOrder}
+            setEpisodeOrder={setEpisodeOrder}
           />
+          <AnimeReviewsSection reviews={reviews} animeName={anime.name} />
+          <AnimeCommentSection comments={comments} />
+        </div>
+
+        {/* Right: Details panel (only visible on large screens) */}
+        <div className="hidden lg:flex flex-col items-end gap-6 min-w-[260px]">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-white text-3xl font-bold">
+              {anime.localRating}
+            </span>
+            <Star className="w-6 h-6 text-white" fill="white" />
+          </div>
+          <AnimeDetailsPanel anime={anime} />
         </div>
       </div>
-
-      {/* Center: Main info */}
-      <div className="flex-1 flex flex-col gap-4">
-        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-          <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-1">
-              {anime.name}
-            </h1>
-            {anime.seo?.title && (
-              <div className="text-lg text-zinc-400 mb-1">
-                {anime.seo.title}
-              </div>
-            )}
-            <Rating
-              icon={<ImdbRating size={22} />}
-              name="IMDb"
-              rating={anime.imdb_score ?? "-"}
-              maxRating={10}
-            />
-          </div>
-        </div>
-        {/* TODO DELETE TEST TAG */}
-        <div className="flex flex-row flex-wrap items-center gap-3 min-h-[27px]">
-          {/* Hardcoded test tag */}
-          <span className="font-sans text-white decoration-dotted text-base font-normal leading-6 underline underline-dotted underline-offset-4 decoration-[#49638A] cursor-pointer bg-none rounded-none p-0">
-            Тест-тег
-          </span>
-          {/* Tags from DB */}
-          {tags &&
-            tags.map((tag, idx) => (
-              <span
-                key={tag + idx}
-                className="font-sans text-white text-base font-normal leading-6 underline underline-dotted underline-offset-4 decoration-[#49638A] cursor-pointer bg-none rounded-none p-0"
-              >
-                {tag}
-              </span>
-            ))}
-        </div>
-        <div className="items-center text-center content-center justify-center">
-          <div className="flex flex-row gap-3 mb-4 justify-center content-center items-center">
-            <ActionButton
-              text="Дивитися E1"
-              icon={<Play size={22} />}
-              colorClass="bg-[#4B7FCC] text-white hover:bg-[#3c70bd]"
-              className="w-full"
-            />
-            <ActionButton
-              text="Дивитись разом"
-              icon={<WatchTogether size={22} />}
-              colorClass="bg-[#D06005] text-white hover:bg-[#c25903]"
-              className="w-full"
-            />
-            <StandartButtonIcon
-              className="w-23"
-              icon={<Share2Icon color="white" size={22} />}
-            />
-            <StandartButtonIcon icon={<MoreIcon size={22} />} />
-          </div>
-          <SectionHeader title="Опис" badge="UA" className="mb-2" />
-          <div className="text-zinc-200 text-base leading-relaxed whitespace-pre-line">
-            {anime.description || anime.seo?.description || "Опис недоступний."}
-          </div>
-        </div>
-        {/* TODO: Fetch and display episodes, persons, tags, ratings, comments, similars, related using additional endpoints */}
-      </div>
-
-      {/* Right: Details panel (only visible on large screens) */}
-      <AnimeDetailsPanel anime={anime} />
-    </div>
+    </>
   );
 }

@@ -1,29 +1,40 @@
 import React from "react";
+import { Star, Film } from "lucide-react";
 
 interface RatingProps {
-  icon: React.ReactNode;
-  name: string;
-  rating: number | string;
-  maxRating: number | string;
+  localRating: number | string;
+  imdb: number | string;
+  maxRating?: number | string;
   className?: string;
 }
 
 const Rating: React.FC<RatingProps> = ({
-  icon,
-  name,
-  rating,
-  maxRating,
+  localRating,
+  imdb,
+  maxRating = 10,
   className = "",
 }) => (
-  <div className={`flex flex-col gap-2 text-sm text-[#4B7FCC] ${className}`}>
-    <div className="flex items-center gap-2">
-      {icon}
-      <span className="text-white font-semibold">{name}:</span>
-      <span className="text-[#4B7FCC] text-base font-normal">
-        {rating ?? "-"}{" "}
-        <span className="text-[#4B7FCC] text-base font-normal">
-          / {maxRating}
-        </span>
+  <div
+    className={`flex flex-row gap-12 w-full ${className}`}
+  >
+    {/* Наш рейтинг */}
+    <div className="flex flex-col">
+      <div className="flex gap-2 mb-1">
+        <Star className="w-6 h-6 text-white" fill="white" />
+        <span className="text-white text-sm font-semibold">Наш рейтинг:</span>
+      </div>
+      <span className="text-[#4B7FCC] text-sm font-medium">
+        {localRating ?? "-"}/{maxRating}
+      </span>
+    </div>
+    {/* IMDb */}
+    <div className="flex flex-col">
+      <div className="flex gap-2 mb-1">
+        <Film className="w-6 h-6 text-white" />
+        <span className="text-white text-sm font-semibold">IMDb:</span>
+      </div>
+      <span className="text-[#4B7FCC] text-sm font-medium">
+        {imdb ?? "-"} / {maxRating}
       </span>
     </div>
   </div>

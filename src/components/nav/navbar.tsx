@@ -1,11 +1,36 @@
 "use client";
 
-import { motion } from "framer-motion";
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Breadcrumbs, { BreadcrumbItem } from "@/components/nav/breadcrumbs";
 import Image from "next/image";
+import { LayoutGrid } from "lucide-react";
+import { motion } from "framer-motion";
 
 import UserProfilePopover from "@/components/nav/user-profile-popover";
 
-export default function Navbar() {
+const Navbar: React.FC = () => {
+  const pathname = usePathname();
+
+  // Динамічний ланцюжок для прикладу (можна замінити на реальні дані)
+  let breadcrumbs: BreadcrumbItem[] = [];
+  if (pathname !== "/") {
+    breadcrumbs = [
+      {
+        label: "Аніме",
+        href: "/anime",
+        icon: <LayoutGrid className="w-5 h-5 text-[#4B7FCC]" />,
+      },
+      // Додати інші рівні динамічно залежно від pathname
+    ];
+    // Наприклад, якщо /anime/slug
+    const parts = pathname.split("/").filter(Boolean);
+    if (parts[0] === "anime" && parts[1]) {
+      breadcrumbs.push({ label: decodeURIComponent(parts[1]), isActive: true });
+    }
+  }
+
   return (
     <motion.header
       initial={{ y: -30, opacity: 0 }}
@@ -14,15 +39,19 @@ export default function Navbar() {
       className="w-full flex items-center justify-between px-8 py-4 bg-transparent"
       style={{ minHeight: 0 }}
     >
-      <div className="flex-shrink-0">
-        <Image
-          src="/logo.png"
-          alt="Логотип"
-          width={256}
-          height={256}
-          className="w-18 h-18 object-contain"
-        />
-      </div>
+      {pathname === "/" ? (
+        <Link href="/">
+          <Image
+            src="/logo.png"
+            alt="Логотип"
+            width={256}
+            height={256}
+            className="w-18 h-18 object-contain"
+          />
+        </Link>
+      ) : (
+        <Breadcrumbs items={breadcrumbs} />
+      )}
 
       <div className="flex items-center gap-6 sm:gap-4 xs:gap-2">
         <div className="hidden md:flex items-center border border-[#5B7CB2] rounded-xl px-4 py-2 w-72 max-w-xs">
@@ -78,4 +107,6 @@ export default function Navbar() {
       </div>
     </motion.header>
   );
-}
+};
+
+export default Navbar;

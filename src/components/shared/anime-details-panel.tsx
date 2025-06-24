@@ -46,9 +46,11 @@ const AnimeDetailsPanel: React.FC<{ anime: AnimeDetails }> = ({ anime }) => {
           <span className="text-zinc-400">Тип:</span>
           <span>{anime.kind || "-"}</span>
         </div>
-        <div className="flex justify-between">
-          <span className="text-zinc-400">Статус:</span>
-          <span>{anime.is_published ? "Вийшло" : "Онґоїнг"}</span>
+        <div className="flex justify-between items-center">
+          <span className="text-zinc-400 text-sm font-semibold">Статус:</span>
+          <span className="bg-[#5C6E91] text-white text-sm font-semibold rounded-xl px-4 py-1">
+            {anime.is_published ? "Вийшло" : "Онґоїнг"}
+          </span>
         </div>
         <div className="flex justify-between">
           <span className="text-zinc-400">Епізоди:</span>
