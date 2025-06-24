@@ -221,8 +221,7 @@ function VideoPlayer({
   return (
     <div
       id="video-container"
-      className="relative flex items-center justify-center w-full aspect-video"
-      style={{ minHeight: "60vh" }}
+      className="relative flex items-center justify-center w-full aspect-video sm:aspect-video xs:aspect-video min-h-[220px] sm:min-h-[320px] md:min-h-[400px] lg:min-h-[60vh]"
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(true)}
     >
@@ -283,7 +282,7 @@ function VideoPlayer({
         }}
       />
       <div
-        className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent px-10 pt-16 pb-8 transition-opacity duration-300 ${
+        className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent px-2 sm:px-4 md:px-10 pt-8 sm:pt-12 md:pt-16 pb-4 sm:pb-6 md:pb-8 transition-opacity duration-300 ${
           showControls ? "opacity-100" : "opacity-0"
         } z-10`}
       >
@@ -307,16 +306,16 @@ function VideoPlayer({
           />
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-5">
+        <div className="flex items-center justify-between flex-wrap gap-y-2">
+          <div className="flex items-center gap-3 sm:gap-5">
             <button
               onClick={handlePlayPause}
-              className="bg-transparent border-none text-white cursor-pointer p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
+              className="bg-transparent border-none text-white cursor-pointer p-1 sm:p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
             >
               {playing ? (
                 <svg
-                  width="24"
-                  height="24"
+                  width="22"
+                  height="22"
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -333,8 +332,8 @@ function VideoPlayer({
                 </svg>
               ) : (
                 <svg
-                  width="24"
-                  height="24"
+                  width="22"
+                  height="22"
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -349,11 +348,11 @@ function VideoPlayer({
 
             <button
               onClick={handleMute}
-              className="bg-transparent border-none text-white cursor-pointer p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
+              className="bg-transparent border-none text-white cursor-pointer p-1 sm:p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
             >
               <svg
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -375,23 +374,23 @@ function VideoPlayer({
               step="any"
               value={volume}
               onChange={handleVolumeChange}
-              className="w-16 accent-white"
+              className="w-12 sm:w-16 accent-white"
               style={{ accentColor: "#fff" }}
             />
 
-            <span className="text-white text-sm font-mono font-normal">
+            <span className="text-white text-xs sm:text-sm font-mono font-normal">
               {formatTime(played * duration)} / {formatTime(duration)}
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <button
               onClick={handleRewind}
-              className="bg-transparent border-none text-white cursor-pointer p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
+              className="bg-transparent border-none text-white cursor-pointer p-1 sm:p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
             >
               <svg
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -408,11 +407,11 @@ function VideoPlayer({
             </button>
             <button
               onClick={handleForward}
-              className="bg-transparent border-none text-white cursor-pointer p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
+              className="bg-transparent border-none text-white cursor-pointer p-1 sm:p-2 rounded flex items-center justify-center transition-colors hover:bg-white/10"
             >
               <svg
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
