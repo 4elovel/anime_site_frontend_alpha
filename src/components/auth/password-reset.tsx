@@ -7,7 +7,7 @@ import { useState } from "react";
 
 import { AuthHeader } from "@/components/auth/auth-header";
 import { AuthInput } from "@/components/auth/auth-input";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/auth-context";
 
 import { Button } from "@/components/ui/button";
 
