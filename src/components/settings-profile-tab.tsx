@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import SettingsSelect from "@/components/ui/settings-select";
 import CalendarIcon from "@/assets/calendar.svg";
+import { Calendar } from "@/components/ui/calendar";
 
 interface SettingsProfileTabProps {
   username: string;
@@ -44,7 +45,7 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
   const [gender, setGender] = useState("female");
   const [cover, setCover] = useState<string | null>(null);
   const [birthdateError, setBirthdateError] = useState("");
-  const birthdateInputRef = useRef<HTMLInputElement>(null);
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   const handleCoverUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -66,15 +67,12 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
     return "";
   };
 
-  const handleBirthdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBirthdate(e.target.value);
-    setBirthdateError(validateBirthdate(e.target.value));
-  };
-
-  const handleCalendarClick = () => {
-    birthdateInputRef.current?.focus();
-    birthdateInputRef.current?.showPicker &&
-      birthdateInputRef.current.showPicker();
+  const handleBirthdateSelect = (date: Date | undefined) => {
+    if (!date) return;
+    const iso = date.toISOString().slice(0, 10);
+    setBirthdate(iso);
+    setBirthdateError(validateBirthdate(iso));
+    setCalendarOpen(false);
   };
 
   return (
@@ -229,21 +227,23 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
             <div className="relative">
               <Input
                 id="birthdate"
-                type="date"
-                value={birthdate}
-                onChange={handleBirthdateChange}
-                ref={birthdateInputRef}
+                type="text"
+                value={
+                  birthdate ? new Date(birthdate).toLocaleDateString() : ""
+                }
+                readOnly
                 className={`bg-transparent border border-[#49638A] rounded-lg px-4 py-2 text-white text-base focus:border-blue-400 focus:ring-0 placeholder:text-[#bfc6d5] pr-12 ${
                   birthdateError ? "border-red-500" : ""
                 }`}
                 placeholder="ДД. ММ. РРРР"
                 aria-invalid={!!birthdateError}
+                onClick={() => setCalendarOpen(true)}
               />
               <button
                 type="button"
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-[#bfc6d5] p-0 m-0 bg-transparent border-0 cursor-pointer"
                 tabIndex={-1}
-                onClick={handleCalendarClick}
+                onClick={() => setCalendarOpen((v) => !v)}
                 aria-label="Вибрати дату"
                 style={{ lineHeight: 0 }}
               >
@@ -257,6 +257,20 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
                   />
                 </svg>
               </button>
+              {calendarOpen && (
+                <div className="absolute z-30 right-0 bottom-full mb-2">
+                  <Calendar
+                    mode="single"
+                    selected={birthdate ? new Date(birthdate) : undefined}
+                    onSelect={handleBirthdateSelect}
+                    fromYear={1900}
+                    toYear={new Date().getFullYear()}
+                    onDayClick={() => setCalendarOpen(false)}
+                    captionLayout="dropdown"
+                    className="rounded-lg border border-[#49638A] shadow-sm text-white bg-black"
+                  />
+                </div>
+              )}
               {birthdateError && (
                 <span className="absolute left-0 -bottom-6 text-red-500 text-xs">
                   {birthdateError}
