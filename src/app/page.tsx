@@ -554,7 +554,7 @@ export default function Home() {
         buttonUrl="/anonce"
       />
 
-      <TopAnimeList items={topAnime} />
+      <TopAnimeList items={topAnime} showRank={false} />
 
       <CommentCollection comments={comments} />
 

@@ -12,11 +12,13 @@ interface Anime {
 interface TopAnimeListProps {
   items: Anime[];
   filterLabel?: string;
+  showRank: boolean;
 }
 
 const TopAnimeList: React.FC<TopAnimeListProps> = ({
   items,
   filterLabel = "За сьогодні",
+  showRank = true,
 }) => {
   return (
     <section className="w-full max-w-[1400px] mx-auto py-10 xs:py-4">
@@ -63,6 +65,7 @@ const TopAnimeList: React.FC<TopAnimeListProps> = ({
               type={anime.type}
               rank={idx + 1}
               rating={anime.rating}
+              showRank={showRank}
             />
           ))}
         </div>
