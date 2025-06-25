@@ -10,23 +10,23 @@ const progress = 0.45;
 
 export default function AnimeViewTimeChart() {
   return (
-    <div className="hidden rounded-xl md:flex flex-col items-start justify-center p-3 border border-white bg-transparent gap-1 w-90 max-h-28">
+    <div className="hidden max-h-28 w-90 flex-col items-start justify-center gap-1 rounded-xl border border-white bg-transparent p-3 md:flex">
       <div className="flex items-center gap-2">
-        <ChartPie className="w-6 h-6 text-[#787880]" />
+        <ChartPie className="h-6 w-6 text-[#787880]" />
         <span className="text-[1rem] font-[500] text-[#787880]">Час аніме</span>
       </div>
-      <div className="flex items-center justify-between w-full">
-        <span className="text-[1.25rem] font-bold text-white leading-tight">
+      <div className="flex w-full items-center justify-between">
+        <span className="text-[1.25rem] leading-tight font-bold text-white">
           {months} місяці {days} дні
         </span>
         <span className="text-[1rem] font-[500] text-[#787880]">
           {totalHours} години
         </span>
       </div>
-      <div className="w-full mt-2">
-        <div className="relative w-full h-2.5">
+      <div className="mt-2 w-full">
+        <div className="relative h-2.5 w-full">
           {/* Bar background */}
-          <div className="absolute top-0 left-0 w-full h-2.5 rounded-full bg-[#23242b]" />
+          <div className="absolute top-0 left-0 h-2.5 w-full rounded-full bg-[#23242b]" />
           {/* Bar foreground */}
           <div
             className="absolute top-0 left-0 h-2.5 rounded-full bg-[#46618E] transition-all duration-500"
