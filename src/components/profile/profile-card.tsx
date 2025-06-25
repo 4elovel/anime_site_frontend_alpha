@@ -8,21 +8,24 @@ export default function ProfileCard() {
   const followingCount = 0;
 
   return (
-    <div className="flex flex-col w-full max-w-128 z-1">
-      <Card className="bg-transparent p-0 border-none">
+    <div className="z-1 flex w-full max-w-128 flex-col">
+      <Card className="border-none bg-transparent p-0">
         <CardContent className="flex flex-row gap-6 p-0">
-          <Avatar className="cursor-pointer w-30 h-30 rounded-md object-cover border-none">
+          <Avatar className="h-30 w-30 cursor-pointer rounded-md border-none object-cover lg:h-50 lg:w-50">
             <AvatarImage src={avatarUrl} />
             <AvatarFallback>VM</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-2">
-            <h1 className="text-white text-[1.5rem] font-[700]">{username}</h1>
-            <p className="text-[1rem] text-[#918c8c] font-[500]">
-              <span className="text-white">{followerCount}</span> стежать
-            </p>
-            <p className="text-[1rem] text-[#918c8c] font-[500]">
-              <span className="text-white">{followingCount}</span> відстежується
-            </p>
+            <h1 className="text-[1.5rem] font-[700] text-white">{username}</h1>
+            <div className="flex flex-col lg:flex-row lg:gap-5">
+              <p className="text-[1rem] font-[500] text-[#918c8c]">
+                <span className="text-white">{followerCount}</span> стежать
+              </p>
+              <p className="text-[1rem] font-[500] text-[#918c8c]">
+                <span className="text-white">{followingCount}</span>{" "}
+                відстежується
+              </p>
+            </div>
           </div>
         </CardContent>
       </Card>

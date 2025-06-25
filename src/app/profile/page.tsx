@@ -12,20 +12,20 @@ export default function ProfilePage() {
     <div className="flex flex-col sm:gap-12">
       <Navbar />
       <ProfileBanner />
-      <div className="flex flex-col px-4 sm:px-8 gap-6 z-1 sm:gap-12">
-        <h1 className="font-[500] text-[2rem] text-white mb-0 sm:hidden">
+      <div className="z-1 flex flex-col gap-6 px-2 sm:gap-12 sm:px-4 md:px-6 lg:px-30">
+        <h1 className="mb-0 text-[2rem] font-[500] text-white sm:hidden">
           Загальне
         </h1>
-        <div className="flex flex-col gap-6 sm:flex-row sm:justify-between">
+        <div className="flex flex-col gap-6 md:w-full md:flex-row md:justify-between">
           <ProfileCard />
           <ViewStatsCard />
         </div>
-        <div className="flex flex-col md:flex-row md:justify-between md:items-start">
-          <div className="flex flex-col gap-8">
-            <h1 className="font-bold text-[2rem] text-white mb-0">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between">
+          <div className="hidden flex-col gap-8 md:max-w-180 xl:flex">
+            <h1 className="mb-0 hidden text-[2rem] font-bold text-white md:block">
               Статистика
             </h1>
-            <div className="flex flex-row gap-6">
+            <div className="hidden flex-row gap-6 md:gap-18 xl:flex">
               <ActivityBarChart />
               <AnimeViewTimeChart />
             </div>

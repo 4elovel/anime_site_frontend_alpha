@@ -5,8 +5,8 @@ import { AnimeStatsBullet } from "@/components/profile/anime-stats-bullet";
 
 export function ViewStatsCard() {
   return (
-    <Card className="flex bg-transparent px-3 py-0 m-0 w-full max-w-100 z-1">
-      <CardContent className="flex flex-row p-0! py-0! justify-between">
+    <Card className="z-1 m-0 flex w-full bg-transparent px-3 py-0 md:max-w-100">
+      <CardContent className="flex flex-row justify-around p-0! py-0!">
         <AnimeChartRadial />
         <div className="flex flex-col items-center justify-center gap-4">
           <AnimeStatsBullet text="Дивлюсь" number={7} circleColor="#2b94ab" />

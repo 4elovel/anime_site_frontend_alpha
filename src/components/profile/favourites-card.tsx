@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Dot } from "lucide-react";
 
 interface FavouritesCardProps {
   imageUrl?: string;
@@ -9,24 +10,27 @@ interface FavouritesCardProps {
 
 export default function FavouritesCard(props: FavouritesCardProps) {
   return (
-    <div className="flex flex-col gap-4 max-w-35 md:w-35 max-h-70 md:h-70">
+    <div className="flex h-70! w-25 flex-col gap-4 sm:w-30 md:w-30">
       <Image
         src={props.imageUrl || "/assets/profile/mock-favourites-card.png"}
         alt={props.title || "Favourites Card"}
         width={300}
         height={400}
-        className="w-full h-auto object-cover rounded-lg"
+        className="h-45 w-full rounded-lg object-cover sm:h-55 md:h-60"
       />
-      <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-semibold text-white">
+      <div className="flex flex-col gap-0">
+        <h2 className="truncate text-lg font-semibold text-white">
           {props.title || "Назва аніме"}
         </h2>
-        <p className="text-sm text-gray-400">
-          {props.year ? `${props.year} рік` : "Рік випуску"}
-        </p>
-        <p className="text-sm text-gray-400">
-          {props.mediaType || "Тип медіа"}
-        </p>
+        <div className="flex flex-row items-center justify-between text-center">
+          <p className="text-sm text-gray-400">
+            {props.year ? `${props.year}` : "Рік випуску"}
+          </p>
+          <Dot className="h-6 w-6 text-gray-400" />
+          <p className="text-sm text-gray-400">
+            {props.mediaType || "Тип медіа"}
+          </p>
+        </div>
       </div>
     </div>
   );

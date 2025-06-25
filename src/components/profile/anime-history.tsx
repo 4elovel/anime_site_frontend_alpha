@@ -25,7 +25,7 @@ const animeList = [
 
 export default function AnimeHistory() {
   return (
-    <div className="flex flex-col gap-4 max-w-100 md:w-100">
+    <div className="flex w-full flex-col gap-4 md:w-100">
       <AnimeHistoryHeader />
       {animeList.map((anime) => (
         <AnimeCard

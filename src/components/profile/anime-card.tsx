@@ -15,7 +15,7 @@ export default function AnimeCard({
 }: AnimeCardProps) {
   return (
     <div
-      className={`flex flex-row items-center h-full w-auto bg-transparent rounded-lg p-0 ${className}`}
+      className={`flex h-full w-auto flex-row items-center rounded-lg bg-transparent p-0 ${className}`}
     >
       <div className="flex-shrink-0">
         <Image
@@ -26,11 +26,11 @@ export default function AnimeCard({
           alt="Anime Cover"
         />
       </div>
-      <div className="flex flex-col justify-between h-full ml-4 flex-1">
-        <h1 className="text-[1.25rem] font-[600] text-white mb-auto">
+      <div className="ml-4 flex h-full flex-1 flex-col justify-between">
+        <h1 className="mb-auto truncate text-[1.25rem] font-[600] text-white">
           {animeName}
         </h1>
-        <p className="text-[1rem] text-[#5C5C5C] mt-auto">
+        <p className="mt-auto text-[1rem] text-[#5C5C5C]">
           {watchedAge} дні тому
         </p>
       </div>
