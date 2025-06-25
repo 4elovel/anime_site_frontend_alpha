@@ -8,10 +8,10 @@ export default function ProfileCard() {
   const followingCount = 0;
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full max-w-128 z-1">
       <Card className="bg-transparent p-0 border-none">
         <CardContent className="flex flex-row gap-6 p-0">
-          <Avatar className="cursor-pointer w-30 h-30 sm:w-9 sm:h-9 xs:w-7 xs:h-7 rounded-md object-cover border-none">
+          <Avatar className="cursor-pointer w-30 h-30 rounded-md object-cover border-none">
             <AvatarImage src={avatarUrl} />
             <AvatarFallback>VM</AvatarFallback>
           </Avatar>
