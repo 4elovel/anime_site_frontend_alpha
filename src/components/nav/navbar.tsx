@@ -9,8 +9,9 @@ import { LayoutGrid } from "lucide-react";
 import { motion } from "framer-motion";
 
 import UserProfilePopover from "@/components/nav/user-profile-popover";
+import SearchModal from "./SearchModal";
+import NotificationModal from "./NotificationModal";
 
-// Хук для визначення мобільного режиму (max-width: 640px)
 function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState(false);
   React.useEffect(() => {
@@ -27,6 +28,9 @@ function useIsMobile() {
 const Navbar: React.FC = () => {
   const pathname = usePathname();
   const isMobile = useIsMobile();
+  const [searchOpen, setSearchOpen] = React.useState(false);
+  const [notifOpen, setNotifOpen] = React.useState(false);
+  const notifBtnRef = React.useRef<HTMLButtonElement>(null);
 
   if (!pathname) return null;
 
@@ -39,9 +43,7 @@ const Navbar: React.FC = () => {
         href: "/anime",
         icon: <LayoutGrid className="w-5 h-5 text-[#4B7FCC]" />,
       },
-      // Додати інші рівні динамічно залежно від pathname
     ];
-    // Наприклад, якщо /anime/slug
     const parts = pathname.split("/").filter(Boolean);
     if (parts[0] === "anime" && parts[1]) {
       breadcrumbs.push({ label: decodeURIComponent(parts[1]), isActive: true });
@@ -71,7 +73,10 @@ const Navbar: React.FC = () => {
       )}
 
       <div className="flex items-center gap-6 sm:gap-4 xs:gap-2">
-        <div className="hidden md:flex items-center border border-[#5B7CB2] rounded-xl px-4 py-2 w-72 max-w-xs">
+        <div
+          className="hidden md:flex items-center border border-[#5B7CB2] rounded-xl px-4 py-2 w-72 max-w-xs cursor-pointer"
+          onClick={() => setSearchOpen(true)}
+        >
           <svg
             className="w-5 h-5 text-white mr-2"
             fill="none"
@@ -85,11 +90,15 @@ const Navbar: React.FC = () => {
           <input
             type="text"
             placeholder="Пошук..."
-            className="bg-transparent outline-none text-white placeholder-gray-400 w-full"
+            className="bg-transparent outline-none text-white placeholder-gray-400 w-full cursor-pointer"
+            readOnly
           />
         </div>
 
-        <button className="md:hidden border border-[#5B7CB2] rounded-xl w-12 h-12 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent hover:bg-[#2C3650] transition p-0">
+        <button
+          className="md:hidden border border-[#5B7CB2] rounded-xl w-12 h-12 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent hover:bg-[#2C3650] transition p-0"
+          onClick={() => setSearchOpen(true)}
+        >
           <svg
             className="w-5 h-5 sm:w-5 sm:h-5 xs:w-4 xs:h-4 text-white"
             fill="none"
@@ -102,7 +111,13 @@ const Navbar: React.FC = () => {
           </svg>
         </button>
 
-        <button className="border border-[#5B7CB2] rounded-xl w-12 h-12 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent hover:bg-[#2C3650] transition p-0">
+        <button
+          ref={notifBtnRef}
+          className={`border border-[#5B7CB2] rounded-xl w-12 h-12 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent transition p-0 ${
+            notifOpen ? "bg-[#2C3650]" : "hover:bg-[#2C3650]"
+          }`}
+          onClick={() => setNotifOpen((v) => !v)}
+        >
           <svg
             className="w-5 h-5 sm:w-5 sm:h-5 xs:w-4 xs:h-4 text-white"
             fill="none"
@@ -121,6 +136,12 @@ const Navbar: React.FC = () => {
         /> */}
 
         <UserProfilePopover isSignedIn={false} username={"SakuraShadow"} />
+        <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+        <NotificationModal
+          open={notifOpen}
+          onClose={() => setNotifOpen(false)}
+          anchorRef={notifBtnRef}
+        />
       </div>
     </motion.header>
   );
