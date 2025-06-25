@@ -13,6 +13,14 @@ interface SettingsPreferencesTabProps {
   setShowHiddenSubs: (v: boolean) => void;
   contentRestriction: string;
   setContentRestriction: (v: string) => void;
+  emailLang: string;
+  setEmailLang: (v: string) => void;
+  emailAll: boolean;
+  setEmailAll: (v: boolean) => void;
+  emailNews: boolean;
+  setEmailNews: (v: boolean) => void;
+  emailUpdates: boolean;
+  setEmailUpdates: (v: boolean) => void;
 }
 
 const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
@@ -26,72 +34,127 @@ const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
   setShowHiddenSubs,
   contentRestriction,
   setContentRestriction,
+  emailLang,
+  setEmailLang,
+  emailAll,
+  setEmailAll,
+  emailNews,
+  setEmailNews,
+  emailUpdates,
+  setEmailUpdates,
 }) => {
   return (
-    <section className="flex-1 max-w-xl min-w-[320px] flex flex-col gap-2">
-      <h2 className="text-2xl font-bold mb-2 text-white">Уподобання</h2>
-      <p className="text-white mb-8">
-        Вкажіть бажані налаштування мови та відео
-      </p>
-      <div className="flex flex-col gap-6">
-        <SettingsSelect
-          label="Мова"
-          value={lang}
-          onChange={setLang}
-          options={[
-            { value: "ua", label: "Українська" },
-            { value: "en", label: "Англійська" },
-          ]}
-        />
-        <SettingsSelect
-          label="Мова аудіо"
-          value={audioLang}
-          onChange={setAudioLang}
-          options={[
-            { value: "ua", label: "Українська" },
-            { value: "en", label: "Англійська" },
-          ]}
-        />
-        <SettingsSelect
-          label="Мова субтитрів"
-          value={subsLang}
-          onChange={setSubsLang}
-          options={[
-            { value: "ua", label: "Українська" },
-            { value: "en", label: "Англійська" },
-          ]}
-        />
-        <div className="flex items-start gap-4 mt-2">
-          <ToggleSwitch checked={showHiddenSubs} onChange={setShowHiddenSubs} />
-          <div className="flex flex-col">
-            <span className="text-white font-semibold">
-              Показати приховані субтитри
-            </span>
-            <span className="text-sm text-[#918C8C] leading-tight mt-2">
-              Увімкнувши це налаштування, ми автоматично показуватимемо
-              приховані субтитри, коли вони доступні
-            </span>
+    <div className="flex flex-col lg:flex-row gap-16 w-full">
+      <section className="flex-1 max-w-xl min-w-[320px] flex flex-col gap-2">
+        <h2 className="text-2xl font-bold mb-2 text-white">Уподобання</h2>
+        <p className="text-white mb-8">
+          Вкажіть бажані налаштування мови та відео
+        </p>
+        <div className="flex flex-col gap-6">
+          <SettingsSelect
+            label="Мова"
+            value={lang}
+            onChange={setLang}
+            options={[
+              { value: "ua", label: "Українська" },
+              { value: "en", label: "Англійська" },
+            ]}
+          />
+          <SettingsSelect
+            label="Мова аудіо"
+            value={audioLang}
+            onChange={setAudioLang}
+            options={[
+              { value: "ua", label: "Українська" },
+              { value: "en", label: "Англійська" },
+            ]}
+          />
+          <SettingsSelect
+            label="Мова субтитрів"
+            value={subsLang}
+            onChange={setSubsLang}
+            options={[
+              { value: "ua", label: "Українська" },
+              { value: "en", label: "Англійська" },
+            ]}
+          />
+          <div className="flex items-start gap-4 mt-2">
+            <ToggleSwitch
+              checked={showHiddenSubs}
+              onChange={setShowHiddenSubs}
+            />
+            <div className="flex flex-col">
+              <span className="text-white font-semibold">
+                Показати приховані субтитри
+              </span>
+              <span className="text-sm text-[#918C8C] leading-tight mt-2">
+                Увімкнувши це налаштування, ми автоматично показуватимемо
+                приховані субтитри, коли вони доступні
+              </span>
+            </div>
+          </div>
+          <SettingsSelect
+            label="Обмеження контенту"
+            value={contentRestriction}
+            onChange={setContentRestriction}
+            options={[
+              { value: "16+", label: "З 16 років і старше" },
+              { value: "18+", label: "З 18 років і старше" },
+              { value: "all", label: "Без обмежень" },
+            ]}
+          />
+          <div className="mt-1 text-sm text-white">
+            Ознайомтеся з нашим{" "}
+            <a href="#" className="text-[#4B7FCC] underline underline-offset-2">
+              FAQ щодо обмежень контенту
+            </a>
+            , щоб дізнатися більше про попередження
           </div>
         </div>
-        <SettingsSelect
-          label="Обмеження контенту"
-          value={contentRestriction}
-          onChange={setContentRestriction}
-          options={[
-            { value: "16+", label: "З 16 років і старше" },
-            { value: "18+", label: "З 18 років і старше" },
-            { value: "all", label: "Без обмежень" },
-          ]}
-        />
-        <div className="mt-1 text-sm text-white">
-          Ознайомтеся з нашим{" "}
-          <a href="#" className="text-[#4B7FCC] underline underline-offset-2">
-            FAQ щодо обмежень контенту
-          </a>
-          , щоб дізнатися більше про попередження
+      </section>
+      <section className="flex-1 max-w-xl min-w-[320px] flex flex-col gap-2">
+        <h2 className="text-2xl font-bold mb-2 text-white">Email сповіщення</h2>
+        <p className="text-white mb-8">
+          Виберіть, які сповіщення ви хочете отримувати на електронну пошту
+        </p>
+        <div className="flex flex-col gap-6">
+          <SettingsSelect
+            label="Мова спілкування в Email"
+            value={emailLang}
+            onChange={setEmailLang}
+            options={[
+              { value: "ua", label: "Українська" },
+              { value: "en", label: "Англійська" },
+            ]}
+          />
+          <div className="flex items-center gap-4 mt-2">
+            <ToggleSwitch checked={emailAll} onChange={setEmailAll} />
+            <span className="text-white font-semibold">Всі сповіщення</span>
+          </div>
+          <div className="flex items-start gap-4 mt-2">
+            <ToggleSwitch checked={emailNews} onChange={setEmailNews} />
+            <div className="flex flex-col">
+              <span className="text-white font-semibold">Розсилка новин</span>
+              <span className="text-sm text-[#918C8C] leading-tight mt-2">
+                Підпишіться на нашу розсилку і будьте в курсі останніх новин та
+                пропозицій
+              </span>
+            </div>
+          </div>
+          <div className="flex items-start gap-4 mt-2">
+            <ToggleSwitch checked={emailUpdates} onChange={setEmailUpdates} />
+            <div className="flex flex-col">
+              <span className="text-white font-semibold">
+                Новини та оновлення
+              </span>
+              <span className="text-sm text-[#918C8C] leading-tight mt-2">
+                Отримуйте новини про продукти, послуги та пропозиції партнерів
+              </span>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import SettingsSelect2 from "@/components/ui/settings-select-2";
 import CalendarIcon from "@/assets/calendar.svg";
 import { Calendar } from "@/components/ui/calendar";
+import BlueButton from "@/components/ui/blue-button";
 
 interface SettingsProfileTabProps {
   username: string;
@@ -173,12 +174,7 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
             className="bg-transparent border border-[#49638A] rounded-lg px-4 py-2 text-white text-base focus:border-blue-400 focus:ring-0 placeholder:text-[#bfc6d5]"
             placeholder="Введіть нове ім'я"
           />
-          <button
-            type="button"
-            className="mt-2 w-32 bg-[#2563eb] text-white rounded-lg px-6 py-2 font-semibold hover:bg-[#1d4ed8] transition-colors"
-          >
-            Зберегти
-          </button>
+          <BlueButton text="Зберегти" className="mt-2 w-32" />
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="about" className="text-white text-base font-medium">
@@ -189,15 +185,10 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
             value={about}
             onChange={(e) => setAbout(e.target.value)}
             rows={3}
-            className="bg-transparent border border-[#49638A] rounded-lg px-4 py-2 text-white text-base focus:border-blue-400 focus:outline-none focus:ring-0 placeholder:text-[#bfc6d5] resize-none"
+            className="bg-transparent h-28 border border-[#49638A] rounded-lg px-4 py-2 text-white text-base focus:border-blue-400 focus:outline-none focus:ring-0 placeholder:text-[#bfc6d5] resize-none"
             placeholder="Введіть опис"
           />
-          <button
-            type="button"
-            className="mt-2 w-32 bg-[#2563eb] text-white rounded-lg px-6 py-2 font-semibold hover:bg-[#1d4ed8] transition-colors"
-          >
-            Зберегти
-          </button>
+          <BlueButton text="Зберегти" className="mt-2 w-32" />
         </div>
         <div className="flex flex-col sm:flex-row gap-6">
           <div className="flex-1 flex flex-col gap-2">

@@ -18,7 +18,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
       aria-checked={checked}
       tabIndex={0}
       className={`relative w-14 h-7 rounded-full ${
-        checked ? "bg-[#4b7fcc]" : "bg-[#23252a]"
+        checked ? "bg-[#34C759]" : "bg-[#23252a]"
       } transition-colors duration-200 flex items-center focus:outline-none focus:ring-1 focus:ring-blue-400 ${className}`}
       onClick={() => onChange && onChange(!checked)}
       style={{ minWidth: 56, minHeight: 28 }}
