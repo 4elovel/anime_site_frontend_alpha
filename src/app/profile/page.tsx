@@ -3,18 +3,24 @@ import Navbar from "@/components/nav/navbar";
 import ProfileBanner from "@/components/profile/profile-banner";
 import ProfileCard from "@/components/profile/profile-card";
 import AnimeHistory from "@/components/profile/anime-history";
-import Image from "next/image";
+import ActivityBarChart from "@/components/profile/activity-bar-chart";
 
 export default function ProfilePage() {
-  const userProfileBannerUrl = "/assets/user-profile-banner.png";
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col sm:gap-12">
       <Navbar />
       <ProfileBanner />
-      <div className="flex flex-col px-4">
-        <div className="flex flex-col sm:flex-row sm:justify-between">
+      <div className="flex flex-col px-4 sm:px-8 gap-6 z-1 sm:gap-12">
+        <h1 className="font-[500] text-[2rem] text-white mb-0 sm:hidden">
+          Загальне
+        </h1>
+        <div className="flex flex-col gap-6 sm:flex-row sm:justify-between">
           <ProfileCard />
           <ViewStatsCard />
+        </div>
+        <div className="flex flex-col md:flex-row md:justify-between">
+          <ActivityBarChart />
+          <AnimeHistory />
         </div>
       </div>
     </div>
