@@ -1,3 +1,6 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { ViewStatsCard } from "@/components/profile/view-stats-card";
 import Navbar from "@/components/nav/navbar";
 import ProfileBanner from "@/components/profile/profile-banner";
@@ -8,6 +11,14 @@ import AnimeViewTimeChart from "@/components/profile/anime-view-time-chart";
 import FavouritesSection from "@/components/profile/favourites-section";
 
 export default function ProfilePage() {
+  const [pageLoaded, setPageLoaded] = useState(false);
+
+  // Simulate loading (replace with real data loading logic)
+  useEffect(() => {
+    const timeout = setTimeout(() => setPageLoaded(true), 1000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <div className="flex flex-col sm:gap-12">
       <Navbar />
@@ -17,7 +28,7 @@ export default function ProfilePage() {
           Загальне
         </h1>
         <div className="flex flex-col gap-6 md:w-full md:flex-row md:justify-between">
-          <ProfileCard />
+          <ProfileCard pageLoaded={pageLoaded} />
           <ViewStatsCard />
         </div>
         <div className="flex flex-col md:flex-row md:items-start md:justify-between">

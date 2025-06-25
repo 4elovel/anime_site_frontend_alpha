@@ -22,7 +22,7 @@ export default function ActivityBarChart() {
             className="relative flex h-12 w-2.5 flex-col items-center justify-end lg:w-3"
           >
             {/* Bar background */}
-            <div className="h-full w-full rounded-full bg-[#23242b]" />
+            <div className="h-full w-full rounded-full bg-[#23242b] transition-all" />
             {/* Bar foreground */}
             <div
               className="absolute bottom-0 w-full rounded-full bg-[#46618E] transition-all duration-500"
