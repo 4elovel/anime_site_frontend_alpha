@@ -4,6 +4,7 @@ import ProfileBanner from "@/components/profile/profile-banner";
 import ProfileCard from "@/components/profile/profile-card";
 import AnimeHistory from "@/components/profile/anime-history";
 import ActivityBarChart from "@/components/profile/activity-bar-chart";
+import AnimeViewTimeChart from "@/components/profile/anime-view-time-chart";
 
 export default function ProfilePage() {
   return (
@@ -19,7 +20,10 @@ export default function ProfilePage() {
           <ViewStatsCard />
         </div>
         <div className="flex flex-col md:flex-row md:justify-between">
-          <ActivityBarChart />
+          <div className="flex flex-row gap-6">
+            <ActivityBarChart />
+            <AnimeViewTimeChart />
+          </div>
           <AnimeHistory />
         </div>
       </div>
