@@ -14,10 +14,10 @@ const navItems = [
   { label: "Основні налаштування", icon: SettingsIcon },
   { label: "Профіль", icon: ProfileSettingsIcon },
   { label: "Безпека", icon: SecuritySettingsIcon },
-  { label: "Список", icon: ListSettingsIcon },
-  { label: "Платіжні дані", icon: PaymentSettingsIcon },
+  // { label: "Список", icon: ListSettingsIcon },
+  // { label: "Платіжні дані", icon: PaymentSettingsIcon },
   { label: "Сповіщення", icon: NotificationSettingsIcon },
-  { label: "Кастомізація", icon: CustomizationSettingsIcon },
+  // { label: "Кастомізація", icon: CustomizationSettingsIcon },
 ];
 
 interface SettingsSidebarProps {
@@ -158,7 +158,7 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({
       </div>
 
       {/* Spacer to compensate for fixed header on mobile */}
-      <div className="lg:hidden h-[130px]"></div>
+      <div className="lg:hidden h-32"></div>
     </>
   );
 };

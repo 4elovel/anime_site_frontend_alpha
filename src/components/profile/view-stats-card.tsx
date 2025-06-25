@@ -5,7 +5,7 @@ import { AnimeStatsBullet } from "@/components/profile/anime-stats-bullet";
 
 export function ViewStatsCard() {
   return (
-    <Card className="flex bg-transparent px-3 py-0 m-0 w-full">
+    <Card className="flex bg-transparent px-3 py-0 m-0 w-full max-w-100 z-1">
       <CardContent className="flex flex-row p-0! py-0! justify-between">
         <AnimeChartRadial />
         <div className="flex flex-col items-center justify-center gap-4">

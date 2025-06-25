@@ -49,8 +49,8 @@ export function AnimeChartRadial() {
             <PolarGrid
               gridType="circle"
               radialLines={false}
-              stroke="none"
-              className="first:fill-[#333333] last:fill-background b-0! p-0!"
+              stroke="transparent"
+              className="fill-transparent b-0! p-0!"
               polarRadius={[57, 48]}
             />
             <RadialBar dataKey="animeCount" background cornerRadius={10} />

@@ -13,13 +13,19 @@ const animeList = [
     id: 1,
     animeName: "Озирнись",
     watchedAge: 23,
-    url: "/assets/profile/mock-history-anime-card2.png", // Ensure every item has a url
+    url: "/assets/profile/mock-history-anime-card2.png",
+  },
+  {
+    id: 2,
+    animeName: "Муміші",
+    watchedAge: 23,
+    url: "/assets/profile/mock-history-anime-card3.png",
   },
 ];
 
 export default function AnimeHistory() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 max-w-100 md:w-100">
       <AnimeHistoryHeader />
       {animeList.map((anime) => (
         <AnimeCard
