@@ -37,7 +37,7 @@ const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
         <SettingsSelect
           label="Мова"
           value={lang}
-          onChange={(e) => setLang(e.target.value)}
+          onChange={setLang}
           options={[
             { value: "ua", label: "Українська" },
             { value: "en", label: "Англійська" },
@@ -46,7 +46,7 @@ const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
         <SettingsSelect
           label="Мова аудіо"
           value={audioLang}
-          onChange={(e) => setAudioLang(e.target.value)}
+          onChange={setAudioLang}
           options={[
             { value: "ua", label: "Українська" },
             { value: "en", label: "Англійська" },
@@ -55,17 +55,14 @@ const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
         <SettingsSelect
           label="Мова субтитрів"
           value={subsLang}
-          onChange={(e) => setSubsLang(e.target.value)}
+          onChange={setSubsLang}
           options={[
             { value: "ua", label: "Українська" },
             { value: "en", label: "Англійська" },
           ]}
         />
         <div className="flex items-start gap-4 mt-2">
-          <ToggleSwitch
-            checked={showHiddenSubs}
-            onChange={setShowHiddenSubs}
-          />
+          <ToggleSwitch checked={showHiddenSubs} onChange={setShowHiddenSubs} />
           <div className="flex flex-col">
             <span className="text-white font-semibold">
               Показати приховані субтитри
@@ -79,7 +76,7 @@ const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
         <SettingsSelect
           label="Обмеження контенту"
           value={contentRestriction}
-          onChange={(e) => setContentRestriction(e.target.value)}
+          onChange={setContentRestriction}
           options={[
             { value: "16+", label: "З 16 років і старше" },
             { value: "18+", label: "З 18 років і старше" },
@@ -88,10 +85,7 @@ const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
         />
         <div className="mt-1 text-sm text-white">
           Ознайомтеся з нашим{" "}
-          <a
-            href="#"
-            className="text-[#4B7FCC] underline underline-offset-2"
-          >
+          <a href="#" className="text-[#4B7FCC] underline underline-offset-2">
             FAQ щодо обмежень контенту
           </a>
           , щоб дізнатися більше про попередження

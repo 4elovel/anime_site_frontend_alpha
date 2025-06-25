@@ -33,7 +33,7 @@ const SettingsNotificationsTab: React.FC<SettingsNotificationsTabProps> = ({
         <SettingsSelect
           label="Мова спілкування в Email"
           value={emailLang}
-          onChange={(e) => setEmailLang(e.target.value)}
+          onChange={setEmailLang}
           options={[
             { value: "ua", label: "Українська" },
             { value: "en", label: "Англійська" },
@@ -48,14 +48,17 @@ const SettingsNotificationsTab: React.FC<SettingsNotificationsTabProps> = ({
           <div className="flex flex-col">
             <span className="text-white font-semibold">Розсилка новин</span>
             <span className="text-sm text-[#918C8C] leading-tight mt-2">
-              Підпишіться на нашу розсилку і будьте в курсі останніх новин та пропозицій
+              Підпишіться на нашу розсилку і будьте в курсі останніх новин та
+              пропозицій
             </span>
           </div>
         </div>
         <div className="flex items-start gap-4 mt-2">
           <ToggleSwitch checked={emailUpdates} onChange={setEmailUpdates} />
           <div className="flex flex-col">
-            <span className="text-white font-semibold">Новини та оновлення</span>
+            <span className="text-white font-semibold">
+              Новини та оновлення
+            </span>
             <span className="text-sm text-[#918C8C] leading-tight mt-2">
               Отримуйте новини про продукти, послуги та пропозиції партнерів
             </span>

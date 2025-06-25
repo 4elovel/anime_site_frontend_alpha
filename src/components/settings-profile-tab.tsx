@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
-import SettingsSelect from "@/components/ui/settings-select";
+import SettingsSelect2 from "@/components/ui/settings-select-2";
 import CalendarIcon from "@/assets/calendar.svg";
 import { Calendar } from "@/components/ui/calendar";
 
@@ -114,14 +114,14 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
               onChange={handleCoverUpload}
             />
           </label>
-          <div className="absolute left-8 -bottom-10 z-20">
+          <div className="absolute left-8 -bottom-5 z-20">
             <div className="relative">
-              <div className="w-20 h-20 rounded-full overflow-hidden bg-[#1a1a1a] border-4 border-[#23252a] shadow-lg">
+              <div className="w-24 h-24 rounded-full overflow-hidden bg-[#1a1a1a] border-4 border-[#23252a] shadow-lg">
                 <Image
                   src={avatar}
                   alt="User avatar"
-                  width={80}
-                  height={80}
+                  width={100}
+                  height={100}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -207,15 +207,15 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
             >
               Стать
             </label>
-            <SettingsSelect
-              haveArrow={false}
-              label=""
-              id="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              options={genderOptions}
-              className="border border-[#49638A] rounded-lg px-4 py-2 text-white text-base focus:border-blue-400 focus:ring-0 placeholder:text-[#bfc6d5]"
-            />
+            <div className="relative text-white">
+              <SettingsSelect2
+                label=""
+                value={gender}
+                onChange={setGender}
+                options={genderOptions}
+                placeholder="Оберіть стать"
+              />
+            </div>
           </div>
           <div className="flex-1 flex flex-col gap-2">
             <label
