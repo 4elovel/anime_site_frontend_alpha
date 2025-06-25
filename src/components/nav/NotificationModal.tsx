@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Settings } from "lucide-react";
+import { createPortal } from "react-dom";
 
 const initialNotifications = [
   {
@@ -117,7 +118,8 @@ const NotificationModal: React.FC<Props> = ({ open, onClose, anchorRef }) => {
     setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })));
   };
 
-  return (
+  if (typeof window === "undefined") return null;
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
@@ -208,7 +210,8 @@ const NotificationModal: React.FC<Props> = ({ open, onClose, anchorRef }) => {
           </div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 

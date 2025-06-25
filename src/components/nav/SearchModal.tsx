@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star } from "lucide-react";
@@ -233,14 +234,15 @@ const SearchModal: React.FC<Props> = ({ open, onClose }) => {
     return () => clearTimeout(timeout);
   }, [query]);
 
-  return (
+  if (typeof window === "undefined") return null;
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 pt-10"
+          className="fixed inset-0 z-[9999] isolate flex items-start justify-center bg-black/70 pt-10"
         >
           <motion.div
             ref={modalRef}
@@ -248,9 +250,9 @@ const SearchModal: React.FC<Props> = ({ open, onClose }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -40, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="bg-[#1A1A1D] border border-[#787880] rounded-2xl w-full max-w-2xl shadow-xl relative"
+            className="bg-[#1A1A1D] border border-[#787880] rounded-2xl w-full max-w-2xl shadow-xl relative z-[10000]"
           >
-            <div className="flex items-center px-4 py-4 rounded-tr-2xl rounded-tl-2xl border border-[#787880]">
+            <div className="flex items-center bg-[#1A1A1D] px-4 py-4 rounded-tr-2xl rounded-tl-2xl border border-[#787880]">
               <div className="relative">
                 <button
                   className="flex items-center gap-2 text-white px-3 py-2 rounded-lg bg-[#2C2C30] text-sm font-medium min-w-[110px]"
@@ -439,7 +441,8 @@ const SearchModal: React.FC<Props> = ({ open, onClose }) => {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 
