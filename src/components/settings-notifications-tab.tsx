@@ -1,7 +1,6 @@
 import React from "react";
 import NotificationSwitchGroup from "@/components/notification-switch-group";
 import NotificationSwitchRow from "@/components/notification-switch-row";
-import BlueButton from "@/components/ui/blue-button";
 
 export interface SettingsNotificationsTabProps {
   // Comments
@@ -36,8 +35,6 @@ export interface SettingsNotificationsTabProps {
   setSystem: (v: boolean) => void;
 }
 
-const groupClass = "mb-8";
-
 const SettingsNotificationsTab: React.FC<SettingsNotificationsTabProps> = ({
   commentReply,
   setCommentReply,
@@ -65,127 +62,111 @@ const SettingsNotificationsTab: React.FC<SettingsNotificationsTabProps> = ({
   setSystem,
 }) => {
   return (
-    <div
-      className="w-full flex justify-center items-start min-h-[772px] px-2"
-      style={{ background: "none" }}
-    >
-      <div
-        className="flex flex-col items-start gap-6 mx-auto"
-        style={{ width: 599, minHeight: 772 }}
-      >
-        <h2
-          className="font-bold mb-0"
-          style={{
-            fontFamily: "Inter",
-            fontWeight: 700,
-            fontSize: 24,
-            lineHeight: "29px",
-            color: "#fff",
-          }}
-        >
-          Сповіщення
-        </h2>
-        <p
-          className="mb-2"
-          style={{
-            fontFamily: "Inter",
-            fontWeight: 400,
-            fontSize: 16,
-            lineHeight: "19px",
-            color: "#bfc6d5",
-          }}
-        >
-          Налаштуйте персоналізовані сповіщення
-        </p>
-        <NotificationSwitchGroup title="Коментарі" className="mb-6 w-full">
-          <NotificationSwitchRow
-            label="Відповідь на коментар"
-            sublabel="Ви отримаєте сповіщення, коли на ваш коментар відповіли"
-            checked={commentReply}
-            onChange={setCommentReply}
-          />
-          <NotificationSwitchRow
-            label="Згадка в коментарі"
-            sublabel="Ви отримаєте сповіщення, коли вас згадали (@) в коментарі"
-            checked={commentMention}
-            onChange={setCommentMention}
-          />
-          <NotificationSwitchRow
-            label="Коментар у колекції"
-            sublabel="Ви отримаєте сповіщення, коли у вашій колекції залишили коментар"
-            checked={commentInCollection}
-            onChange={setCommentInCollection}
-          />
-          <NotificationSwitchRow
-            label="Коментар у правці"
-            sublabel="Ви отримаєте сповіщення, коли вам залишать коментар у правці"
-            checked={commentInEdit}
-            onChange={setCommentInEdit}
-          />
-        </NotificationSwitchGroup>
-        <NotificationSwitchGroup title="Оцінки" className="mb-6 w-full">
-          <NotificationSwitchRow
-            label="Оцінка коментаря"
-            sublabel="Ви отримаєте сповіщення, коли ваш коментар оцінили"
-            checked={commentRating}
-            onChange={setCommentRating}
-          />
-          <NotificationSwitchRow
-            label="Оцінка колекції"
-            sublabel="Ви отримаєте сповіщення, коли вашу колекцію оцінили"
-            checked={collectionRating}
-            onChange={setCollectionRating}
-          />
-        </NotificationSwitchGroup>
-        <NotificationSwitchGroup title="Правки" className="mb-6 w-full">
-          <NotificationSwitchRow
-            label="Прийнята правка"
-            sublabel="Ви отримаєте сповіщення, коли ваша правка прийнята"
-            checked={editAccepted}
-            onChange={setEditAccepted}
-          />
-          <NotificationSwitchRow
-            label="Відхилена правка"
-            sublabel="Ви отримаєте сповіщення, коли ваша правка відхилена"
-            checked={editRejected}
-            onChange={setEditRejected}
-          />
-        </NotificationSwitchGroup>
-        <NotificationSwitchGroup title="Аніме" className="mb-6 w-full">
-          <NotificationSwitchRow
-            label="Оновлення аніме"
-            sublabel="Ви отримаєте сповіщення про вихід нових епізодів аніме"
-            checked={animeUpdate}
-            onChange={setAnimeUpdate}
-          />
-          <NotificationSwitchRow
-            label="Мої аніме"
-            sublabel="Ваші підписки на аніме. Отримуйте сповіщення про оновлення або видаляйте тайтли зі списку"
-            checked={myAnime}
-            onChange={setMyAnime}
-          />
-        </NotificationSwitchGroup>
-        <NotificationSwitchGroup title="Користувачі" className="mb-6 w-full">
-          <NotificationSwitchRow
-            label="Підписка на користувача"
-            sublabel="Ви отримаєте сповіщення, коли хтось підписався на Вас"
-            checked={userFollow}
-            onChange={setUserFollow}
-          />
-        </NotificationSwitchGroup>
-        <NotificationSwitchGroup title="Інше" className="mb-10 w-full">
-          <NotificationSwitchRow
-            label="Системні оповіщення"
-            sublabel="Ви отримаєте сповіщення про системні зміни"
-            checked={system}
-            onChange={setSystem}
-          />
-        </NotificationSwitchGroup>
-        <div className="w-full flex justify-end mt-8">
-          <BlueButton
-            text="Зберегти"
-            className="w-40 h-12 text-lg font-semibold"
-          />
+    <div className="w-full max-w-4xl mx-auto flex flex-col gap-0 pt-8">
+      <h2 className="text-2xl font-bold text-white mb-1">Сповіщення</h2>
+      <p className="text-[#918C8C] mb-8 text-base">
+        Налаштуйте персоналізовані сповіщення
+      </p>
+      <div className="flex flex-col md:flex-row gap-16 w-full">
+        {/* Left column */}
+        <div className="flex-1 min-w-[320px]">
+          <NotificationSwitchGroup title="Коментарі">
+            <NotificationSwitchRow
+              label="Відповідь на коментар"
+              sublabel="Ви отримаєте сповіщення, коли на ваш коментар відповіли"
+              checked={commentReply}
+              onChange={setCommentReply}
+            />
+            <NotificationSwitchRow
+              label="Згадка в коментарі"
+              sublabel="Ви отримаєте сповіщення, коли вас згадали (@) в коментарі"
+              checked={commentMention}
+              onChange={setCommentMention}
+            />
+            <NotificationSwitchRow
+              label="Коментар у колекції"
+              sublabel="Ви отримаєте сповіщення, коли у вашій колекції залишили коментар"
+              checked={commentInCollection}
+              onChange={setCommentInCollection}
+            />
+            <NotificationSwitchRow
+              label="Коментар у правці"
+              sublabel="Ви отримаєте сповіщення, коли вам залишать коментар у правці"
+              checked={commentInEdit}
+              onChange={setCommentInEdit}
+            />
+          </NotificationSwitchGroup>
+          <NotificationSwitchGroup title="Оцінки">
+            <NotificationSwitchRow
+              label="Оцінка коментаря"
+              sublabel="Ви отримаєте сповіщення, коли ваш коментар оцінили"
+              checked={commentRating}
+              onChange={setCommentRating}
+            />
+            <NotificationSwitchRow
+              label="Оцінка колекції"
+              sublabel="Ви отримаєте сповіщення, коли вашу колекцію оцінили"
+              checked={collectionRating}
+              onChange={setCollectionRating}
+            />
+          </NotificationSwitchGroup>
+          <NotificationSwitchGroup title="Правки">
+            <NotificationSwitchRow
+              label="Прийнята правка"
+              sublabel="Ви отримаєте сповіщення, коли ваша правка прийнята"
+              checked={editAccepted}
+              onChange={setEditAccepted}
+            />
+            <NotificationSwitchRow
+              label="Відхилена правка"
+              sublabel="Ви отримаєте сповіщення, коли ваша правка відхилена"
+              checked={editRejected}
+              onChange={setEditRejected}
+            />
+          </NotificationSwitchGroup>
+        </div>
+        {/* Right column */}
+        <div className="flex-1 min-w-[320px]">
+          <NotificationSwitchGroup title="Аніме">
+            <NotificationSwitchRow
+              label="Оновлення аніме"
+              sublabel="Ви отримаєте сповіщення про вихід нових епізодів аніме"
+              checked={animeUpdate}
+              onChange={setAnimeUpdate}
+            />
+            <NotificationSwitchRow
+              label="Мої аніме"
+              sublabel="Ваші підписки на аніме. Отримуйте сповіщення про оновлення або видаляте тайтли зі списку"
+              checked={myAnime}
+              onChange={setMyAnime}
+            />
+          </NotificationSwitchGroup>
+          <NotificationSwitchGroup title="Користувачі">
+            <NotificationSwitchRow
+              label="Підписка на користувача"
+              sublabel="Ви отримаєте сповіщення, коли хтось підписався на Вас"
+              checked={userFollow}
+              onChange={setUserFollow}
+            />
+          </NotificationSwitchGroup>
+          <NotificationSwitchGroup title="Інше">
+            <NotificationSwitchRow
+              label="Системні оповіщення"
+              sublabel="Ви отримаєте сповіщення про системні зміни"
+              checked={system}
+              onChange={setSystem}
+            />
+          </NotificationSwitchGroup>
+          <div className="flex w-full mt-8">
+            <button
+              type="button"
+              className="flex flex-row items-center justify-center bg-[#4B7FCC] rounded-[8px] w-[98px] h-[43px] px-0 py-0 gap-2"
+            >
+              <span className="block text-white text-[16px] leading-[19px] font-normal font-inter text-center w-[74px] h-[19px]">
+                Зберегти
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

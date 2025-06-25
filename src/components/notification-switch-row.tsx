@@ -18,7 +18,7 @@ const NotificationSwitchRow: React.FC<NotificationSwitchRowProps> = ({
     <div>
       <div className="text-white text-base font-medium">{label}</div>
       {sublabel && (
-        <div className="text-[#bfc6d5] text-xs max-w-[340px]">{sublabel}</div>
+        <div className="text-[#918C8C] text-xs max-w-[340px]">{sublabel}</div>
       )}
     </div>
     <ToggleSwitch checked={checked} onChange={onChange} />

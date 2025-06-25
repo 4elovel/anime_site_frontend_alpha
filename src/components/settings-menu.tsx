@@ -21,14 +21,19 @@ import SettingsPreferencesTab from "@/components/settings-preferences-tab";
 import SettingsSecurityTab from "@/components/settings-security-tab";
 import SettingsNotificationsTab from "./settings-notifications-tab";
 
+/*
+список дивно зроблений в дизайні
+платіжні дані не зроблені в дизайні
+кастомізацію не робив бо не думаю що встигнемо зміну теми та локалізацію.
+*/
 const navItems = [
   { label: "Основні налаштування", icon: SettingsIcon },
   { label: "Профіль", icon: ProfileSettingsIcon },
   { label: "Безпека", icon: SecuritySettingsIcon },
-  { label: "Список", icon: ListSettingsIcon },
-  { label: "Платіжні дані", icon: PaymentSettingsIcon },
+  // { label: "Список", icon: ListSettingsIcon },
+  // { label: "Платіжні дані", icon: PaymentSettingsIcon },
   { label: "Сповіщення", icon: NotificationSettingsIcon },
-  { label: "Кастомізація", icon: CustomizationSettingsIcon },
+  // { label: "Кастомізація", icon: CustomizationSettingsIcon },
 ];
 
 const SettingsMenu = () => {
@@ -142,7 +147,7 @@ const SettingsMenu = () => {
             setPasswordConfirm={setPasswordConfirm}
           />
         )}
-        {activeTab === 5 && (
+        {activeTab === 3 && (//насправді 5
           <SettingsNotificationsTab
             commentReply={commentReply}
             setCommentReply={setCommentReply}
@@ -173,7 +178,8 @@ const SettingsMenu = () => {
         {activeTab !== 0 &&
           activeTab !== 1 &&
           activeTab !== 2 &&
-          activeTab !== 5 && (
+          activeTab !== 3 &&  //насправді 5
+          (
             <section className="flex-1 flex items-center justify-center text-white text-2xl font-bold">
               {navItems[activeTab]?.label || "Розділ"}
             </section>
