@@ -238,8 +238,8 @@ function VideoPlayer({
       id="video-container"
       className="relative flex items-center justify-center w-full aspect-video sm:aspect-video xs:aspect-video min-h-[220px] sm:min-h-[320px] md:min-h-[400px] lg:min-h-[60vh]
       z-20 cursor-pointer"
-      onMouseEnter={() => playing && setShowControls(true)}
-      onMouseLeave={() => playing && setShowControls(true)}
+      onMouseEnter={() => setShowControls(true)}
+      onMouseLeave={() => playing && setShowControls(false)}
       onClick={handlePlayPause}
     >
       {isLightOn && (
@@ -352,7 +352,7 @@ function VideoPlayer({
       />
       <div
         className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent px-2 sm:px-4 md:px-10 pt-8 sm:pt-12 md:pt-16 pb-4 sm:pb-6 md:pb-8 transition-opacity duration-300 ${
-          showControls && playing ? "opacity-100" : "opacity-0"
+          showControls || !playing ? "opacity-100" : "opacity-0"
         } z-10`}
       >
         <div className="relative w-full h-1 bg-white/30 rounded-sm mb-5 cursor-pointer">

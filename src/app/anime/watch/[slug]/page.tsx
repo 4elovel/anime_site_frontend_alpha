@@ -26,7 +26,6 @@ function WatchPage() {
     <>
       <Navbar />
       <div className="min-h-screen px-2 xs:px-4 sm:px-6 md:px-12 pt-6 sm:pt-8 pb-16 transition-all duration-500 ease-in-out relative">
-        {/* Dark overlay - always rendered but opacity controlled by isLightOn */}
         <div
           className={`fixed inset-0 bg-black z-10 pointer-events-none transition-opacity duration-500 ease-in-out ${
             isLightOn ? "opacity-80" : "opacity-0"
@@ -34,7 +33,6 @@ function WatchPage() {
         />
 
         <div className="flex flex-row w-full gap-6 relative">
-          {/* Video Player Section */}
           <div className="flex flex-col items-center w-full lg:w-3/4 relative">
             <VideoPlayer
               url={TEST_VIDEO_URL}
@@ -54,13 +52,13 @@ function WatchPage() {
               onVoiceoverChange={handleVoiceoverChange}
             />
           </div>
-          {/* Anime Info */}
+
           <div className="hidden lg:flex flex-col w-1/4 gap-6">
-            {/* Anime Info */}
             <div className="bg-[#181A20] rounded-xl p-5 mb-4 shadow-md">
               <div className="text-white text-xl font-bold mb-2">
                 My Hero Academia: Final Season
               </div>
+
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-gray-400 text-sm">2024</span>
                 <span className="text-gray-400 text-sm">•</span>
@@ -68,6 +66,7 @@ function WatchPage() {
                   Екшн, Школа, Суперсила
                 </span>
               </div>
+
               <div className="flex items-center gap-2 mb-3">
                 <svg
                   width="18"

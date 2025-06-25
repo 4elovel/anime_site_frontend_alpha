@@ -327,7 +327,17 @@ export default function GenrePage() {
         <div className="mb-6">
           <div className="max-w-full sm:max-w-4xl">{genreDescription}</div>
         </div>
-        <div className="flex justify-end mb-4 overflow-x-auto scrollbar-thin scrollbar-thumb-[#232b45]">
+        <div className="w-full flex justify-center mt-4">
+          <div
+            className="w-full h-0 border-t-[2px]"
+            style={{
+              borderImageSource:
+                "linear-gradient(90deg, rgba(73, 99, 138, 0) 0%, rgba(73, 99, 138, 0.5) 50%, rgba(73, 99, 138, 0) 100%)",
+              borderImageSlice: 1,
+            }}
+          />
+        </div>
+        <div className="flex justify-end mb-4 overflow-x-auto scrollbar-thin scrollbar-thumb-[#232b45] mt-6">
           <select
             className="bg-[#181f33] text-white px-3 py-2 rounded-lg border border-[#232b45] focus:outline-none min-w-[120px] xs:min-w-[140px]"
             value={sort}

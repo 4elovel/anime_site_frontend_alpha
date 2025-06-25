@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -45,7 +46,7 @@ const GenreCard: React.FC<GenreCardProps> = ({
   return (
     <Link href={href} className="block w-full group" tabIndex={0}>
       <div className="w-full flex flex-row relative cursor-pointer group-hover:opacity-90 transition-opacity">
-        <div className="flex flex-col justify-start z-10 flex-shrink-0 w-[200px] md:w-[520px]">
+        <div className="flex flex-col justify-start z-10 flex-shrink-0 w-[200px] md:w-[300px] lg:w-[420px]">
           <h2 className="text-white text-3xl font-bold mb-6 leading-tight">
             {title}
           </h2>

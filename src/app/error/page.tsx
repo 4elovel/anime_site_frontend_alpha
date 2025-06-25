@@ -1,11 +1,11 @@
-import ErrorMessage from "@/components/auth/error-message";
+import UniversalErrorPage from "../universal-error-page";
 
-export default function EmailVerificiationPage() {
-  return (
-    <div className="flex min-h-screen w-full items-center justify-center p-2 md:p-6 flex-col gap-8">
-      <div className="w-full max-w-full flex items-center justify-center">
-        <ErrorMessage />
-      </div>
-    </div>
-  );
+export default function ErrorPage({
+  searchParams,
+}: {
+  searchParams?: { code?: string };
+}) {
+  // Можна отримати код помилки з query (?code=403)
+  const errorCode = searchParams?.code === "403" ? 403 : 403;
+  return <UniversalErrorPage errorCode={errorCode} />;
 }
