@@ -34,7 +34,7 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({
   return (
     <>
       {/* Desktop sidebar - hidden on mobile, shown on large screens */}
-      <aside className="hidden lg:flex flex-col pt-20 pl-16 pr-10 min-w-[270px] max-w-[320px] border-r border-[#49638A]/30">
+      <aside className="hidden lg:flex flex-col pt-20 pl-16 pr-10 min-w-[270px] max-w-[320px]">
         <h1 className="font-sans font-bold text-3xl mb-12 text-white">
           Налаштування
         </h1>

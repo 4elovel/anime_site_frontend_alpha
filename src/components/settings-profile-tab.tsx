@@ -93,7 +93,7 @@ const SettingsProfileTab: React.FC<SettingsProfileTabProps> = ({
         <div className="relative w-full h-28 mb-8">
           <label
             htmlFor="cover-upload"
-            className="block w-full h-full bg-[#23252a] rounded-xl flex items-center justify-center text-[#bfc6d5] text-base font-medium cursor-pointer border border-[#23252a] overflow-hidden relative"
+            className=" w-full h-full bg-[#23252a] rounded-xl flex items-center justify-center text-[#bfc6d5] text-base font-medium cursor-pointer border border-[#23252a] overflow-hidden relative"
           >
             {cover ? (
               <Image
