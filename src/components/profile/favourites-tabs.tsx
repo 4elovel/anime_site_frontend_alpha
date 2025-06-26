@@ -50,7 +50,7 @@ const animeList = [
   },
 ];
 
-export default function FavouritesTabs() {
+export default function FavouritesTabs({ isLoading }: { isLoading: boolean }) {
   return (
     <div className="hidden w-full flex-col md:flex">
       <Tabs
@@ -99,6 +99,7 @@ export default function FavouritesTabs() {
                   title={anime.title}
                   year={anime.year}
                   mediaType={anime.mediaType}
+                  isLoading={isLoading}
                 />
               ))}
             </CardContent>

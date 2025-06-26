@@ -24,19 +24,16 @@ const chartData = [{ animeCount: 220, fill: "#399A54" }];
 
 const chartConfig = {} satisfies ChartConfig;
 
-export function AnimeChartRadial() {
+export function AnimeChartRadial({ isLoading }: { isLoading: boolean }) {
   const innerRadius = 53;
   const outerRadius = 63;
 
   return (
-    <Card className="flex flex-col bg-transparent border-0 gap-1 px-0!">
-      {/* <CardHeader className="items-center pb-0">
-        <CardTitle>Radial Chart - Text</CardTitle>
-      </CardHeader> */}
-      <CardContent className="flex-1 pb-0 mb-0 p-0! px-0!">
+    <Card className="flex flex-col gap-1 border-0 bg-transparent px-0!">
+      <CardContent className="mb-0 flex-1 p-0! px-0! pb-0">
         <ChartContainer
           config={chartConfig}
-          className="m-0! aspect-square h-[120px] b-0! px-0!"
+          className="b-0! m-0! aspect-square h-[120px] px-0!"
         >
           <RadialBarChart
             data={chartData}
@@ -50,7 +47,7 @@ export function AnimeChartRadial() {
               gridType="circle"
               radialLines={false}
               stroke="transparent"
-              className="fill-transparent b-0! p-0!"
+              className="b-0! fill-transparent p-0!"
               polarRadius={[57, 48]}
             />
             <RadialBar dataKey="animeCount" background cornerRadius={10} />
@@ -68,7 +65,7 @@ export function AnimeChartRadial() {
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-white text-xl font-bold text-white! "
+                          className="fill-white text-xl font-bold text-white!"
                         >
                           {chartData[0].animeCount.toLocaleString()}
                         </tspan>
@@ -81,8 +78,8 @@ export function AnimeChartRadial() {
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm mt-0 m-0 p-0">
-        <h1 className="text-[#918C8C] text-lg font-[500]">Завершено</h1>
+      <CardFooter className="m-0 mt-0 flex-col gap-2 p-0 text-sm">
+        <h1 className="text-lg font-[500] text-[#918C8C]">Завершено</h1>
       </CardFooter>
     </Card>
   );

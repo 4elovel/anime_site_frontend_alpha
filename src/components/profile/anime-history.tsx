@@ -23,7 +23,7 @@ const animeList = [
   },
 ];
 
-export default function AnimeHistory() {
+export default function AnimeHistory({ isLoading }: { isLoading: boolean }) {
   return (
     <div className="flex w-full flex-col gap-4 md:w-100">
       <AnimeHistoryHeader />
@@ -33,6 +33,7 @@ export default function AnimeHistory() {
           animeName={anime.animeName}
           watchedAge={anime.watchedAge}
           url={anime.url}
+          isLoading={isLoading}
         />
       ))}
     </div>
