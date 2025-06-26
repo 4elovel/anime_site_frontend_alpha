@@ -60,7 +60,6 @@ export default function TagPage() {
 
   return (
     <>
-      <Navbar />
       <div className="min-h-screen px-2 xs:px-4 sm:px-6 md:px-12 pt-6 sm:pt-8 pb-16 transition-all">
         <div className="mb-6">
           <div className="max-w-full sm:max-w-4xl">{tagDescription}</div>

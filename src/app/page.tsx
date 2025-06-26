@@ -477,8 +477,6 @@ const reviews: Review[] = [
 export default function Home() {
   return (
     <div className="p-0 m-0 font-[family-name:var(--font-geist-sans)]">
-      <Navbar />
-
       <AnimeCarousel />
 
       <CardCollection

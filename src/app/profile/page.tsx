@@ -21,7 +21,6 @@ export default function ProfilePage() {
 
   return (
     <div className="flex flex-col sm:gap-12">
-      <Navbar />
       <ProfileBanner />
       <div className="z-1 flex flex-col gap-6 px-2 sm:gap-12 sm:px-4 md:px-6 lg:px-30">
         <h1 className="mb-0 text-[2rem] font-[500] text-white sm:hidden">

@@ -4,6 +4,8 @@ import "./globals.css";
 
 import { Inter } from "next/font/google";
 import { AuthProvider } from "@/contexts/auth-context";
+import Footer from "@/components/ui/footer";
+import Navbar from "@/components/nav/navbar";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const geistSans = Geist({
@@ -32,7 +34,9 @@ export default function RootLayout({
       className="`${inter.variable} ${geistSans.variable} ${geistMono.variable}`"
     >
       <body className={`font-sans bg-gradient antialiased`}>
+        <Navbar/>
         <AuthProvider>{children}</AuthProvider>
+        <Footer />
       </body>
     </html>
   );

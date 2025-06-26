@@ -259,7 +259,6 @@ export default function AnimePage() {
       borderRadius={8}
       duration={1.2}
     >
-      <Navbar />
       <div className="max-w-7xl mx-auto py-10 px-4 flex flex-col md:flex-row gap-10">
         {/* Left: Poster */}
         <AnimePosterSection

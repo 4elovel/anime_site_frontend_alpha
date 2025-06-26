@@ -78,7 +78,6 @@ export default function UniversalErrorPage({
   const { text, subtext, image } = errorConfig[errorCode];
   return (
     <>
-      <Navbar />
       <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8">
         <div className="mb-6">
           <Image

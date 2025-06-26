@@ -24,7 +24,6 @@ function WatchPage() {
 
   return (
     <>
-      <Navbar />
       <div className="min-h-screen px-2 xs:px-4 sm:px-6 md:px-12 pt-6 sm:pt-8 pb-16 transition-all duration-500 ease-in-out relative">
         <div
           className={`fixed inset-0 bg-black z-10 pointer-events-none transition-opacity duration-500 ease-in-out ${
