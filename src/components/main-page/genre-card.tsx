@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface GenreCardProps {
   title?: string;
@@ -68,13 +69,12 @@ const GenreCard: React.FC<GenreCardProps> = ({
                   }}
                 >
                   <div className="rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-purple-600 to-blue-600 w-32 h-48 md:w-[140px] md:h-[200px]">
-                    <img
+                    <Image
                       src={img}
                       alt={`anime-${idx}`}
+                      fill
                       className="w-full h-full object-cover"
-                      style={{
-                        filter: "brightness(0.9) contrast(1.1)",
-                      }}
+                      style={{ filter: "brightness(0.9) contrast(1.1)" }}
                     />
                   </div>
                 </div>

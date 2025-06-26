@@ -586,7 +586,7 @@ export default function Home() {
           time="близько 5 годин тому"
           tags={["Україна", "Українці"]}
           items={collectionItems}
-          userAvatar="assets/mock-user-logo.png"
+          userAvatar="/assets/mock-user-logo.png"
           userName="Україна в аніме"
         />
         <CustomCollectionSection
@@ -596,7 +596,7 @@ export default function Home() {
           time="близько 5 годин тому"
           tags={["Серіал", "ONA"]}
           items={collectionItems}
-          userAvatar="assets/mock-user-logo.png"
+          userAvatar="/assets/mock-user-logo.png"
           userName="Аніме, що закінчилися за один сезон"
         />
       </section>

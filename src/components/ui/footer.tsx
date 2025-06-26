@@ -1,40 +1,40 @@
 import React from "react";
-import Image from "next/image";
+import {
+  Youtube,
+  Facebook,
+  Instagram,
+  MessageCircle,
+  Send,
+} from "lucide-react";
 
 const socialLinks = [
   {
     href: "#",
-    icon: "/assets/auth/youtube.svg",
+    icon: Youtube,
     label: "YouTube",
     text: "YouTube",
   },
   {
     href: "#",
-    icon: "/assets/auth/facebook.svg",
+    icon: Facebook,
     label: "Facebook",
     text: "Facebook",
   },
   {
     href: "#",
-    icon: "/assets/auth/instagram.svg",
+    icon: Instagram,
     label: "Instagram",
     text: "Instagram",
   },
   {
     href: "#",
-    icon: "/assets/auth/tiktok.svg",
-    label: "TikTok",
-    text: "TikTok",
-  },
-  {
-    href: "#",
-    icon: "/assets/auth/discord.svg",
+    icon: MessageCircle,
     label: "Discord",
     text: "Discord",
   },
   {
     href: "#",
-    icon: "/assets/auth/telegram.svg",
+    icon: Send,
     label: "Telegram",
     text: "Telegram",
   },
@@ -74,7 +74,7 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-400 text-lg">
               {socialLinks.map((link) => (
                 <li key={link.label} className="flex items-center gap-2">
-                  <Image src={link.icon} alt={link.label} width={24} height={24} className="opacity-70" unoptimized />
+                  <link.icon className="opacity-70" size={24} />
                   <a href={link.href} className="hover:text-white">{link.text}</a>
                 </li>
               ))}

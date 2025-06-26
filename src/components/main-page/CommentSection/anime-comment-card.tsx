@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -122,9 +123,11 @@ const AnimeCommentCard: React.FC<AnimeCommentCardProps> = ({
       }`}
     >
       <div className="flex items-start gap-4">
-        <img
+        <Image
           src={avatarUrl}
           alt={username}
+          width={48}
+          height={48}
           className="w-12 h-12 rounded-full object-cover mt-1"
         />
         <div className="flex-1">

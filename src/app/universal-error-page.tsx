@@ -3,18 +3,46 @@ import Navbar from "@/components/nav/navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
+import { usePathname } from "next/navigation";
 
 interface ErrorPageProps {
   errorCode?: 404 | 403;
+  // entityType?: "anime" | "genre" | "tag" | "character" | "studio" | "default";
 }
 
-const errorConfig = {
-  404: {
+const errorTexts = {
+  anime: {
     text: "Це аніме загубилось у мультивсесвіті...",
-    subtext:
-      "О ні! Ми не можемо знайти те, що ти шукаєш... Але можливо тобі сподобається щось із цього!",
-    image: "/assets/errors/404.png",
+    subtext: "О ні! Ми не можемо знайти те, що ти шукаєш... Але можливо тобі сподобається щось із цього!",
   },
+  genre: {
+    text: "Цей жанр ще не відкрито...",
+    subtext: "Ми не знайшли такий жанр, але у нас є багато інших цікавих напрямків!",
+  },
+  tag: {
+    text: "Цей тег ще не набув популярності...",
+    subtext: "Ми не знайшли такий тег, але ти можеш дослідити інші!",
+  },
+  character: {
+    text: "Цей персонаж десь подорожує...",
+    subtext: "Ми не знайшли цього героя, але інші чекають на тебе!",
+  },
+  studio: {
+    text: "Студія загубилась у світі аніме...",
+    subtext: "Ми не знайшли цю студію, але є багато інших!",
+  },
+  default: {
+    text: "Сторінку не знайдено...",
+    subtext: "Ми не можемо знайти те, що ти шукаєш. Спробуй інший запит!",
+  },
+};
+
+const errorConfig = {
+  404: (entityType: string = "default") => ({
+    text: errorTexts[entityType as keyof typeof errorTexts]?.text || errorTexts.default.text,
+    subtext: errorTexts[entityType as keyof typeof errorTexts]?.subtext || errorTexts.default.subtext,
+    image: "/assets/errors/404.png",
+  }),
   403: {
     text: "Заборонена зона... але в тебе є шанс знайти щось цікаве 🧭",
     subtext:
@@ -62,10 +90,21 @@ const animeList = [
   },
 ];
 
+function getEntityTypeFromPath(path: string): keyof typeof errorTexts {
+  if (path.includes("/anime/")) return "anime";
+  if (path.includes("/genre/")) return "genre";
+  if (path.includes("/tag/")) return "tag";
+  if (path.includes("/character/")) return "character";
+  if (path.includes("/studio/") || path.includes("/studios/")) return "studio";
+  return "default";
+}
+
 export default function UniversalErrorPage({
   errorCode = 404,
 }: ErrorPageProps) {
-  // Для стрілок-скролу
+  const pathname = usePathname();
+  const entityType = getEntityTypeFromPath(pathname || "");
+
   const listRef = useRef<HTMLDivElement>(null);
   const scroll = (dir: "left" | "right") => {
     if (listRef.current) {
@@ -75,7 +114,10 @@ export default function UniversalErrorPage({
       });
     }
   };
-  const { text, subtext, image } = errorConfig[errorCode];
+  const { text, subtext, image } =
+    errorCode === 404
+      ? errorConfig[404](entityType)
+      : (errorConfig[errorCode] as any);
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8">

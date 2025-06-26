@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface CollectionItem {
   img: string;
@@ -71,7 +72,7 @@ const CustomCollectionSection: React.FC<CustomCollectionCardProps> = ({
       href: "#",
     },
   ],
-  userAvatar = "assets/mock-user-logo.png",
+  userAvatar = "/assets/mock-user-logo.png",
   userName = "Україна в аніме",
 }) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -136,9 +137,11 @@ const CustomCollectionSection: React.FC<CustomCollectionCardProps> = ({
         )}
       </div>
       <div className="flex flex-col items-start mb-4 sm:flex-row sm:items-center">
-        <img
+        <Image
           src={userAvatar}
           alt={userName}
+          width={80}
+          height={80}
           className="w-20 h-20 rounded-xl mb-2 sm:mb-0 sm:mr-4 object-cover"
         />
         <div className="flex flex-col items-start sm:items-start flex-1">
@@ -225,9 +228,11 @@ const CustomCollectionSection: React.FC<CustomCollectionCardProps> = ({
                   className="group cursor-pointer"
                 >
                   <div className="relative">
-                    <img
+                    <Image
                       src={item.img}
                       alt={item.title}
+                      width={180}
+                      height={240}
                       className="w-full aspect-[3/4] object-cover rounded-lg transition-transform group-hover:scale-105"
                     />
                   </div>
@@ -250,9 +255,11 @@ const CustomCollectionSection: React.FC<CustomCollectionCardProps> = ({
               className="group cursor-pointer min-w-[180px] max-w-[220px]"
             >
               <div className="relative">
-                <img
+                <Image
                   src={item.img}
                   alt={item.title}
+                  width={180}
+                  height={240}
                   className="w-full aspect-[3/4] object-cover rounded-lg transition-transform group-hover:scale-105"
                 />
               </div>

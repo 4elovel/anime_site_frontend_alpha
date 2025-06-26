@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface ReleaseCardProps {
   image?: string;
@@ -26,7 +27,7 @@ const ReleaseCard: React.FC<ReleaseCardProps> = ({
 }) => (
   <div className="w-full h-[140px] rounded-2xl px-4 py-3 flex items-center">
     <div className="w-[120px] h-[180px] rounded-xl overflow-hidden flex-shrink-0 mr-4">
-      <img src={image} alt={title} className="w-full h-full object-cover" />
+      <Image src={image} alt={title} width={120} height={180} className="w-full h-full object-cover" />
     </div>
     <div className="flex flex-col flex-1 min-w-0">
       <div className="text-white text-lg font-semibold leading-tight whitespace-normal break-words">

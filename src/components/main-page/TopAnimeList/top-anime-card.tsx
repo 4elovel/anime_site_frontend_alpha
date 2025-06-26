@@ -15,6 +15,7 @@ interface TopAnimeCardProps {
   rating: number;
   showRank?: boolean;
   href?: string;
+  small?: boolean;
 }
 
 const TopAnimeCard: FC<TopAnimeCardProps> = ({
@@ -25,11 +26,13 @@ const TopAnimeCard: FC<TopAnimeCardProps> = ({
   rank,
   rating,
   showRank = true,
-  href,
+  href = "#",
+  small = false,
 }) => {
   const isTop1 = rank === 1;
 
-  const card = (
+  return (
+    <Link href={href ?? "#"}>
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -37,15 +40,19 @@ const TopAnimeCard: FC<TopAnimeCardProps> = ({
       whileHover={{
         scale: 1.04,
       }}
-      className="min-w-[200px] sm:w-[260px] xs:min-w-0 flex flex-col text-white font-sans cursor-pointer transition-transform duration-200"
+      className={
+        small
+          ? "min-w-[140px] sm:w-[170px] xs:min-w-0 flex flex-col text-white font-sans cursor-pointer transition-transform duration-200"
+          : "min-w-[200px] sm:w-[250px] xs:min-w-0 flex flex-col text-white font-sans cursor-pointer transition-transform duration-200"
+      }
     >
-      <div className="relative h-[300px] sm:h-[390px] w-full rounded-2xl overflow-hidden">
+      <div className={small ? "relative h-[200px] sm:h-[250px] w-full rounded-2xl overflow-hidden" : "relative h-[250px] sm:h-[390px] w-full rounded-2xl overflow-hidden"}>
         <Image
           src={image}
           alt={title}
           fill
           className="object-cover rounded-2xl"
-          sizes="260px"
+          sizes={small ? "170px" : "250px"}
           priority
         />
       </div>
@@ -76,9 +83,8 @@ const TopAnimeCard: FC<TopAnimeCardProps> = ({
         </div>
       )}
     </motion.div>
+    </Link>
   );
-
-  return href ? <Link href={href}>{card}</Link> : card;
 };
 
 export default TopAnimeCard;

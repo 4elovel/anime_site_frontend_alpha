@@ -4,6 +4,7 @@ import ArrowDown from "@/assets/arrow-down.svg";
 import { Play } from "lucide-react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import Image from "next/image";
 
 interface AnimePosterSectionProps {
   poster: string;
@@ -20,9 +21,11 @@ const AnimePosterSection: React.FC<AnimePosterSectionProps> = ({
     {isLoading ? (
       <Skeleton height={360} width={260} borderRadius={16} />
     ) : (
-      <img
+      <Image
         src={poster}
         alt={name}
+        width={260}
+        height={400}
         className="rounded-2xl w-full h-[500px] md:w-[260px] md:h-[400px] object-cover shadow-xl border border-zinc-700"
       />
     )}

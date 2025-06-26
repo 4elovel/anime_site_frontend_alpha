@@ -2,6 +2,7 @@ import React from "react";
 import { Filter, MoreVertical } from "lucide-react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import Image from "next/image";
 
 interface Episode {
   id: number;
@@ -83,10 +84,12 @@ const AnimeEpisodesSection: React.FC<AnimeEpisodesSectionProps> = ({
                 className="flex flex-col min-w-[210px] md:min-w-[220px] max-w-[240px]"
               >
                 <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-3">
-                  <img
+                  <Image
                     src={ep.preview}
                     alt={ep.title}
+                    fill
                     className="w-full h-full object-cover"
+                    style={{objectFit: 'cover'}}
                   />
                   <button className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/60 transition cursor-pointer">
                     <svg
