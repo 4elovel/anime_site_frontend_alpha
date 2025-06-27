@@ -31,10 +31,19 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="`${inter.variable} ${geistSans.variable} ${geistMono.variable}`"
+      className={` ${inter.variable} ${geistSans.variable} ${geistMono.variable} `}
     >
-      <body className={`font-sans bg-gradient antialiased`}>
-        <Navbar/>
+      <body className={`bg-gradient relative font-sans antialiased`}>
+        <div className="pointer-events-none absolute top-0 left-0 -z-10 h-screen w-full overflow-hidden">
+          <img
+            src="/assets/line-back.svg"
+            alt="background lines"
+            className="h-screen w-full object-cover"
+            draggable="false"
+            aria-hidden="true"
+          />
+        </div>
+        <Navbar />
         <AuthProvider>{children}</AuthProvider>
         <Footer />
       </body>

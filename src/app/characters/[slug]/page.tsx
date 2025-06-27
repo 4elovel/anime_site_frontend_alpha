@@ -1,159 +1,174 @@
 import Image from "next/image";
-import { API_BASE_URL } from "@/config";
-import CardCollection from "@/components/shared/card-collection";
-import SectionHeader from "@/components/shared/section-header";
+import CardCollection from "@/components/main-page/card-collection";
+import TopAnimeCard from "@/components/main-page/TopAnimeList/top-anime-card";
 
-interface CharacterData {
-  id: string;
-  name: string;
-  slug: string;
-  image: string;
-  birth_date?: string;
-  death_date?: string | null;
-  biography?: string;
-  gender?: string;
-  age?: string;
-  birthplace?: string;
-  original_name?: string;
-  type?: string;
-}
-//TODO get voiceactor data from API
-const voiceActorCards = [
+const mockCharacter = {
+  name: "Інтегра Фейрбрук Вінґейтс Геллсінґ",
+  originalName: "インテグラル・ファルブルケ・ウィンゲーツ・ヘルシング",
+  image: "/assets/profile/mock-history-anime-card.png",
+  age: 22,
+  gender: "Жінка",
+  aliases: "Граф, Магістр, Лорд Геллсінґ, Вавилон",
+  abilities: "Влучна стрільба, фехтування, окультні знання, командир Алукарда",
+  bio: (
+    <>
+      <b>Інтегра Фейрбрук Вінґейтс Геллсінґ</b> — сильна, рішуча та
+      холоднокровна глава Організації Геллсінґ, яка займається знищенням
+      вампірів та надприродних загроз у Великобританії. Вона — благородна леді з
+      залізною волею, мудрим розумом і безмежною відданістю своїй місії. Інтегра
+      сувора, але справедлива, її поважають навіть наймогутніші підлеглі,
+      зокрема вампір Алукард, який служить їй з беззаперечною лояльністю. Її
+      образ — це поєднання аристократичної елегантності та воєнної твердості
+    </>
+  ),
+  source: {
+    name: "MyAnimeList",
+    url: "https://myanimelist.net/character/",
+  },
+};
+
+const mockAnime = [
   {
-    type: "voice-actor",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    name: "Сакакібара Йошико",
+    image: "/assets/profile/mock-history-anime-card.png",
     title: "Геллсінґ OVA",
-    animeImage: "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+    year: 2006,
+    type: "OVA",
+    rating: 8.2,
+    href: "#",
+    showRank: false,
+    small: true,
   },
   {
-    type: "voice-actor",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    name: "Іван Петров Іванович",
+    image: "/assets/profile/mock-history-anime-card2.png",
     title: "Геллсінґ",
-    animeImage: "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+    year: 2001,
+    type: "ТВ Серіал",
+    rating: 7.7,
+    href: "#",
+    showRank: false,
+    small: true,
   },
   {
-    type: "voice-actor",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    name: "Сакакібара Йошико",
-    title: "Геллсінґ OVA",
-    animeImage: "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+    image: "/assets/profile/mock-history-anime-card3.png",
+    title: "Геллсінґ: Спешл",
+    year: 2001,
+    type: "Спешл",
+    rating: 7.5,
+    href: "#",
+    showRank: false,
+    small: true,
   },
   {
-    type: "voice-actor",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    name: "Сакакібара Йошико",
-    title: "Геллсінґ OVA",
-    animeImage: "https://cdn.myanimelist.net/images/anime/4/5123.jpg",
+    image: "/assets/profile/mock-history-anime-card3.png",
+    title: "Геллсінґ: Спешл",
+    year: 2001,
+    type: "Спешл",
+    rating: 7.5,
+    href: "#",
+    showRank: false,
+    small: true,
+  },
+  {
+    image: "/assets/profile/mock-history-anime-card3.png",
+    title: "Геллсінґ: Спешл",
+    year: 2001,
+    type: "Спешл",
+    rating: 7.5,
+    href: "#",
+    showRank: false,
+    small: true,
+  },
+  {
+    image: "/assets/profile/mock-history-anime-card3.png",
+    title: "Геллсінґ: Спешл",
+    year: 2001,
+    type: "Спешл",
+    rating: 7.5,
+    href: "#",
+    showRank: false,
+    small: true,
+  },
+  {
+    image: "/assets/profile/mock-history-anime-card3.png",
+    title: "Геллсінґ: Спешл",
+    year: 2001,
+    type: "Спешл",
+    rating: 7.5,
+    href: "#",
+    showRank: false,
+    small: true,
   },
 ];
 
-async function getCharacter(slug: string): Promise<CharacterData | null> {
-  try {
-    const res = await fetch(`${API_BASE_URL}people/${slug}`, {
-      cache: "no-store",
-    });
-    if (!res.ok) return null;
-    const json = await res.json();
-    return json.data;
-  } catch {
-    return null;
-  }
-}
-
-async function getCharacterAnimes(slug: string) {
-  try {
-    const res = await fetch(`${API_BASE_URL}people/${slug}/animes`, {
-      cache: "no-store",
-    });
-    if (!res.ok) return [];
-    const json = await res.json();
-    return Array.isArray(json.data) ? json.data : [];
-  } catch {
-    return [];
-  }
-}
-
-export default async function CharacterPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const character = await getCharacter(params.slug);
-  if (!character || character.type !== "character") {
-    return (
-      <div className="text-white text-center mt-20">Такого персонажа немає</div>
-    );
-  }
-
-  // Fetch first 4 anime for this character
-  const animes = (await getCharacterAnimes(params.slug)).slice(0, 4);
-  const animeCards = animes.map((anime: any) => ({
-    image: anime.poster,
-    title: anime.name,
-    year: anime.first_air_date
-      ? new Date(anime.first_air_date).getFullYear()
-      : undefined,
-    media_type: anime.kind,
-    slug: anime.slug,
-  }));
-
+export default function CharacterPage() {
   return (
-    <div className="max-w-6xl mx-auto py-12 px-4 flex flex-col md:flex-row gap-12">
-      <div className="flex-shrink-0 flex justify-center md:block">
-        <div className="rounded-2xl overflow-hidden shadow-lg border border-zinc-700 bg-zinc-900 w-[220px] h-[300px] relative">
-          <Image
-            src={character.image}
-            alt={character.name}
-            width={220}
-            height={300}
-            className="object-cover w-full h-full"
-            unoptimized
-          />
-        </div>
-      </div>
-      <div className="flex-1 flex flex-col gap-4 max-w-2xl">
-        <h1 className="text-3xl md:text-4xl font-bold text-white mb-1">
-          {character.name}
-        </h1>
-        {character.original_name && (
-          <div className="text-zinc-400 text-base mb-2">
-            {character.original_name}
+    <div className="mx-auto flex max-w-7xl flex-col gap-12 px-4 py-12">
+      <div className="flex flex-col gap-12 md:flex-row">
+        <div className="flex flex-shrink-0 justify-center md:block">
+          <div className="relative h-[360px] w-[260px] overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-900 shadow-lg">
+            <Image
+              src={mockCharacter.image}
+              alt={mockCharacter.name}
+              width={260}
+              height={360}
+              className="h-full w-full object-cover"
+              unoptimized
+            />
           </div>
-        )}
-        <SectionHeader title="Опис" badge="UA" className="mb-2" />
-        <div className="flex flex-col gap-1 text-zinc-300 text-base">
-          {character.birth_date && (
+        </div>
+        <div className="flex max-w-3xl flex-1 flex-col gap-2">
+          <h1 className="mb-1 text-3xl font-bold text-white md:text-4xl">
+            {mockCharacter.name}
+          </h1>
+          <div className="mb-4 text-lg text-zinc-400">
+            {mockCharacter.originalName}
+          </div>
+          <div className="mb-2 flex items-center gap-3">
+            <span className="text-xl font-semibold text-white">Опис</span>
+            <span className="ml-2 rounded-xl bg-[#232B3A] px-3 py-1 text-xs font-bold text-white">
+              UA
+            </span>
+          </div>
+          <div className="mb-2 flex flex-col gap-1 text-base text-zinc-300">
             <div>
               <span className="font-semibold text-white">Вік:</span>{" "}
-              {new Date().getFullYear() -
-                new Date(character.birth_date).getFullYear()}{" "}
-              роки
+              {mockCharacter.age} роки
             </div>
-          )}
-          {/* Add more fields as needed */}
-        </div>
-        {character.biography && (
-          <div className="mt-2 text-zinc-200 text-base leading-relaxed whitespace-pre-line">
-            {character.biography}
+            <div>
+              <span className="font-semibold text-white">Стать:</span>{" "}
+              {mockCharacter.gender}
+            </div>
+            <div>
+              <span className="font-semibold text-white">Інші псевдоніми:</span>{" "}
+              {mockCharacter.aliases}
+            </div>
+            <div>
+              <span className="font-semibold text-white">Здібності:</span>{" "}
+              {mockCharacter.abilities}
+            </div>
           </div>
-        )}
-        {animeCards.length > 0 && (
-          <div className="mt-8">
+          <div className="mt-2 mb-2 text-base leading-relaxed whitespace-pre-line text-zinc-200">
+            {mockCharacter.bio}
+          </div>
+          <div className="mt-2 mb-8 text-base text-zinc-400">
+            Джерело{" "}
+            <a
+              href={mockCharacter.source.url}
+              className="text-[#4B7FCC] hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {mockCharacter.source.name}
+            </a>
+          </div>
+          <div>
             <CardCollection
               title="Аніме"
-              showArrowRightIcon
-              items={animeCards}
-              cardType="anime"
-            />
-            <CardCollection
-              title="Озвучення персонажа"
-              items={voiceActorCards}
-              cardType="voice-actor"
+              items={mockAnime}
+              cardType="top-anime"
             />
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

@@ -10,6 +10,8 @@ import TopUserCard from "./top-user-card";
 import ContinueWatchingCard from "./continue-watching-card";
 import GenreCard from "@/components/main-page/genre-card";
 import ReleaseCard from "./release-card";
+import AuthorCardComponent from "../author-card";
+import TopAnimeCard from "./TopAnimeList/top-anime-card";
 
 interface CardCollectionProps {
   title?: string;
@@ -115,17 +117,17 @@ const CardCollection: React.FC<CardCollectionProps> = ({
   if (isMobile === null) return null;
 
   return (
-    <section className="w-full flex flex-col items-center py-10 xs:py-4">
-      <div className="relative w-full max-w-[1400px] mx-auto">
-        <div className="flex items-center mb-8 xs:mb-4 pl-2 pr-2 justify-between">
-          <h2 className="text-white text-4xl sm:text-2xl xs:text-lg font-bold tracking-tight">
+    <section className="xs:py-4 flex w-full flex-col items-center py-10">
+      <div className="relative mx-auto w-full max-w-[1400px]">
+        <div className="xs:mb-4 mb-8 flex items-center justify-between pr-2 pl-2">
+          <h2 className="xs:text-lg text-4xl font-bold tracking-tight text-white sm:text-2xl">
             {title}
           </h2>
 
           {!isMobile && showButton && buttonText && buttonUrl ? (
             <a
               href={buttonUrl}
-              className="border-2 border-[#4B7FCC] rounded-xl px-4 py-2 text-white font-semibold transition-colors duration-200 hover:bg-[#4B7FCC] hover:text-black text-base ml-2 h-10 flex items-center"
+              className="ml-2 flex h-10 items-center rounded-xl border-2 border-[#4B7FCC] px-4 py-2 text-base font-semibold text-white transition-colors duration-200 hover:bg-[#4B7FCC] hover:text-black"
             >
               {buttonText}
             </a>
@@ -133,14 +135,14 @@ const CardCollection: React.FC<CardCollectionProps> = ({
             !isMobile &&
             pagesCount > 1 && (
               <div
-                className="flex items-center border border-[#918C8C80] rounded-xl px-2 py-1 bg-black/80 ml-2"
+                className="ml-2 flex items-center rounded-xl border border-[#918C8C80] bg-black/80 px-2 py-1"
                 style={{ minWidth: 100 }}
               >
                 <button
                   aria-label="Scroll left"
                   onClick={() => scroll("left")}
                   disabled={activePage === 0}
-                  className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#19191c] transition-all text-white text-lg disabled:opacity-40"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#19191c] text-lg text-white transition-all disabled:opacity-40"
                 >
                   <svg width={18} height={18} fill="none" viewBox="0 0 24 24">
                     <path
@@ -152,11 +154,11 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                     />
                   </svg>
                 </button>
-                <div className="flex items-center gap-2 mx-2">
+                <div className="mx-2 flex items-center gap-2">
                   {Array.from({ length: pagesCount }).map((_, idx) => (
                     <span
                       key={idx}
-                      className={`h-1 rounded-full transition-all duration-200 cursor-pointer ${
+                      className={`h-1 cursor-pointer rounded-full transition-all duration-200 ${
                         activePage === idx
                           ? "w-6 bg-blue-500"
                           : "w-4 bg-[#23232a]"
@@ -170,7 +172,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                   aria-label="Scroll right"
                   onClick={() => scroll("right")}
                   disabled={activePage === pagesCount - 1}
-                  className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#19191c] transition-all text-white text-lg disabled:opacity-40"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#19191c] text-lg text-white transition-all disabled:opacity-40"
                 >
                   <svg width={18} height={18} fill="none" viewBox="0 0 24 24">
                     <path
@@ -187,12 +189,12 @@ const CardCollection: React.FC<CardCollectionProps> = ({
           )}
 
           {isMobile && (
-            <div className="flex gap-2 ml-auto">
+            <div className="ml-auto flex gap-2">
               <button
                 aria-label="Scroll left"
                 onClick={() => setActivePage((p) => Math.max(0, p - 1))}
                 disabled={activePage === 0}
-                className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#1A1A1D] text-white text-xl disabled:opacity-40"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A1A1D] text-xl text-white disabled:opacity-40"
               >
                 <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
                   <path
@@ -210,7 +212,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                   setActivePage((p) => Math.min(p + 1, pagesCount - 1))
                 }
                 disabled={activePage === pagesCount - 1}
-                className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#1A1A1D] text-white text-xl disabled:opacity-40"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A1A1D] text-xl text-white disabled:opacity-40"
               >
                 <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
                   <path
@@ -230,12 +232,12 @@ const CardCollection: React.FC<CardCollectionProps> = ({
           <div
             className={
               cardType === "top-user"
-                ? "grid grid-cols-1 gap-2 px-2 justify-center"
+                ? "grid grid-cols-1 justify-center gap-2 px-2"
                 : cardType === "genre"
-                ? "flex flex-col gap-6 px-2"
-                : cardType === "release"
-                ? "flex flex-col gap-16 px-2"
-                : "grid grid-cols-2 gap-2 px-2"
+                  ? "flex flex-col gap-6 px-2"
+                  : cardType === "release"
+                    ? "flex flex-col gap-16 px-2"
+                    : "grid grid-cols-2 gap-2 px-2"
             }
             ref={gridRef}
           >
@@ -244,13 +246,13 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                 isMobile && cardType === "top-user"
                   ? activePage * 5
                   : cardType === "release"
-                  ? activePage * 2
-                  : activePage * 2,
+                    ? activePage * 2
+                    : activePage * 2,
                 isMobile && cardType === "top-user"
                   ? activePage * 5 + 5
                   : cardType === "release"
-                  ? activePage * 2 + 2
-                  : activePage * 2 + 2
+                    ? activePage * 2 + 2
+                    : activePage * 2 + 2,
               )
               .map((item, idx) => (
                 <div
@@ -273,13 +275,27 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                     <GenreCard {...item} />
                   ) : cardType === "release" ? (
                     <ReleaseCard {...item} />
+                  ) : cardType === "author" ? (
+                    <AuthorCardComponent {...item} />
+                  ) : cardType === "top-anime" ? (
+                    <TopAnimeCard
+                      image={item.image}
+                      title={item.title}
+                      year={item.year}
+                      type={item.type}
+                      rank={item.rank ?? idx + 1}
+                      rating={item.rating}
+                      showRank={item.showRank}
+                      href={item.href}
+                      small={item.small}
+                    />
                   ) : null}
                 </div>
               ))}
             {cardType === "genre" && (
-              <div className="w-full flex justify-center mt-4">
+              <div className="mt-4 flex w-full justify-center">
                 <div
-                  className="w-full h-0 border-t-[2px]"
+                  className="h-0 w-full border-t-[2px]"
                   style={{
                     borderImageSource:
                       "linear-gradient(90deg, rgba(73, 99, 138, 0) 0%, rgba(73, 99, 138, 0.5) 50%, rgba(73, 99, 138, 0) 100%)",
@@ -290,15 +306,15 @@ const CardCollection: React.FC<CardCollectionProps> = ({
             )}
           </div>
         ) : cardType === "genre" ? (
-          <div className="flex flex-col gap-6 px-2 w-full">
+          <div className="flex w-full flex-col gap-6 px-2">
             {items.map((item, idx) => (
               <div key={item.title ? item.title + idx : idx} className="w-full">
                 {renderCard ? renderCard(item, idx) : <GenreCard {...item} />}
               </div>
             ))}
-            <div className="w-full flex justify-center mt-4">
+            <div className="mt-4 flex w-full justify-center">
               <div
-                className="w-full h-0 border-t-[2px]"
+                className="h-0 w-full border-t-[2px]"
                 style={{
                   borderImageSource:
                     "linear-gradient(90deg, rgba(73, 99, 138, 0) 0%, rgba(73, 99, 138, 0.5) 50%, rgba(73, 99, 138, 0) 100%)",
@@ -324,12 +340,12 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                     />
                   ))}
               </div>
-              <div className="flex justify-center gap-2 mt-4">
+              <div className="mt-4 flex justify-center gap-2">
                 <button
                   aria-label="Попередня сторінка"
                   onClick={() => setActivePage((p) => Math.max(0, p - 1))}
                   disabled={activePage === 0}
-                  className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#1A1A1D] text-white text-xl disabled:opacity-40"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A1A1D] text-xl text-white disabled:opacity-40"
                 >
                   <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
                     <path
@@ -345,11 +361,11 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                   aria-label="Наступна сторінка"
                   onClick={() =>
                     setActivePage((p) =>
-                      Math.min(p + 1, Math.ceil(items.length / 2) - 1)
+                      Math.min(p + 1, Math.ceil(items.length / 2) - 1),
                     )
                   }
                   disabled={activePage === Math.ceil(items.length / 2) - 1}
-                  className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#1A1A1D] text-white text-xl disabled:opacity-40"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A1A1D] text-xl text-white disabled:opacity-40"
                 >
                   <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
                     <path
@@ -364,7 +380,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-2">
+            <div className="grid grid-cols-1 gap-8 px-2 sm:grid-cols-2 lg:grid-cols-3">
               {items.map((item, idx) => (
                 <ReleaseCard
                   key={item.title ? item.title + idx : idx}
@@ -374,7 +390,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
             </div>
           )
         ) : cardType === "top-user" && items.length <= ITEMS_PER_PAGE ? (
-          <div className="flex gap-2 xs:gap-4 justify-center px-2 pb-2 pt-1 w-full">
+          <div className="xs:gap-4 flex w-full justify-center gap-2 px-2 pt-1 pb-2">
             {items.map((item, idx) => (
               <div
                 key={item.title ? item.title + idx : idx}
@@ -388,7 +404,7 @@ const CardCollection: React.FC<CardCollectionProps> = ({
         ) : (
           <motion.div
             ref={scrollRef}
-            className={`flex gap-2 xs:gap-4 overflow-x-auto scrollbar-hide px-2 pb-2 pt-1`}
+            className={`xs:gap-4 scrollbar-hide flex gap-2 overflow-x-auto px-2 pt-1 pb-2`}
             style={{
               scrollBehavior: "smooth",
               maxWidth: "1400px",
@@ -400,11 +416,21 @@ const CardCollection: React.FC<CardCollectionProps> = ({
             {items.map((item, idx) => (
               <div
                 key={item.title ? item.title + idx : idx}
-                className={cardType === "genre" ? "w-full" : "flex-shrink-0"}
+                className={
+                  cardType === "author"
+                    ? undefined
+                    : cardType === "genre"
+                      ? "w-full"
+                      : cardType === "top-anime"
+                        ? undefined
+                        : "flex-shrink-0"
+                }
                 style={
                   cardType === "genre"
                     ? { minWidth: "100%" }
-                    : { width: isMobile ? 220 : 320 }
+                    : cardType === "top-anime"
+                      ? { flexShrink: 0 }
+                      : { width: isMobile ? 220 : 320 }
                 }
               >
                 {renderCard ? (
@@ -423,6 +449,20 @@ const CardCollection: React.FC<CardCollectionProps> = ({
                   <GenreCard {...item} />
                 ) : cardType === "release" ? (
                   <ReleaseCard {...item} />
+                ) : cardType === "author" ? (
+                  <AuthorCardComponent {...item} />
+                ) : cardType === "top-anime" ? (
+                  <TopAnimeCard
+                    image={item.image}
+                    title={item.title}
+                    year={item.year}
+                    type={item.type}
+                    rank={item.rank ?? idx + 1}
+                    rating={item.rating}
+                    showRank={item.showRank}
+                    href={item.href}
+                    small={item.small}
+                  />
                 ) : null}
               </div>
             ))}

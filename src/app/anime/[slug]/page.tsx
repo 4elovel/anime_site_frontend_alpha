@@ -22,6 +22,7 @@ import AnimeMainInfoSection from "@/components/anime-page/AnimeMainInfoSection";
 import AnimeEpisodesSection from "@/components/anime-page/AnimeEpisodesSection";
 import AnimeReviewsSection from "@/components/anime-page/AnimeReviewsSection";
 import { SkeletonTheme } from "react-loading-skeleton";
+import AnimeCharactersSection from "@/components/anime-page/AnimeCharactersSection";
 
 interface Studio {
   id: string;
@@ -198,7 +199,7 @@ export default function AnimePage() {
   ];
 
   const [episodeOrder, setEpisodeOrder] = React.useState<"newest" | "oldest">(
-    "oldest"
+    "oldest",
   );
   const filteredEpisodes = [...episodes];
   if (episodeOrder === "newest") filteredEpisodes.reverse();
@@ -252,6 +253,56 @@ export default function AnimePage() {
     },
   ];
 
+  // Додати мокові дані для авторів:
+  const authors = [
+    {
+      name: "Маюдзукі Джюн",
+      role: "Автор оригіналу",
+      image: "/assets/mock-user-logo.png",
+      link: "#",
+    },
+    {
+      name: "Івасаки Йошіакі",
+      role: "Режисер",
+      image: "/assets/mock-user-logo.png",
+      link: "#",
+    },
+    {
+      name: "Бенія Йошікадзу",
+      role: "Виконавчий продюсер",
+      image: "/assets/mock-user-logo.png",
+      link: "#",
+    },
+    {
+      name: "Ямамото Джюн'їчі",
+      role: "Режисер епізодів",
+      image: "/assets/mock-user-logo.png",
+      link: "#",
+    },
+  ];
+
+  // Мокові дані для головних персонажів
+  const mainCharacters = [
+    {
+      name: "Куджірай Рейко",
+      role: "Головна героїня",
+      image: "/assets/profile/mock-history-anime-card.png",
+      link: "#",
+    },
+    {
+      name: "Кудо Хаджіме",
+      role: "Головний герой",
+      image: "/assets/profile/mock-history-anime-card2.png",
+      link: "#",
+    },
+    {
+      name: "Сайто",
+      role: "Друг головного героя",
+      image: "/assets/profile/mock-history-anime-card3.png",
+      link: "#",
+    },
+  ];
+
   return (
     <SkeletonTheme
       baseColor="#23242A"
@@ -259,7 +310,7 @@ export default function AnimePage() {
       borderRadius={8}
       duration={1.2}
     >
-      <div className="max-w-7xl mx-auto py-10 px-4 flex flex-col md:flex-row gap-10">
+      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 py-10 md:flex-row">
         {/* Left: Poster */}
         <AnimePosterSection
           poster={anime.poster || anime.image_name}
@@ -268,7 +319,7 @@ export default function AnimePage() {
         />
 
         {/* Center: Main info */}
-        <div className="flex-1 flex flex-col gap-4">
+        <div className="flex flex-1 flex-col gap-4">
           <AnimeMainInfoSection
             anime={anime}
             tags={tags}
@@ -287,19 +338,24 @@ export default function AnimePage() {
             isLoading={isLoading}
           />
           <AnimeCommentSection comments={comments} isLoading={isLoading} />
+          <AnimeCharactersSection
+            authors={mainCharacters}
+            title="Головні персонажі"
+          />
+          <AnimeCharactersSection authors={authors} title="Автори" />
         </div>
 
         {/* Right: Details panel (only visible on large screens) */}
-        <div className="hidden lg:flex flex-col items-end gap-6 min-w-[260px]">
+        <div className="hidden min-w-[260px] flex-col items-end gap-6 lg:flex">
           {isLoading ? (
             <AnimeDetailsPanel anime={anime} isLoading />
           ) : (
             <>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-white text-3xl font-bold">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="text-3xl font-bold text-white">
                   {anime.localRating}
                 </span>
-                <Star className="w-6 h-6 text-white" fill="white" />
+                <Star className="h-6 w-6 text-white" fill="white" />
               </div>
               <AnimeDetailsPanel anime={anime} />
             </>
