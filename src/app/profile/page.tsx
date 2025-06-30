@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { ViewStatsCard } from "@/components/profile/view-stats-card";
-import Navbar from "@/components/nav/navbar";
 import ProfileBanner from "@/components/profile/profile-banner";
 import ProfileCard from "@/components/profile/profile-card";
 import AnimeHistory from "@/components/profile/anime-history";
@@ -11,12 +10,10 @@ import AnimeViewTimeChart from "@/components/profile/anime-view-time-chart";
 import FavouritesSection from "@/components/profile/favourites-section";
 
 export default function ProfilePage() {
-  const [pageLoaded, setPageLoaded] = useState(false);
-
-  // Simulate loading (replace with real data loading logic)
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    const timeout = setTimeout(() => setPageLoaded(true), 1000);
-    return () => clearTimeout(timeout);
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -27,8 +24,8 @@ export default function ProfilePage() {
           Загальне
         </h1>
         <div className="flex flex-col gap-6 md:w-full md:flex-row md:justify-between">
-          <ProfileCard pageLoaded={pageLoaded} />
-          <ViewStatsCard />
+          <ProfileCard isLoading={isLoading} />
+          <ViewStatsCard isLoading={isLoading} />
         </div>
         <div className="flex flex-col md:flex-row md:items-start md:justify-between">
           <div className="hidden flex-col gap-8 md:max-w-180 xl:flex">
@@ -36,12 +33,12 @@ export default function ProfilePage() {
               Статистика
             </h1>
             <div className="hidden flex-row gap-6 md:gap-18 xl:flex">
-              <ActivityBarChart />
-              <AnimeViewTimeChart />
+              <ActivityBarChart isLoading={isLoading} />
+              <AnimeViewTimeChart isLoading={isLoading} />
             </div>
-            <FavouritesSection />
+            <FavouritesSection isLoading={isLoading} />
           </div>
-          <AnimeHistory />
+          <AnimeHistory isLoading={isLoading} />
         </div>
       </div>
     </div>
