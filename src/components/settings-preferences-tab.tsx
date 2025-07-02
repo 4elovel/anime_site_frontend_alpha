@@ -44,10 +44,10 @@ const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
   setEmailUpdates,
 }) => {
   return (
-    <div className="flex flex-col lg:flex-row gap-16 w-full">
-      <section className="flex-1 max-w-xl min-w-[320px] flex flex-col gap-2">
-        <h2 className="text-2xl font-bold mb-2 text-white">Уподобання</h2>
-        <p className="text-white mb-8">
+    <div className="flex w-full flex-col gap-16 lg:flex-row">
+      <section className="flex max-w-xl min-w-[320px] flex-1 flex-col gap-2">
+        <h2 className="mb-2 text-2xl font-bold text-white">Уподобання</h2>
+        <p className="mb-8 text-white">
           Вкажіть бажані налаштування мови та відео
         </p>
         <div className="flex flex-col gap-6">
@@ -78,16 +78,16 @@ const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
               { value: "en", label: "Англійська" },
             ]}
           />
-          <div className="flex items-start gap-4 mt-2">
+          <div className="mt-2 flex items-start gap-4">
             <ToggleSwitch
               checked={showHiddenSubs}
               onChange={setShowHiddenSubs}
             />
             <div className="flex flex-col">
-              <span className="text-white font-semibold">
+              <span className="font-semibold text-white">
                 Показати приховані субтитри
               </span>
-              <span className="text-sm text-[#918C8C] leading-tight mt-2">
+              <span className="mt-2 text-sm leading-tight text-[#918C8C]">
                 Увімкнувши це налаштування, ми автоматично показуватимемо
                 приховані субтитри, коли вони доступні
               </span>
@@ -98,6 +98,7 @@ const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
             value={contentRestriction}
             onChange={setContentRestriction}
             options={[
+              { value: "13+", label: "З 13 років і старше" },
               { value: "16+", label: "З 16 років і старше" },
               { value: "18+", label: "З 18 років і старше" },
               { value: "all", label: "Без обмежень" },
@@ -112,9 +113,9 @@ const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
           </div>
         </div>
       </section>
-      <section className="flex-1 max-w-xl min-w-[320px] flex flex-col gap-2">
-        <h2 className="text-2xl font-bold mb-2 text-white">Email сповіщення</h2>
-        <p className="text-white mb-8">
+      <section className="flex max-w-xl min-w-[320px] flex-1 flex-col gap-2">
+        <h2 className="mb-2 text-2xl font-bold text-white">Email сповіщення</h2>
+        <p className="mb-8 text-white">
           Виберіть, які сповіщення ви хочете отримувати на електронну пошту
         </p>
         <div className="flex flex-col gap-6">
@@ -127,27 +128,27 @@ const SettingsPreferencesTab: React.FC<SettingsPreferencesTabProps> = ({
               { value: "en", label: "Англійська" },
             ]}
           />
-          <div className="flex items-center gap-4 mt-2">
+          <div className="mt-2 flex items-center gap-4">
             <ToggleSwitch checked={emailAll} onChange={setEmailAll} />
-            <span className="text-white font-semibold">Всі сповіщення</span>
+            <span className="font-semibold text-white">Всі сповіщення</span>
           </div>
-          <div className="flex items-start gap-4 mt-2">
+          <div className="mt-2 flex items-start gap-4">
             <ToggleSwitch checked={emailNews} onChange={setEmailNews} />
             <div className="flex flex-col">
-              <span className="text-white font-semibold">Розсилка новин</span>
-              <span className="text-sm text-[#918C8C] leading-tight mt-2">
+              <span className="font-semibold text-white">Розсилка новин</span>
+              <span className="mt-2 text-sm leading-tight text-[#918C8C]">
                 Підпишіться на нашу розсилку і будьте в курсі останніх новин та
                 пропозицій
               </span>
             </div>
           </div>
-          <div className="flex items-start gap-4 mt-2">
+          <div className="mt-2 flex items-start gap-4">
             <ToggleSwitch checked={emailUpdates} onChange={setEmailUpdates} />
             <div className="flex flex-col">
-              <span className="text-white font-semibold">
+              <span className="font-semibold text-white">
                 Новини та оновлення
               </span>
-              <span className="text-sm text-[#918C8C] leading-tight mt-2">
+              <span className="mt-2 text-sm leading-tight text-[#918C8C]">
                 Отримуйте новини про продукти, послуги та пропозиції партнерів
               </span>
             </div>
