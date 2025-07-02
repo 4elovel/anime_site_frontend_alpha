@@ -7,7 +7,7 @@ const nextConfig = {
         hostname: "cdn.myanimelist.net",
       },
     ],
-    domains: ["images.unsplash.com"],
+    domains: ["images.unsplash.com", "via.placeholder.com"],
   },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule) =>

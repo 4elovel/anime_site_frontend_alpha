@@ -2,100 +2,18 @@
 
 import TopAnimeCard from "@/components/main-page/TopAnimeList/top-anime-card";
 import Navbar from "@/components/nav/navbar";
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 
-const topAnime = [
-  {
-    image: "/assets/profile/mock-history-anime-card.png",
-    title: "Проводжальниця Фр...",
-    year: 2023,
-    type: "TV Серіал",
-    rank: 1,
-    rating: 9.3,
-    href: "#",
-  },
-  {
-    image: "/assets/profile/mock-history-anime-card2.png",
-    title: "Тільки я візьму новий...",
-    year: 2025,
-    type: "TV Серіал",
-    rank: 2,
-    rating: 8.75,
-    href: "#",
-  },
-  {
-    image: "/assets/profile/mock-history-anime-card3.png",
-    title: "Ван Піс",
-    year: 1999,
-    type: "TV Серіал",
-    rank: 3,
-    rating: 8.73,
-    href: "#",
-  },
-  {
-    image: "/assets/profile/mock-history-anime-card.png",
-    title: "Доктор Стоун",
-    year: 2019,
-    type: "TV Серіал",
-    rank: 4,
-    rating: 8.27,
-    href: "#",
-  },
-  {
-    image: "/assets/profile/mock-history-anime-card2.png",
-    title: "Полум'яні вогнеборці",
-    year: 2025,
-    type: "TV Серіал",
-    rank: 5,
-    rating: 7.96,
-    href: "#",
-  },
-  {
-    image: "/assets/profile/mock-history-anime-card3.png",
-    title: "Кланнад: Після...",
-    year: 2008,
-    type: "TV Серіал",
-    rank: 6,
-    rating: 0,
-    href: "#",
-  },
-  {
-    image: "/assets/profile/mock-history-anime-card.png",
-    title: "Форма голосу",
-    year: 2016,
-    type: "Фільм",
-    rank: 7,
-    rating: 0,
-    href: "#",
-  },
-  {
-    image: "/assets/profile/mock-history-anime-card2.png",
-    title: "Березневий лев...",
-    year: 2017,
-    type: "TV Серіал",
-    rank: 8,
-    rating: 0,
-    href: "#",
-  },
-  {
-    image: "/assets/profile/mock-history-anime-card3.png",
-    title: "Код Ґіас: Повст...",
-    year: 2008,
-    type: "TV Серіал",
-    rank: 9,
-    rating: 0,
-    href: "#",
-  },
-  {
-    image: "/assets/profile/mock-history-anime-card.png",
-    title: "Монстр",
-    year: 2004,
-    type: "TV Серіал",
-    rank: 10,
-    rating: 0,
-    href: "#",
-  },
-];
+interface Anime {
+  id: string;
+  slug: string;
+  name: string;
+  poster: string;
+  kind: string;
+  rank: number;
+  imdb_score: number;
+  first_air_date: string;
+}
 
 const sortOptions = [
   { label: "A-Я", value: "az" },
@@ -126,17 +44,52 @@ const getSortIcon = (dir: "asc" | "desc") =>
     </svg>
   );
 
+const sortMap: Record<string, string> = {
+  az: "name",
+  rating: "imdb_score",
+  year: "first_air_date",
+};
+
+import { useRouter, useSearchParams } from "next/navigation";
+import { API_BASE_URL } from "@/config";
+
 const TopAnimePage: FC = () => {
+  const [animes, setAnimes] = useState<Anime[]>([]);
   const [sort, setSort] = useState("rating");
   const [direction, setDirection] = useState<"asc" | "desc">("desc");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const sortedAnime = [...topAnime].sort((a, b) => {
-    let result = 0;
-    if (sort === "az") result = a.title.localeCompare(b.title, "uk");
-    if (sort === "rating") result = b.rating - a.rating;
-    if (sort === "year") result = b.year - a.year;
-    return direction === "asc" ? -result : result;
-  });
+  // Update URL when sort or direction changes
+  useEffect(() => {
+    const params = new URLSearchParams();
+    params.set("sort", sort);
+    params.set("direction", direction);
+    router.replace(`?${params.toString()}`);
+  }, [sort, direction, router]);
+
+  useEffect(() => {
+    const backendSort = sortMap[sort] || "imdb_score";
+    const url = `${API_BASE_URL}animes/top100?sort=${backendSort}&direction=${direction}`;
+    console.log("Fetching:", url);
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
+        setAnimes(data.data);
+      } catch (e: any) {
+        setError(e.message || "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [sort, direction]);
 
   return (
     <>
@@ -163,9 +116,10 @@ const TopAnimePage: FC = () => {
             <div className="relative flex items-center">
               <button
                 className="mr-2 text-white transition-colors hover:text-blue-400"
-                onClick={() =>
-                  setDirection((dir) => (dir === "asc" ? "desc" : "asc"))
-                }
+                onClick={() => {
+                  const newDir = direction === "asc" ? "desc" : "asc";
+                  setDirection(newDir);
+                }}
                 aria-label="Змінити напрям сортування"
                 type="button"
               >
@@ -174,7 +128,9 @@ const TopAnimePage: FC = () => {
               <select
                 className="xs:min-w-[140px] min-w-[120px] rounded-lg border border-[#232b45] bg-[#181f33] px-3 py-2 text-white focus:outline-none"
                 value={sort}
-                onChange={(e) => setSort(e.target.value)}
+                onChange={(e) => {
+                  setSort(e.target.value);
+                }}
               >
                 {sortOptions.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -185,21 +141,31 @@ const TopAnimePage: FC = () => {
             </div>
           </div>
           <div className="w-full overflow-x-auto pb-2">
-            <div className="xs:grid-cols-2 grid min-w-[320px] grid-cols-2 justify-items-center gap-x-4 gap-y-6 transition-all sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {sortedAnime.map((anime, idx) => (
-                <TopAnimeCard
-                  key={anime.rank}
-                  image={anime.image}
-                  title={anime.title}
-                  year={anime.year}
-                  type={anime.type}
-                  rank={anime.rank}
-                  rating={anime.rating}
-                  showRank={idx < 5}
-                  href={anime.href}
-                />
-              ))}
-            </div>
+            {loading ? (
+              <div className="text-center text-white">Завантаження...</div>
+            ) : error ? (
+              <div className="text-center text-red-500">{error}</div>
+            ) : (
+              <div className="xs:grid-cols-2 grid min-w-[320px] grid-cols-2 justify-items-center gap-x-4 gap-y-6 transition-all sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                {animes.map((anime, idx) => (
+                  <TopAnimeCard
+                    key={anime.id}
+                    image={anime.poster}
+                    title={anime.name}
+                    year={
+                      anime.first_air_date
+                        ? Number(anime.first_air_date.slice(0, 4))
+                        : 0
+                    }
+                    type={anime.kind}
+                    rank={anime.rank}
+                    rating={anime.imdb_score}
+                    showRank={idx < 5}
+                    href={"/anime/" + anime.slug}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
