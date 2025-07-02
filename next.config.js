@@ -7,7 +7,12 @@ const nextConfig = {
         hostname: "cdn.myanimelist.net",
       },
     ],
-    domains: ["images.unsplash.com", "via.placeholder.com"],
+    domains: [
+      "images.unsplash.com",
+      "via.placeholder.com",
+      "upload.wikimedia.org",
+      "static.wikia.nocookie.net",
+    ],
   },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule) =>

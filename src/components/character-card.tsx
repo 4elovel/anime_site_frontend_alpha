@@ -5,7 +5,7 @@ import Link from "next/link";
 interface CharacterCardProps {
   image: string;
   name: string;
-  latinName: string;
+  originalName: string;
   description: React.ReactNode;
   subtitle?: string;
   href: string;
@@ -14,7 +14,7 @@ interface CharacterCardProps {
 export default function CharacterCard({
   image,
   name,
-  latinName,
+  originalName,
   description,
   subtitle,
   href = "",
@@ -45,7 +45,7 @@ export default function CharacterCard({
               {name}
             </h2>
             <div className="text-sm font-medium text-[#A0A0A0] md:text-xs lg:text-sm xl:text-base">
-              {latinName}
+              {originalName}
             </div>
           </div>
           <div className="my-2 flex w-full items-center justify-center md:items-start md:justify-start">
