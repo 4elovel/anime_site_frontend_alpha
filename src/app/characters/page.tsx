@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import CharacterCard from "@/components/character-card";
 import { useRouter, useSearchParams } from "next/navigation";
 import { API_BASE_URL } from "@/config";
@@ -14,7 +14,6 @@ const sortMap: Record<string, string> = {
   popularity: "popularity", // Adjust if backend uses a different field
 };
 //TODO add server side sorting and filtering
-//TODO maybe anime center_dot anime-name
 
 function FilterButton({
   children,
@@ -46,34 +45,51 @@ interface Character {
   popularity?: number;
 }
 
+import InfiniteScroll from "react-infinite-scroll-component";
+
 const CharactersPage = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [sort, setSort] = useState("az");
   const [direction, setDirection] = useState<"asc" | "desc">("asc");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [total, setTotal] = useState(0);
+  const [perPage, setPerPage] = useState(16);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const scrollPositionRef = useRef<number>(0);
 
   // Sync state with URL
   useEffect(() => {
+    setCharacters([]);
+    setPage(1);
+    setHasMore(true);
     const params = new URLSearchParams();
     params.set("sort", sort);
     params.set("direction", direction);
+    params.set("page", "1");
     router.replace(`?${params.toString()}`);
   }, [sort, direction, router]);
 
   useEffect(() => {
+    let ignore = false;
     const backendSort = sortMap[sort] || "name";
-    const url = `${API_BASE_URL}people?types=character&sort=${backendSort}&direction=${direction}`;
+    const url = `${API_BASE_URL}people?types=character&sort=${backendSort}&direction=${direction}&page=${page}&per_page=16`;
     console.log("Fetching:", url);
     const fetchData = async () => {
-      setLoading(true);
+      if (page === 1 && characters.length === 0) setLoading(true);
       setError(null);
       try {
         const res = await fetch(url);
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
+        setTotal(data.meta?.total || 0);
+        setPerPage(data.meta?.per_page || 16);
+        setHasMore(
+          (data.meta?.current_page || 1) < (data.meta?.last_page || 1),
+        );
         // For each character, fetch their first anime for subtitle
         const charactersWithSubtitle = await Promise.all(
           data.data.map(async (character: Character) => {
@@ -85,7 +101,8 @@ const CharactersPage = () => {
               if (animeRes.ok) {
                 const animeData = await animeRes.json();
                 if (animeData.data && animeData.data.length > 0) {
-                  subtitle = animeData.data[0].name;
+                  subtitle =
+                    animeData.data[0].kind + " ・ " + animeData.data[0].name;
                 }
               }
             } catch (e) {
@@ -94,15 +111,36 @@ const CharactersPage = () => {
             return { ...character, subtitle };
           }),
         );
-        setCharacters(charactersWithSubtitle);
+        if (ignore) return;
+        if (page === 1) {
+          setCharacters(charactersWithSubtitle);
+        } else {
+          setCharacters((prev) => [...prev, ...charactersWithSubtitle]);
+        }
       } catch (e: any) {
-        setError(e.message || "Unknown error");
+        if (!ignore) setError(e.message || "Unknown error");
       } finally {
-        setLoading(false);
+        if (!ignore && page === 1) setLoading(false);
       }
     };
     fetchData();
-  }, [sort, direction]);
+    return () => {
+      ignore = true;
+    };
+    // eslint-disable-next-line
+  }, [sort, direction, page]);
+
+  const fetchMoreCharacters = () => {
+    if (!hasMore || loading) return;
+    setPage((prev) => {
+      const nextPage = prev + 1;
+      // Update the URL without rerendering or navigation
+      const params = new URLSearchParams(window.location.search);
+      params.set("page", String(nextPage));
+      router.replace(`?${params.toString()}`, { scroll: false });
+      return nextPage;
+    });
+  };
 
   return (
     <div className="min-h-screen w-full px-4 pt-10 pb-20 sm:px-8 sm:pt-6 sm:pb-8 md:pt-8 md:pb-14">
@@ -138,25 +176,36 @@ const CharactersPage = () => {
           }}
         />
       </div>
-      <div className="mt-6 grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2 md:gap-x-6 md:gap-y-6">
-        {loading ? (
+      <div>
+        {loading && page === 1 ? (
           <div className="text-center text-white">Завантаження...</div>
         ) : error ? (
           <div className="text-center text-red-500">{error}</div>
         ) : characters.length === 0 ? (
           <div className="text-center text-white">Немає персонажів</div>
         ) : (
-          characters.map((character) => (
-            <CharacterCard
-              key={character.id}
-              image={character.image}
-              name={character.name}
-              originalName={character.original_name || ""}
-              description={character.biography || ""}
-              subtitle={character.subtitle}
-              href={`/characters/${character.slug}`}
-            />
-          ))
+          <InfiniteScroll
+            dataLength={characters.length}
+            next={fetchMoreCharacters}
+            hasMore={hasMore}
+            loader={
+              <div className="text-center text-white">Завантаження...</div>
+            }
+            scrollThreshold={0.95}
+            className="mt-6 grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2 md:gap-x-6 md:gap-y-6"
+          >
+            {characters.map((character) => (
+              <CharacterCard
+                key={character.id}
+                image={character.image}
+                name={character.name}
+                originalName={character.original_name || ""}
+                description={character.biography || ""}
+                subtitle={character.subtitle}
+                href={`/characters/${character.slug}`}
+              />
+            ))}
+          </InfiniteScroll>
         )}
       </div>
     </div>

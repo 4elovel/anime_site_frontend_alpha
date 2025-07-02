@@ -22,7 +22,9 @@ const CardCollection: React.FC<CardCollectionProps> = ({
   return (
     <section className="w-full sm:max-w-screen">
       <div className="mb-8 flex items-center">
-        <h2 className="mr-6 text-4xl font-bold text-white">{title}</h2>
+        <h2 className="xs:text-lg text-4xl font-bold tracking-tight text-white sm:text-2xl">
+          {title}
+        </h2>
         {showArrowRightIcon && (
           <button className="ml-auto rounded-xl border border-blue-400 p-2 text-white transition-colors hover:bg-blue-900">
             <ArrowRightIcon href={arrowRightIconUrl} className="h-7 w-7" />
