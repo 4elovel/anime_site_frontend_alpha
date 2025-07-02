@@ -43,7 +43,9 @@ export default function TagPage() {
 
     const sortParam = apiSortMap[sort] || "name";
 
-    fetch(`http://127.0.0.1:8000/api/v1/tags/${tagSlug}?sort_anime=${sortParam}`)
+    fetch(
+      `http://127.0.0.1:8000/api/v1/tags/${tagSlug}?sort_anime=${sortParam}`,
+    )
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch data");
         return res.json();
@@ -61,14 +63,14 @@ export default function TagPage() {
 
   return (
     <>
-      <div className="min-h-screen px-2 xs:px-4 sm:px-6 md:px-12 pt-6 sm:pt-8 pb-16 transition-all">
-        <h1 className="text-white text-2xl xs:text-3xl font-bold mb-4">
+      <div className="xs:px-4 min-h-screen px-2 pt-6 pb-16 transition-all sm:px-6 sm:pt-8 md:px-12">
+        <h1 className="xs:text-3xl mb-4 text-2xl font-bold text-white">
           Тег - <span className="text-[#4B7FCC]">{tagSlug.toUpperCase()}</span>
         </h1>
 
-        <div className="flex justify-end mb-4 overflow-x-auto scrollbar-thin scrollbar-thumb-[#232b45]">
+        <div className="scrollbar-thin scrollbar-thumb-[#232b45] mb-4 flex justify-end overflow-x-auto">
           <select
-            className="bg-[#181f33] text-white px-3 py-2 rounded-lg border border-[#232b45] focus:outline-none min-w-[120px] xs:min-w-[140px]"
+            className="xs:min-w-[140px] min-w-[120px] rounded-lg border border-[#232b45] bg-[#181f33] px-3 py-2 text-white focus:outline-none"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
           >
@@ -84,7 +86,7 @@ export default function TagPage() {
         {error && <p className="text-red-500">Помилка: {error}</p>}
 
         {!loading && !error && (
-          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6 transition-all">
+          <div className="xs:grid-cols-2 grid grid-cols-1 gap-x-4 gap-y-6 transition-all sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {animes.length > 0 ? (
               animes.map((anime) => (
                 <TopAnimeCard

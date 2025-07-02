@@ -53,7 +53,7 @@ export function AuthForm({}: React.ComponentProps<"div">) {
             aria-invalid={touched.email && !isEmailValid}
           />
           {emailError && (
-            <span className="text-red-500 text-xs pl-2">{emailError}</span>
+            <span className="pl-2 text-xs text-red-500">{emailError}</span>
           )}
         </div>
         <div className="grid gap-3">
@@ -69,21 +69,21 @@ export function AuthForm({}: React.ComponentProps<"div">) {
             aria-invalid={touched.password && !isPasswordValid}
           />
           {passwordError && (
-            <span className="text-red-500 text-xs pl-2">{passwordError}</span>
+            <span className="pl-2 text-xs text-red-500">{passwordError}</span>
           )}
           <div className="flex items-center">
             <div className="flex items-center space-x-2">
               <Checkbox
-                className="data-[state=checked]:bg-blue w-5 h-5 border-blue"
+                className="data-[state=checked]:bg-blue border-blue h-5 w-5"
                 id="rememberUser"
               />
-              <Label className="font-sans text-white text-sm font-light">
+              <Label className="font-sans text-sm font-light text-white">
                 Запам'ятати мене
               </Label>
             </div>
             <a
               href="#"
-              className="ml-auto inline-block text-sm underline-offset-4 hover:underline font-sans bg-transparent text-white font-light"
+              className="ml-auto inline-block bg-transparent font-sans text-sm font-light text-white underline-offset-4 hover:underline"
             >
               Забули пароль?
             </a>
@@ -94,20 +94,20 @@ export function AuthForm({}: React.ComponentProps<"div">) {
             type="submit"
             size="sm"
             className={cn(
-              "text-white hover:text-dark-white bg-blue hover:bg-dark-blue cursor-pointer font-semibold text-lg font-sans",
+              "hover:text-dark-white bg-blue hover:bg-dark-blue cursor-pointer font-sans text-lg font-semibold text-white",
               "rounded-[3.25rem]", // 52px / 16 = 3.25rem
               "px-0 py-0", // override default padding
-              "w-[7.5rem] md:w-[8.5rem] h-[3.75rem]", // 136px = 8.5rem, 60px = 3.75rem
+              "h-[3.75rem] w-[7.5rem] md:w-[8.5rem]", // 136px = 8.5rem, 60px = 3.75rem
               !isEmailValid || !isPasswordValid
-                ? "opacity-60 pointer-events-none"
-                : ""
+                ? "pointer-events-none opacity-60"
+                : "",
             )}
             disabled={loading || !isEmailValid || !isPasswordValid}
           >
             {loading ? "Вхід..." : "Далі"}
           </Button>
         </div>
-        {error && <span className="text-red-500 text-xs pl-2">{error}</span>}
+        {error && <span className="pl-2 text-xs text-red-500">{error}</span>}
       </div>
     </form>
   );

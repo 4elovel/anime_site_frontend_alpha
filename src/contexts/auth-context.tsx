@@ -66,35 +66,35 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Storage keys
 const STORAGE_KEYS = {
-  USER: 'anime_user',
-  TOKEN: 'anime_token',
+  USER: "anime_user",
+  TOKEN: "anime_token",
 } as const;
 
 // Helper functions for localStorage
 const storage = {
   get: (key: string): string | null => {
-    if (typeof window === 'undefined') return null;
+    if (typeof window === "undefined") return null;
     try {
       return localStorage.getItem(key);
     } catch (error) {
-      console.error('Error reading from localStorage:', error);
+      console.error("Error reading from localStorage:", error);
       return null;
     }
   },
   set: (key: string, value: string): void => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
     try {
       localStorage.setItem(key, value);
     } catch (error) {
-      console.error('Error writing to localStorage:', error);
+      console.error("Error writing to localStorage:", error);
     }
   },
   remove: (key: string): void => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
     try {
       localStorage.removeItem(key);
     } catch (error) {
-      console.error('Error removing from localStorage:', error);
+      console.error("Error removing from localStorage:", error);
     }
   },
 };
@@ -124,7 +124,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setUser(parsedUser);
           setToken(storedToken);
         } catch (error) {
-          console.error('Error parsing stored user data:', error);
+          console.error("Error parsing stored user data:", error);
           // Clear corrupted data
           storage.remove(STORAGE_KEYS.USER);
           storage.remove(STORAGE_KEYS.TOKEN);
@@ -180,23 +180,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: 'Login failed' }));
-        throw new Error(errorData.message || `HTTP ${response.status}: Login failed`);
+        const errorData = await response
+          .json()
+          .catch(() => ({ message: "Login failed" }));
+        throw new Error(
+          errorData.message || `HTTP ${response.status}: Login failed`,
+        );
       }
 
       const data: LoginResponse = await response.json();
 
       if (!data.user || !data.token) {
-        throw new Error('Invalid response: missing user or token');
+        throw new Error("Invalid response: missing user or token");
       }
 
       saveAuthData(data.user, data.token);
       return true;
-
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+      const errorMessage =
+        error instanceof Error ? error.message : "An unexpected error occurred";
       setError(errorMessage);
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       return false;
     } finally {
       setLoading(false);
@@ -219,13 +223,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             "X-Requested-With": "XMLHttpRequest",
           },
           credentials: "include",
-        }).catch(error => {
-          console.warn('Logout API call failed:', error);
+        }).catch((error) => {
+          console.warn("Logout API call failed:", error);
           // Continue with local logout even if API call fails
         });
       }
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     } finally {
       // Always clear local auth data
       clearAuthData();
@@ -236,23 +240,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   // Don't render children until auth state is initialized
   if (!isInitialized) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-white">Loading...</div>
       </div>
     );
   }
 
   return (
-    <AuthContext.Provider 
-      value={{ 
-        user, 
-        token, 
-        login, 
-        logout, 
-        loading, 
-        error, 
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        login,
+        logout,
+        loading,
+        error,
         isAuthenticated,
-        clearError 
+        clearError,
       }}
     >
       {children}

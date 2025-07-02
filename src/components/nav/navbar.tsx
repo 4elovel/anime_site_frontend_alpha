@@ -27,7 +27,6 @@ function useIsMobile() {
   return isMobile;
 }
 
-
 const Navbar: React.FC = () => {
   const pathname = usePathname();
   const isMobile = useIsMobile();
@@ -46,7 +45,7 @@ const Navbar: React.FC = () => {
       {
         label: "Аніме",
         href: "/anime",
-        icon: <LayoutGrid className="w-5 h-5 text-[#4B7FCC]" />, 
+        icon: <LayoutGrid className="h-5 w-5 text-[#4B7FCC]" />,
       },
     ];
     const parts = pathname.split("/").filter(Boolean);
@@ -60,7 +59,7 @@ const Navbar: React.FC = () => {
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="w-full flex items-center justify-between px-8 py-4 bg-transparent z-9999"
+      className="z-9999 flex w-full items-center justify-between bg-transparent px-8 py-4"
       style={{ minHeight: 0 }}
     >
       {pathname === "/" ? (
@@ -70,25 +69,25 @@ const Navbar: React.FC = () => {
             alt="Логотип"
             width={256}
             height={256}
-            className="w-18 h-18 object-contain"
+            className="h-18 w-18 object-contain"
           />
         </Link>
       ) : (
         <Breadcrumbs items={isMobile ? breadcrumbs.slice(0, 1) : breadcrumbs} />
       )}
 
-      <div className="flex items-center gap-6 sm:gap-4 xs:gap-2">
+      <div className="xs:gap-2 flex items-center gap-6 sm:gap-4">
         {!user ? (
           <>
             <button
-              className="border border-[#5B7CB2] text-white rounded-xl px-8 py-3 text-lg font-medium bg-transparent hover:bg-[#232b45] transition-colors"
-              onClick={() => router.push('/signin')}
+              className="rounded-xl border border-[#5B7CB2] bg-transparent px-8 py-3 text-lg font-medium text-white transition-colors hover:bg-[#232b45]"
+              onClick={() => router.push("/signin")}
             >
               Увійти
             </button>
             <button
-              className="bg-[#4B7FCC] text-white rounded-xl px-8 py-3 text-lg font-medium hover:bg-[#3a65b2] transition-colors"
-              onClick={() => router.push('/signup')}
+              className="rounded-xl bg-[#4B7FCC] px-8 py-3 text-lg font-medium text-white transition-colors hover:bg-[#3a65b2]"
+              onClick={() => router.push("/signup")}
             >
               Реєстрація
             </button>
@@ -96,11 +95,11 @@ const Navbar: React.FC = () => {
         ) : (
           <>
             <div
-              className="hidden md:flex items-center border border-[#5B7CB2] rounded-xl px-4 py-2 w-72 max-w-xs cursor-pointer"
+              className="hidden w-72 max-w-xs cursor-pointer items-center rounded-xl border border-[#5B7CB2] px-4 py-2 md:flex"
               onClick={() => setSearchOpen(true)}
             >
               <svg
-                className="w-5 h-5 text-white mr-2"
+                className="mr-2 h-5 w-5 text-white"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -112,17 +111,17 @@ const Navbar: React.FC = () => {
               <input
                 type="text"
                 placeholder="Пошук..."
-                className="bg-transparent outline-none text-white placeholder-gray-400 w-full cursor-pointer"
+                className="w-full cursor-pointer bg-transparent text-white placeholder-gray-400 outline-none"
                 readOnly
               />
             </div>
 
             <button
-              className="md:hidden border border-[#5B7CB2] rounded-xl w-12 h-12 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent hover:bg-[#2C3650] transition p-0"
+              className="xs:w-8 xs:h-8 flex h-12 w-12 items-center justify-center rounded-xl border border-[#5B7CB2] bg-transparent p-0 transition hover:bg-[#2C3650] sm:h-10 sm:w-10 md:hidden"
               onClick={() => setSearchOpen(true)}
             >
               <svg
-                className="w-5 h-5 sm:w-5 sm:h-5 xs:w-4 xs:h-4 text-white"
+                className="xs:w-4 xs:h-4 h-5 w-5 text-white sm:h-5 sm:w-5"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -135,13 +134,13 @@ const Navbar: React.FC = () => {
 
             <button
               ref={notifBtnRef}
-              className={`border border-[#5B7CB2] rounded-xl w-12 h-12 sm:w-10 sm:h-10 xs:w-8 xs:h-8 flex items-center justify-center bg-transparent transition p-0 ${
+              className={`xs:w-8 xs:h-8 flex h-12 w-12 items-center justify-center rounded-xl border border-[#5B7CB2] bg-transparent p-0 transition sm:h-10 sm:w-10 ${
                 notifOpen ? "bg-[#2C3650]" : "hover:bg-[#2C3650]"
               }`}
               onClick={() => setNotifOpen((v) => !v)}
             >
               <svg
-                className="w-5 h-5 sm:w-5 sm:h-5 xs:w-4 xs:h-4 text-white"
+                className="xs:w-4 xs:h-4 h-5 w-5 text-white sm:h-5 sm:w-5"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -151,8 +150,14 @@ const Navbar: React.FC = () => {
               </svg>
             </button>
 
-            <UserProfilePopover isSignedIn={true} username={user?.name || user?.email || "User"} />
-            <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+            <UserProfilePopover
+              isSignedIn={true}
+              username={user?.name || user?.email || "User"}
+            />
+            <SearchModal
+              open={searchOpen}
+              onClose={() => setSearchOpen(false)}
+            />
             <NotificationModal
               open={notifOpen}
               onClose={() => setNotifOpen(false)}
